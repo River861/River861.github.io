@@ -1,0 +1,463 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[数学][经典] 常见的数学方法归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [数学][经典] 常见的数学方法归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-10
+					  </span>
+					  <span>
+						8 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>一些数学算法题中常用的技巧，包括gcd、exgcd、快速幂、逆元、组合数等。</p>
+<!-- more -->
+<h3 id="基本说明">基本说明</h3>
+<p>由于数学类方法经常性混合使用（比如组合数+快速幂），因此例题在最后统一给出。</p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="一-最大公约数和最小公倍数gcd">一、最大公约数和最小公倍数（gcd）</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>没啥好说，大家都懂。最大公约数 gcd(a,b) ，最小公倍数 lcm(a,b) 。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p>求最大公约一般用辗转相除法，最小公倍数可以由最大公约数导出：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>c</mi><mi>d</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo><mo>⋅</mo><mi>l</mi><mi>c</mi><mi>m</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo><mo>=</mo><mi>a</mi><mo>⋅</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">gcd(a, b) \cdot lcm(a, b) = a \cdot b
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">m</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p>同时注意为了防止a*b溢出，最终我们最小公倍数用下述公式求解：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>m</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo><mo>=</mo><mi>a</mi><mi mathvariant="normal">/</mi><mi>g</mi><mi>c</mi><mi>d</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo><mo>⋅</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">lcm(a, b) = a / gcd(a, b) \cdot b
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">m</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>ll gcd(ll a, ll b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-扩展欧几里得算法exgcd">二、扩展欧几里得算法（exgcd）</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>上面说的求最大公约数的方式实际上叫<strong>欧几里得算法</strong>，而这里要讲的是它的升级版，不仅可以计算出前面说的最小公约数，还可以求出相应的“不定方程解”.</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p>exgcd可以快速求出下面方程中的x、y、gcd(a,b)：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">ax + by = gcd(a, b)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span></span></p>
+<p>上面的公式为裴蜀定理，有很多有用的结论：</p>
+<ul>
+<li>上述式子一定有整数解，通过exgcd可以求出其中一组整数解</li>
+<li>若要求出其它解，只需要 <strong>x+=b/gcd(a,b)，y-=a/gcd(a,b)</strong> 即可
+<ul>
+<li>注意不要漏了除以 gcd(a, b)</li>
+<li>+、-可以互换，相当于从另一个方向找其它解</li>
+</ul>
+</li>
+<li>对于ax+by=c，若c不是gcd(a, b)的倍数，则该方程无解</li>
+<li>......</li>
+</ul>
+<h4 id="3-模板-2">3. 模板</h4>
+<p>注意 在求解 ax+by=c 时<strong>要特判 a、b等于0 的情况</strong>。</p>
+<pre><code>ll exgcd(ll a, ll b, ll&amp; x, ll&amp; y) {
+    if(b == 0) {
+        y = 0, x = 1;
+        return a;
+    }
+    ll res = exgcd(b, a % b, y, x);
+    y -= (a / b) * x;
+    return res;
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="三-快速幂算法">三、快速幂算法</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>一种用来快速求解指数很大的幂运算的算法。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p>原理是将幂次减半，底数平方，并以此类推直到幂次为0。比如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>3</mn><mn>10</mn></msup><mo>=</mo><msup><mn>9</mn><mn>5</mn></msup><mo>=</mo><mo>(</mo><msup><mn>9</mn><mn>4</mn></msup><mo>)</mo><mo>(</mo><msup><mn>9</mn><mn>1</mn></msup><mo>)</mo><mo>=</mo><mo>(</mo><mn>8</mn><msup><mn>1</mn><mn>2</mn></msup><mo>)</mo><mo>(</mo><msup><mn>9</mn><mn>1</mn></msup><mo>)</mo><mo>=</mo><mo>(</mo><mn>656</mn><msup><mn>1</mn><mn>1</mn></msup><mo>)</mo><mo>(</mo><msup><mn>9</mn><mn>1</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">3^{10}=9^5=(9^4)(9^1)=(81^2)(9^1)=(6561^1)(9^1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mopen">(</span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">8</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mopen">(</span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">6</span><span class="mord">5</span><span class="mord">6</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mopen">(</span><span class="mord"><span class="mord">9</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，这样原式的答案就是6561*9了。</p>
+<h4 id="3-模板-3">3. 模板</h4>
+<ul>
+<li>普通版，注意用long long：</li>
+</ul>
+<pre><code>LL fast_pow(LL a, LL b) {  // 快速幂算法
+    LL res = 1;
+    while(b) {
+        if(b &amp; 1) res = res * a;  // 指数为奇时分一个出来
+        b &gt;&gt;= 1;  // 指数减半
+        a = a * a;  // 底数平方
+    }
+    return res;
+}
+</code></pre>
+<ul>
+<li>带mod版，注意用long long：</li>
+</ul>
+<pre><code>LL fast_pow_mod(LL a, LL b) {  // 快速幂算法 带mod版
+    LL res = 1;
+    while(b) {
+        if(b &amp; 1) res = res * a % mod;
+        b &gt;&gt;= 1;
+        a = a * a % mod;
+    }
+    return res % mod;
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="四-除法求模逆元">四、除法求模（逆元）</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>我们都知道，对于加法、减法、乘法，求模运算都可以提前，即：</p>
+<blockquote>
+<p>(a + b) % p = (a % p + b % p) % p<br>
+(a - b) % p = (a % p - b % p ) % p<br>
+(a * b) % p = (a % p * b % p) % p<br>
+而除法求模不行，因此对于除法求模我们需要使用一种专门的方法，即转化为乘法求模。</p>
+</blockquote>
+<h4 id="2-解析-4">2. 解析</h4>
+<p>由费马小定理：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>b</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>≡</mo><mn>1</mn><mo>(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">b^{m - 1}  \equiv 1 (mod m) 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.864108em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<p>转化一下则有：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mn>1</mn><mi>b</mi></mfrac><mo>≡</mo><msup><mi>b</mi><mrow><mi>m</mi><mo>−</mo><mn>2</mn></mrow></msup><mo>(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\frac{1}{b} \equiv b^{m-2} (mod m)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">b</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<p>也就是说，对于除以b取模可以转化为乘以b^(m-2)取模！ 这样就成功将除法取模转化为了乘法取模。但要注意b、m必须互质。好消息是，这里的m一般就是题目给出的mod值，一般题目给出的都是一个很大的质数。</p>
+<p>因此我们一般称b^(m-2)为b的 <strong>逆元</strong> ，除以b取模相当于乘以b的逆元取模。<br>
+而对于b^(m-2)的求法，参见前文的 <strong>快速幂算法</strong> 即可。</p>
+<h4 id="3-模板-4">3. 模板</h4>
+<p>以求组合数的模为例，里面要用到除法（除数为阶乘）求模：</p>
+<pre><code>int C(int n, int m) {  // n! / (n-m)! / m! =&gt; n! * [(n-m)!]^(mod-2) * [m!]^(mod-2)
+    return fac[n] * inv_fac[n - m] % mod * inv_fac[m] % mod;
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="四-指数求模">四、指数求模</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>指数比较大的情况一般用快速幂可以解决，然而....</p>
+<p>有时用快速幂还是会超时....这个时候也需要将指数模一模.</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<p>由费马小定理：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>b</mi><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>≡</mo><mn>1</mn><mtext> </mtext><mo>(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mtext> </mtext><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">b^{m-1} \equiv 1\ (mod\ m)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.864108em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mspace"> </span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<p>将k组上式乘到下面这个式子中</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mi>B</mi></msup><mo>≡</mo><mi>a</mi><mi>n</mi><mi>s</mi><mtext> </mtext><mo>(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mtext> </mtext><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a^{B} \equiv ans\ (mod\ m)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8913309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913309999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mspace"> </span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<p>得到</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mrow><mi>B</mi><mo>+</mo><mi>k</mi><mo>(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow></msup><mo>≡</mo><mi>a</mi><mi>n</mi><mi>s</mi><mtext> </mtext><mo>(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mtext> </mtext><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a^{B+k(m-1)} \equiv ans\ (mod\ m)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.938em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mspace"> </span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<p>上面两个式子说明，可以对指数 模(m-1)，答案不会变化。</p>
+<h4 id="3-结论">3. 结论</h4>
+<p><strong>在计算指数运算时，要是指数太大，可以 模(m-1)，答案不会变化</strong>。m为题目指定的mod。</p>
+<hr>
+<h3 id="五-组合数cn-m">五、组合数（C(n, m)）</h3>
+<h4 id="1-定义-6">1. 定义</h4>
+<p>在一些题目中需要用到组合数，甚至通过组合数直接输出结果，因此有必要学习一下组合数的计算方式。</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>n</mi><mo>!</mo></mrow><mrow><mo>(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo>)</mo><mo>!</mo><mi>m</mi><mo>!</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">C(n, m) = \frac{n!}{(n - m)! m!}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.30744em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mclose">!</span><span class="mord mathdefault">m</span><span class="mclose">!</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="mclose">!</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h4 id="2-解析-6">2. 解析</h4>
+<p>两种方法</p>
+<ul>
+<li><strong>方法一</strong>：通过动态规划预处理出C[maxn][maxn]数组，预处理用时O(n^2)，查询用时O(1)<br>
+一般只要预处理不会超时、空间不会爆 就优先用这个！！</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo><mo>=</mo><mi>C</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>C</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(n, m) = C(n - 1, m - 1) + C(n - 1, m)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span></p>
+<ul>
+<li><strong>方法二</strong>：仅预处理出阶乘数fac[maxn]和阶乘数的逆元inv_fac[maxn]，预处理时间O(n*lg(mod))，查询用时稍微慢一点的O(1)<br>
+若方法一预处理超时了 或 内存爆了 就用这个。</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo><mo>=</mo><mi>f</mi><mi>a</mi><mi>c</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>⋅</mo><mi>i</mi><mi>n</mi><mi>v</mi><mi mathvariant="normal">_</mi><mi>f</mi><mi>a</mi><mi>c</mi><mo>(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo>)</mo><mo>⋅</mo><mi>m</mi><mi>o</mi><mi>d</mi><mo>⋅</mo><mi>i</mi><mi>n</mi><mi>v</mi><mi mathvariant="normal">_</mi><mi>f</mi><mi>a</mi><mi>c</mi><mo>(</mo><mi>m</mi><mo>)</mo><mo>⋅</mo><mi>m</mi><mi>o</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">C(n, m) = fac[n]\cdot inv\_fac(n - m) \cdot mod \cdot inv\_fac(m) \cdot mod
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mopen">[</span><span class="mord mathdefault">n</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span></span></span></span></span></p>
+<h4 id="3-模板-5">3. 模板</h4>
+<ul>
+<li><strong>方法一</strong>：</li>
+</ul>
+<pre><code>void init(ll n) {
+    C[0][0] = 1;
+    for(ll i = 1; i &lt;= n; i ++) {
+        for(ll j = 0; j &lt;= i; j ++) {
+            C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % mod;
+        }
+    }
+}
+</code></pre>
+<ul>
+<li><strong>方法二</strong>：</li>
+</ul>
+<pre><code>
+LL fast_pow_mod(LL a, LL b) {  // 快速幂
+    LL res = 1;
+    while(b) {
+        if(b &amp; 1) res = res * a % mod;
+        b &gt;&gt;= 1;
+        a = a * a % mod;
+    }
+    return res % mod;
+}
+ 
+void init(int n) {  // 预处理
+    fac[0] = inv_fac[0] = 1;
+    for(int i = 1; i &lt;= n; i ++) {
+        fac[i] = fac[i - 1] * i % mod;
+        inv_fac[i] = fast_pow_mod(fac[i], mod - 2);
+    }
+}
+ 
+int C(int n, int m) {  // 计算组合数
+    return fac[n] * inv_fac[n - m] % mod * inv_fac[m] % mod;
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="last-例题">Last. 例题</h3>
+<p><a href="https://blog.nowcoder.net/n/44393c613d934015bd7c7a54888535a0">Nowcoder 数列统计</a><br>
+<a href="https://ac.nowcoder.com/acm/contest/7539/F">Nowcoder 子序列</a><br>
+<a href="https://ac.nowcoder.com/acm/contest/7329/D">Nowcoder 火柴排队</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E8%AF%B4%E6%98%8E">基本说明</a></li>
+<li><a href="#%E4%B8%80-%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0%E5%92%8C%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0gcd">一、最大公约数和最小公倍数（gcd）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95exgcd">二、扩展欧几里得算法（exgcd）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95">三、快速幂算法</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-3">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-3">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-3">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E9%99%A4%E6%B3%95%E6%B1%82%E6%A8%A1%E9%80%86%E5%85%83">四、除法求模（逆元）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-4">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-4">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-4">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E6%8C%87%E6%95%B0%E6%B1%82%E6%A8%A1">四、指数求模</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-5">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-5">2. 解析</a></li>
+<li><a href="#3-%E7%BB%93%E8%AE%BA">3. 结论</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E7%BB%84%E5%90%88%E6%95%B0cn-m">五、组合数（C(n, m)）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-6">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-6">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-5">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#last-%E4%BE%8B%E9%A2%98">Last. 例题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/tu-lun-zui-duan-lu-wen-ti-gui-na/" class="post-title gt-a-link">
+                    [图论] 最短路问题归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

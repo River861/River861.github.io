@@ -1,0 +1,457 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[枚举] 暴力求解之枚举方法归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [枚举] 暴力求解之枚举方法归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-04
+					  </span>
+					  <span>
+						7 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>包括枚举排列、枚举集合、回溯法、IDA*等算法。</p>
+<!-- more -->
+<h3 id="一-枚举排列">一、枚举排列</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>枚举出一个序列a[maxn]的所有排列。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p>枚举排列 最简单的方法是运用STL的 <strong>next_permutation函数</strong>.</p>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>int a[maxn];
+
+int main(){
+        ......
+	sort(a, a + n);
+	do{
+		for(int i = 0; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; &quot; &quot;;  // 打印排列
+		cout &lt;&lt; endl;
+	} while(next_permutation(a, a + n));
+} 
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-枚举集合">二、枚举集合</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>枚举出一个序列a[maxn]的所有子集。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p>枚举子集 最简单的方法是 <strong>二进制法</strong>。</p>
+<ul>
+<li>
+<p>设A、B为两个集合的二进制表示，则</p>
+<ul>
+<li>交集表示为 A &amp; B</li>
+<li>并集表示为 A | B</li>
+<li>对称差集表示为 A ^ B</li>
+<li>补集表示为 ALL ^ A [其中 ALL = (1 &lt;&lt; n) - 1]</li>
+</ul>
+</li>
+<li>
+<p><strong>[枚举所有子集]</strong>：<br>
+枚举 0 到 (1 &lt;&lt; n) - 1 中的每个数字 i，然后将数字 i 转化为二进制，<br>
+如果 i 的第 j 位是 1，表示集合 i 包含 a[j]；<br>
+如果 i 的第 j 位是 0，表示集合 i 不包含 a[j]。</p>
+</li>
+</ul>
+<h4 id="3-变式">3. 变式</h4>
+<ol>
+<li>
+<p><strong>[枚举大小为k的所有子集]</strong><br>
+从 i = (1 &lt;&lt; k) - 1 开始枚举，每次找比它大的下一个包含k个1的二进制数，方法如下：</p>
+<ul>
+<li>令 x = lowbit(i)，表示当前 i 的靠右的 1 的权值</li>
+<li>令 y = i + x，即让 y 等于 i 的最低 “1” 发生进位后的数字，此时必然有 y 中 1 的个数小于等于k</li>
+<li>通过 (i &amp; -y) 得到由于进位而导致的所有从 1 变成 0 的位，然后将其除以 x 来去掉右边的所有 0 , 然后再继续右移 1 位来去掉一个 1 (因为进位后在左侧会有一个 0 变成 1) 。这样得到的数再 和 y 或一下，就可以得到下一个包含 k 个 1 的数字。 总结起来就是 i = ((i &amp; -y) / x) &gt;&gt; 1 | y。</li>
+</ul>
+</li>
+<li>
+<p><strong>[枚举一个给定集合 x 的所有子集]</strong><br>
+从 全集 i = x 开始，从大到小枚举子集，方法如下：</p>
+<ul>
+<li>i = (i - 1) &amp; x. 即通过减1来缩小子集，通过&amp;x来限定在x的子集中。</li>
+</ul>
+</li>
+<li>
+<p><strong>[枚举一个给定集合 x 的所有超集]</strong><br>
+从 最小集 i = x 开始，从小到大枚举超集，方法如下：</p>
+<ul>
+<li>i = (i + 1) | x. 即通过+1来扩大集合，通过|x来限定生成的集合必定包含x。</li>
+</ul>
+</li>
+</ol>
+<h4 id="4-模板">4. 模板</h4>
+<ul>
+<li><strong>打印数字 i 代表的集合</strong></li>
+</ul>
+<pre><code>int n, a[maxn];  // 长度为 n 的序列
+
+void print_subset(int s){  // 打印 s 所表示的子集
+	for(int i = 0; i &lt; n; i ++){
+		if(s &amp; (1 &lt;&lt; i)) cout &lt;&lt; a[i] &lt;&lt; &quot; &quot;;
+	}
+	cout &lt;&lt; endl;
+}
+</code></pre>
+<ul>
+<li><strong>枚举所有子集</strong></li>
+</ul>
+<pre><code>void solve() {
+    for(int i = 0; i &lt; (1 &lt;&lt; n); i ++) {
+        print_subset(i);  // 用二进制数字i表示一个子集
+    }
+} 
+</code></pre>
+<ul>
+<li><strong>枚举所有大小为 k 的子集</strong></li>
+</ul>
+<pre><code>void solve(int k) {
+	for(int i = (1 &lt;&lt; k) - 1; i &lt; (1 &lt;&lt; n);) {
+		print_subset(i);
+		int x = i &amp; -i, y = i + x;
+		i = (((i &amp; ~y) / x ) &gt;&gt; 1) | y;
+	}
+}
+</code></pre>
+<ul>
+<li><strong>[枚举一个给定集合 x 的所有子集]</strong></li>
+</ul>
+<pre><code>void solve(int x) {
+	for (int i = x; i &gt;= 0; i = (i - 1) &amp; x) {
+		print_subset(i);
+	}
+}
+</code></pre>
+<ul>
+<li><strong>[枚举一个给定集合 x 的所有超集]</strong></li>
+</ul>
+<pre><code>void solve(int x) {
+	for (int i = x; i &lt; (1 &lt;&lt; n); i = (i + 1) | x) {
+		print_subset(i);
+	}
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="三-回溯法">三、回溯法</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>即利用递归的回溯过程，来进行状态的“还原”，从而枚举出所有的情形。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p>紫薯告诉我们，<strong>回溯法总是比生成-测试法快得多</strong>。</p>
+<ul>
+<li>需要一个<strong>递归深度值 idx</strong>（或一个坐标x, y）表示当前递归进度</li>
+<li>需要一个值 <strong>cur 表示根据当前选择所形成的值</strong>（如和值等）。</li>
+<li>需要一个 <strong>vis 数组</strong>标记已经递归过的位置（在回溯时还原）</li>
+</ul>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>int n, vis[maxn];
+ 
+void solve(int idx, int cur) {
+    if(idx == n - 1) {  // 递归出口
+        // 根据 cur 更新 ans
+        return;
+    }
+    for(int i = 1; i &lt;= n; i ++) if(!vis[i] &amp;&amp; 其它条件) {
+        vis[i] = 1;
+        solve(idx + 1, cur + i);  // 递归
+        vis[i] = 0;  // 还原
+    }
+}
+ 
+int main() {
+    ......
+    vis[1] = 1;
+    solve(0, 1);
+    ......
+}
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/2a2e5ff2a5b6479dacca40edafe57b25">Uva 524</a><br>
+<a href="https://blog.nowcoder.net/n/2762e03342d740f3aa4bb69b8f9c8775">Uva 167 (八皇后)</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="四-迭代加深搜索ida">四、迭代加深搜索（IDA*）</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>一种通过<strong>多次dfs</strong>找解的算法。<br>
+从小到大枚举dfs深度上限maxd，每次执行只考虑不超过maxd的节点。<br>
+IDA* 能进行关于深度的剪枝，从而提高效率。<br>
+一般回溯法可以解决的问题，但是 <strong>回溯时枚举边界无法确定时</strong>，可以使用IDA*算法。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<ul>
+<li>枚举深搜的最大深度maxd，然后在maxd的限制下去进行dfs，并利用maxd来对dfs进行剪枝，使得dfs的每一层可以很快枚举完。</li>
+<li>每次针对一个maxd进行dfs时，实际上就是相当于反复去解答这道题，因此也要重新初始化。</li>
+<li>由于需要<strong>由maxd限制递归层数</strong>，因此dfs函数的参数必须包括一个idx表示当前递归的层数。<br>
+剩下的参数就按照需要进行增添。</li>
+<li><em><em>优化技巧（IDA</em> 的精髓）</em><em>：<br>
+1、考虑</em><em>最优性剪枝，即通过maxd可以判断出该次迭代已经不可能得到答案时要及时退出</em>*；<br>
+2、考虑节点的搜索顺序，以加快搜索到目标节点。</li>
+</ul>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>bool dfs(int maxd, int idx, ......) {
+    if(idx == maxd) {  // 达到当前枚举的最大深度maxd就处理完后退出
+        if(不满足条件) return 0;
+        else {
+            ...... // 记录答案
+            return 1;
+        }
+    }
+    if(通过maxd可以判断出该次迭代已经不可能得到答案) return 0;  // 精髓：最优性剪枝
+    for(正常的dfs枚举) {
+        if(不满足条件) continue;
+        if(dfs(maxd, idx + 1, ......)) return 1;
+    }
+    return 0;
+}
+ 
+int main() {
+    ......
+    for(int maxd = 1; ; maxd ++) {
+        memset(ans, -1, sizeof(ans));  // 每次 dfs 需要重新初始化
+        if(dfs(maxd, 0, ....)) break;  // 找到解就退出
+    }
+    ......
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/6aeaadbaf50347a7979571da59dce6b3">Uva 12558</a><br>
+<a href="https://vjudge.net/problem/UVA-1343">Uva 1343</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E6%9E%9A%E4%B8%BE%E6%8E%92%E5%88%97">一、枚举排列</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E6%9E%9A%E4%B8%BE%E9%9B%86%E5%90%88">二、枚举集合</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E5%8F%98%E5%BC%8F">3. 变式</a></li>
+<li><a href="#4-%E6%A8%A1%E6%9D%BF">4. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%9B%9E%E6%BA%AF%E6%B3%95">三、回溯法</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-3">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-3">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E8%BF%AD%E4%BB%A3%E5%8A%A0%E6%B7%B1%E6%90%9C%E7%B4%A2ida">四、迭代加深搜索（IDA*）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-4">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-4">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-3">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-2">4. 例题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/jing-dian-chang-jian-de-gao-xiao-suan-fa-gui-na/" class="post-title gt-a-link">
+                    [经典] 常见的高效算法归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

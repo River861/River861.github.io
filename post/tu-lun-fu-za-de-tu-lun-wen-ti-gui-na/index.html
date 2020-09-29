@@ -1,0 +1,367 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[图论] 复杂的图论问题归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [图论] 复杂的图论问题归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-13
+					  </span>
+					  <span>
+						6 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>比如LCA问题、最大流问题等。</p>
+<!-- more -->
+<h3 id="一-求最近公共祖先结点lca">一、求最近公共祖先结点（LCA）</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>LCA（Lowest Common Ancestors），即最近公共祖先，是指在有根树中找出某两个结点u和v最近的公共祖先结点。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p>这里只说一种我个人比较喜欢的在线算法：<strong>欧拉序 + RMQ</strong></p>
+<ul>
+<li>
+<p>时间复杂度：预处理 O(n+nlgn)，查询只需要O(1)</p>
+</li>
+<li>
+<p>原理：<br>
+欧拉序 就是在dfs遍历一棵树时经过的结点序列（包括回溯时经过的结点），显然两个结点u、v的最近公共祖先就是 <strong>欧拉序中 区间[u, v] 中深度最小的结点</strong>。（其中u、v指的是u、v在欧拉序中的第一次出现，即递归过程中的记录）<br>
+因此我们只需要通过一遍dfs得到欧拉序euler[2 * maxn]、对应的结点深度dep[2 * maxn]，以及每个结点在欧拉序中的位置 pos[maxn]，就可以通过RMQ在O(1)实现内找到欧拉序中 区间[pos[u], pos[v]] 中深度最小的结点位置。</p>
+</li>
+<li>
+<p>需要维护的结构：</p>
+<ul>
+<li>euler[2 * maxn]：欧拉序</li>
+<li>dep[2 * maxn]：欧拉序中结点对应的深度</li>
+<li>pos[maxn]：每个结点在欧拉序中第一次出现的位置（对应于进入递归的时候）</li>
+<li>cnt：欧拉序长度</li>
+<li>dp[2 * maxn][log_2maxn = 25]：对欧拉序根据dep进行RMQ预处理，dp[i][j]表示区间[i，i+2^j)中深度最小的 <strong>结点下标</strong></li>
+</ul>
+</li>
+<li>
+<p>为了防止混乱，规定RMQ存储、询问的是区间中深度最浅的 <strong>结点下标值</strong>，并且也是通过 <strong>结点下标区间</strong> 进行询问。之后只需要利用euler数组即可映射到对应的点。另外，区间表示为 <strong>左闭右开</strong>。</p>
+</li>
+</ul>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>int n, m, s;
+vector&lt;int&gt; G[maxn];
+int cnt, euler[2 * maxn], dep[2 * maxn], pos[maxn];
+int dp[2 * maxn][log_2maxn];
+
+void dfs(int u, int fa, int d) {
+    pos[u] = cnt, euler[cnt] = u, dep[cnt] = d, cnt ++;
+    for(int v : G[u]) if(v != fa) {
+        dfs(v, u, d + 1);
+        euler[cnt] = u, dep[cnt] = d, cnt ++;
+    }
+}
+
+void init_RMQ() {
+    for(int i = 0; i &lt; cnt; i ++) dp[i][0] = i;  // 最短的区间
+    for(int j = 1; (1 &lt;&lt; j) &lt;= cnt; j ++) {  // 注意先计算小区间，所以先从小到大遍历j
+        for(int i = 0; i + (1 &lt;&lt; j) - 1 &lt; cnt; i ++) {
+            int idx1 = dp[i][j - 1], idx2 = dp[i + (1 &lt;&lt; (j-1))][j - 1];
+            dp[i][j] = (dep[idx1] &lt; dep[idx2] ? idx1 : idx2);  // RMQ中存放的是深度最小结点的下标值
+        }
+    }
+}
+
+int min_RMQ(int l, int r) {
+    int k = log2(r - l);
+    int idx1 = dp[l][k], idx2 = dp[r - (1 &lt;&lt; k)][k];
+    return dep[idx1] &lt; dep[idx2] ? idx1 : idx2;
+}
+
+int main() {
+    ......
+    dfs(s, -1, 0);  // 求欧拉序euler、dep、pos
+    init_RMQ();  // RMQ预处理
+    while(m --) {
+        ...... 
+        if(pos[u] &gt; pos[v]) swap(u, v);  // 询问u、v两个点的LCA，注意要保持欧拉序中u在v前面
+        cout &lt;&lt; euler[min_RMQ(pos[u], pos[v] + 1)] &lt;&lt; endl;  // min_RMQ的输入、输出都是下标值，区间表示为左闭右开
+    }
+}
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://www.luogu.com.cn/problem/P3379">Luogu P3379</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-最大流问题dinic算法">二、最大流问题（Dinic算法）</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>设源点为1, 终点为N。用 G[u][v] 表示点u、v之间的容量大小，求这样一个网络图 G 中的最大流量大小ans。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<ul>
+<li>Dinic算法 求最大流 <strong>用邻接矩阵G存图</strong>更方便</li>
+<li>先进行<strong>bfs</strong>, 判断有无增广路的同时,标记每个点的层号</li>
+<li>然后<strong>根据层号进行dfs</strong>, 找增广路, 更新流值, 可能有多条不相交的增广路</li>
+<li>循环往复</li>
+</ul>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>bool bfs(){
+	memset(dist, -1, sizeof(dist)); // 每次重新标记dist, 因为增加了反向边, 图已经不同
+	dist[1] = 0;
+	que.push(1);
+	while(!que.empty()){
+		int u = que.front();
+		que.pop();
+		for(int v = 1; v &lt;= N; i ++){
+			if(G[u][v] &amp;&amp; dist[v] == -1){ 
+			//    连接  &amp;&amp; 未被标记 的点 
+			dist[v] = dist[u] + 1;
+			que.push(v); 
+		}
+	}
+	if(dist[N] == -1) return 0;  // 若无法增广到终点，则表示没有增广路了
+	return 1; 
+} 
+
+int find(int u, int low){ // low是源点到现在最窄的(剩余流量最小)的边的剩余流量 
+	if(u == N) return low; // dfs出口
+	for(int v = 1, a; v &lt;= N; i ++){
+		if(G[u][v] &amp;&amp; dist[v] == dist[u] + 1 &amp;&amp; (a = find(v, min(low, G[u][v])))){
+		//   连接的    &amp;&amp;  是上下层关系的      &amp;&amp; 能连通到汇点  min维护low
+			G[u][v] -= a;
+			G[v][u] += a; // 增加反向边 起容错作用
+			return a; //只要发现一条增广路, 就返回增广的流量 
+		}
+	} 
+	return 0; 
+}
+
+int main(){
+	//....
+	int ans = 0;
+	while(bfs()){ // 利用bfs为每个点标记dis, 若标记不到汇点, 说明已经没有增广路 
+		int temp;  // 每次增广的流量
+		while(temp = find(1, INF)) ans += temp; // 根据dist进行dfs找增广路, 直到找不到为止 
+	}
+	cout &lt;&lt; ans &lt;&lt; endl;
+} 
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E6%B1%82%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E7%BB%93%E7%82%B9lca">一、求最近公共祖先结点（LCA）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E6%9C%80%E5%A4%A7%E6%B5%81%E9%97%AE%E9%A2%98dinic%E7%AE%97%E6%B3%95">二、最大流问题（Dinic算法）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/qu-jian-wen-ti-shu-zhuang-shu-zu-yu-xian-duan-shu-gui-na/" class="post-title gt-a-link">
+                    [区间问题] 树状数组与线段树归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

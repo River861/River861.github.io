@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>关于 | River&#39;s Blog</title>
+<title>[动态规划] 数位dp方法归纳 | River&#39;s Blog</title>
 
 <link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
 
@@ -90,40 +90,93 @@
 			<div class="post-detail gt-bg-theme-color-second">
 				<article class="gt-post-content">
 					<h2 class="post-title">
-					  关于
+					  [动态规划] 数位dp方法归纳
 					</h2>
 					<div class="post-info">
 					  <span>
-						2019-01-25
+						2020-09-13
 					  </span>
 					  <span>
-						1 min read
+						4 min read
 					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
 					  
 					</div>
 					
 					<div class="post-content">
-						<p>🚩 欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+						<p>数位dp问题其实就是模板题。</p>
 <!-- more -->
-<hr>
-<h4 id="关于本站">🏠 关于本站</h4>
+<h3 id="一-定义">一、定义</h3>
+<p>求出在给定<strong>区间</strong> [A,B] 内，符合条件 f(i) 的数i的<strong>个数</strong>。条件f(i)一般与数的大小无关，而<strong>与数的组成有关</strong>。由于数是按位dp，数的大小对复杂度的影响很小。</p>
+<p>简单来说，就是解决一些与区间中的数字的计数问题，计数条件一般与数的组成有关。</p>
+<h3 id="二-状态量">二、状态量</h3>
+<p>一般采用记忆化搜索的方式来实现dp，dp的状态经常包括pos、pre、cnt、lead、limit这几项：</p>
 <ul>
-<li>写写笔记，做做归纳，分享知识（大概...</li>
+<li>pos：当前处理的是数位的第几项，一般从高往低走</li>
+<li>pre：当前位的前几位的状态，由于数位dp解决的大多是数字组成问题，所以经常要比较当前位和前一位或前几位的关系（根据题意而定）</li>
+<li>cnt：随着pos的前进需要维护的一些答案值/计数值</li>
+<li>lead：当前位是否位前导0位</li>
+<li>limit：当前位的最大值是否存在限制</li>
 </ul>
-<h4 id="博主是谁">👨‍💻 博主是谁</h4>
+<h3 id="三-记忆化搜索">三、记忆化搜索</h3>
+<p>把dfs的答案值存放在dp[pos][pre][cnt][...]数组中，以避免重复计算。</p>
 <ul>
-<li>一个 FDU CS 在读学生，比较菜</li>
+<li>
+<p>原理：从pos开始的低位dp答案会在高位值的枚举遍历中被反复调用。若从某个pos开始的dp它的前置状态pre和之前的某一次处理完全一样，则无需再重复计算，直接返回之前的答案值即可。因为所拥有的条件和上一次完全一样。</p>
+</li>
+<li>
+<p>注意：当当前位为前导0或当前位受到限制时，没有必要将该值记录到dp数组。因为这些状态并不会被重复使用。</p>
+</li>
 </ul>
-<h4 id="兴趣爱好">⛹ 兴趣爱好</h4>
-<ul>
-<li>看球看番看妹纸</li>
-<li>Pokémon （破壳萌</li>
-<li>Fire Emblem <s>（我永远喜欢萌萌哒</s></li>
-</ul>
-<h4 id="联系我呀">📬 联系我呀</h4>
-<ul>
-<li>邮箱：luoxuchuan@gmail.com</li>
-</ul>
+<h3 id="四-模板">四、模板</h3>
+<p>以下模板大多数情况可套用，但部分细节还是需要结合具体题意进行考虑。</p>
+<pre><code>ll a[20], dp[20][20]; // a是用来装数位最高值的数组，dp是memo数组
+
+ll dfs(ll pos, ll pre, ll cnt, bool lead, bool limit) {
+    if(pos == 0) return cnt;  // 已经遍历完一个数的情形
+    if(!lead &amp;&amp; !limit &amp;&amp; dp[pos][pre][...] != -1) return dp[pos][pre][...];  // 记忆化搜索
+    
+    ll res = 0, maxv = limit ? a[pos] : 9;  // 计算当前位最大值
+    for(ll i = 0; i &lt;= maxv; i ++) {
+        // 若当前位是前导0
+        if(i == 0 &amp;&amp; lead) res += dfs(pos - 1, ...., 1, limit &amp;&amp; i == maxv);
+        // 若当前位是最高位
+        else if(i &amp;&amp; lead) res += dfs(pos - 1, ...., 0, limit &amp;&amp; i == maxv);
+        // 正常情况
+        else res += dfs(pos - 1, ...., 0, limit &amp;&amp; i == maxv);
+    }
+
+    if(!lead &amp;&amp; !limit) dp[pos][cnt] = res;
+    return res;  // 注意区分res和cnt，res是问题的答案，cnt是当前状态维护的小答案，res由最终的cnt累加而成
+}
+
+ll cal(ll num) {
+    ll pos = 0;
+    while(num) a[++ pos] = num % 10, num /= 10;  // 把数按位拆分（数位dp的前提）
+    memset(dp, -1, sizeof(dp));  // memo数组初始化为-1
+    return dfs(pos, 0, 1, 1);  // 从高位往低位dp
+}
+
+int main() {
+    ......
+    // 注意！！！l为0时一般要特别处理，因为数位dp的过程会将0一直当作前导0从而忽略了数值0这一个数，不过由于是计算差值所以大部分情况不影响
+    cout &lt;&lt; cal(r, i) - cal(l - 1, i);  // 将区间计算转化为差值计算
+    ......
+}
+</code></pre>
+<h3 id="五-例题">五、例题</h3>
+<p><a href="https://blog.nowcoder.net/n/616849ad0fc14a69b57af2e4e78191fc">Nowcoder 17867</a><br>
+<a href="https://blog.nowcoder.net/n/4d0c2930acc84d6c97c2e356edaeb7cd">ZJOI 2010</a></p>
+<blockquote>
+<p>数位dp就是模板题！！！</p>
+</blockquote>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+<p><a href="https://www.luogu.com.cn/blog/virus2017/shuweidp">参考博客</a></p>
 
 					</div>
 				</article>
@@ -134,14 +187,11 @@
 <ul>
 <li>
 <ul>
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#%E4%B8%80-%E5%AE%9A%E4%B9%89">一、定义</a></li>
+<li><a href="#%E4%BA%8C-%E7%8A%B6%E6%80%81%E9%87%8F">二、状态量</a></li>
+<li><a href="#%E4%B8%89-%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2">三、记忆化搜索</a></li>
+<li><a href="#%E5%9B%9B-%E6%A8%A1%E6%9D%BF">四、模板</a></li>
+<li><a href="#%E4%BA%94-%E4%BE%8B%E9%A2%98">五、例题</a></li>
 </ul>
 </li>
 </ul>
@@ -151,6 +201,13 @@
 			</div>
 		</div>
 
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/shu-xue-jing-dian-chang-jian-de-shu-xue-fang-fa-gui-na/" class="post-title gt-a-link">
+                    [数学][经典] 常见的数学方法归纳
+                </a>
+            </div>
         
 
         

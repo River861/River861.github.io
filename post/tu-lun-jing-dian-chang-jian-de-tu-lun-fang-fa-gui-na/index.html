@@ -1,0 +1,480 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[图论][经典] 常见的图论方法归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [图论][经典] 常见的图论方法归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-24
+					  </span>
+					  <span>
+						7 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>比如dfs、bfs、并查集、链式前向星、判断二分图等。</p>
+<!-- more -->
+<h3 id="一-dfs">一、dfs</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>dfs，即深度优先搜索。顾名思义，即尽可能递归到达最深处，然后再回溯，以此类推，直到遍历完整个图。</p>
+<h4 id="2-解析">2. 解析</h4>
+<ul>
+<li>
+<p>通过递归实现。<br>
+主要用于解决找迷宫路径等问题。<br>
+dfs代码比bfs简单。</p>
+</li>
+<li>
+<p><strong>要领：</strong><br>
+用vis数组维护是否走过，记得清零；<br>
+dfs中continue的条件分三类：<strong>出界、已走过、不是所求</strong>。不要遗漏了。</p>
+</li>
+</ul>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>const int Fx[8][2] = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};  // 方向
+string a[maxn];  // 记录地图
+bool vis[maxn][maxm];  // vis数组记录是否走过
+ 
+void dfs(int x, int y) {
+    vis[x][y] = 1;
+    for(int k = 0; k &lt; 8; k ++) {
+        int nx = x + Fx[k][0], ny = y + Fx[k][1];
+        if(nx &lt; 0 || nx &gt;= n || ny &lt; 0 || ny &gt;= m || vis[nx][ny] || a[nx][ny] == '*') continue;  // 出界、已走过、不是所求
+        dfs(nx, ny);  // 递归
+    }
+}
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/8e03fa67e5f5427dace3bdcf7adad4cc">Uva 572</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-bfs">二、bfs</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>bfs，即广度优先搜索。顾名思义，即先走完这一层，再走下一层，以此类推，直到遍历完整个图。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<ul>
+<li>
+<p>通过队列实现。<br>
+主要用于解决简单（权值为1）的最短路问题。</p>
+</li>
+<li>
+<p><strong>要领：</strong><br>
+bfs问题要先想清楚**“状态点”<strong>如何定义，然后维护相应维度的</strong>vis、a数组（地图）<strong>。<br>
+如果需要打印路径需要用</strong>p数组**进行父节点的存储。</p>
+</li>
+<li>
+<p>debug时不要太着急，可以将打印信息写的详细一点，这样才能有利于更快地发现问题！<br>
+注意区分Dijkstra模板：bfs用的是普通队列，vis数组的更新位置在push后。</p>
+</li>
+</ul>
+<h4 id="3-变式">3. 变式</h4>
+<ul>
+<li>
+<p>双向bfs<br>
+先通过逆向bfs求出距离d[maxn]，然后再进行正向的“bfs”，这样就能实现一些比较复杂的最短路径问题。</p>
+</li>
+<li>
+<p>复杂状态的表示<br>
+有时后一些状态点具有很多维度（比如八数码），或取值范围很大（超过1e8），这时没有办法通过vis数组来存储，因为会爆空间。<br>
+这时可以考虑这些方法来保存vis状态：set、<strong>哈希法（推荐）</strong>、康托展开。</p>
+</li>
+</ul>
+<h4 id="4-模板">4. 模板</h4>
+<pre><code>const int Fx[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};  // 方向
+struct node {  // 队列中的结点
+    int x, y, dist;
+    node(int x, int y, int dist) : x(x), y(y), dist(dist) {}
+};
+int a[maxn][maxm], vis[maxn][maxm], ans;
+ 
+void bfs(int x0, int y0) {
+    queue&lt;node&gt; que;
+    que.push(node(x0, y0, 0)), vis[x0][y0] = 1;  // 入队后紧接着更新vis
+    while(!que.empty()) {
+        node u = que.front();
+        que.pop();
+        if(u.x == n - 1 &amp;&amp; u.y == m - 1) {  // 退出条件（可选）
+            ans = u.dist;
+            break;
+        }
+        for(int i = 0; i &lt; 4; i ++) {
+            int nx = u.x + Fx[i][0], ny = u.y + Fx[i][1];
+            if(nx &lt; 0 || nx &gt;= n || ny &lt; 0 || ny &gt;= m || vis[nx][ny] || a[nx][ny] == '#') continue;
+            que.push(node(nx, ny, u.dist + 1)), vis[nx][ny] = 1;  // 入队后紧接着更新vis
+        }
+    }
+}
+</code></pre>
+<h4 id="5-例题">5. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/5aeea79a2a14464b9cc101e8d376442e">Uva 1600</a><br>
+<a href="https://blog.nowcoder.net/n/7c15d9766ba3450bbea4a55fd554dfc5">Uva 1599</a><br>
+<a href="https://blog.nowcoder.net/n/6a23a0608d0c43b6a7422c32beeaffd6">Uva 10085</a><br>
+<a href="https://blog.nowcoder.net/n/d4265122a1454285b73e6b1f1ddeb9b4">Uva 816</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="三-并查集">三、并查集</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>将若干点进行加边联通，每个连通块形成一个代表元Fa[i]（i为连通块中的任意一点）。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p>并查集通常用于解决与连通相关的图论问题。<br>
+优化方法有：路径压缩、启发式连接。一般为了方便，只是用路径压缩就足够了。</p>
+<h4 id="3-变式-2">3. 变式</h4>
+<p>在一些比较复杂的题目中，除了要维护父子关系，要需要维护其它的关系，这个时候需要 <strong>使用额外的辅助数组</strong>。</p>
+<h4 id="4-模板-2">4. 模板</h4>
+<ul>
+<li>普通并查集</li>
+</ul>
+<pre><code>int n, Fa[maxn];  // 并查集要使用的Fa数组
+ 
+int find(int x) {
+    return Fa[x] == x ? x : Fa[x] = find(Fa[x]);  // 路径压缩
+}
+ 
+int main() {
+    ......
+    for(int i = 1; i &lt;= n; i ++) Fa[i] = i;  // Fa初始化
+    ......
+    for(const auto&amp; e : E) {  // 逐条加边
+        int u = find(e.u), v = find(e.v);
+        if(u == v) continue;  // 若连通
+        Fa[u] = v;   // 若不连通则将其连通
+        ......
+    }
+    .....
+}
+</code></pre>
+<ul>
+<li>复杂并查集</li>
+</ul>
+<pre><code>int Fa[maxn], dist[maxn];  // 辅助数组：到father的距离（非路径压缩的距离）
+
+int find(int x) {
+    if(Fa[x] == x) return x;
+    int fx = Fa[x];
+    Fa[x] = find(fx);
+    dist[x] += dist[fx];  // 在回溯过程中更新，需要用到原father即fx
+    return Fa[x];
+}
+</code></pre>
+<h4 id="5-例题-2">5. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/d806b758176c4f7e9b1de4895dd36279">最小生成树专题</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="四-链式前向星">四、链式前向星</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>一种比vector快且省空间的存图方法。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<p><strong>链式向前星</strong> 就是一种用一个链表来存放每个结点的所有出边的结构，新的边从链表头插入，用于加快读图。<br>
+链表头数组：head[maxn]，head[u]指向一条包含了u的所有邻接边的链表<br>
+存所有边：E[maxm]<br>
+边序号：cnt</p>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>struct edge {
+    int to, w, next;
+    edge() {}
+    edge(int to, int w, int next) : to(to), w(w), next(next) {}
+} E[maxm];  // 用链式向前星来存图
+int cnt, head[maxn];  // head[u]指向一条包含了u的所有邻接边的链表
+ 
+void addEdge(int u, int v, int w) {
+    E[cnt] = edge(v, w, head[u]);  // 从链表的头部插入
+    head[u] = cnt ++;  // 更改头指针
+}
+ 
+int main() {
+    ......
+    fill(head, head + n + 1, -1);  // 初始化链表头，-1表示链表尾部
+    cnt = 1;  // cnt表示当前加入的边序号
+    while(m --) {
+        ......
+        addEdge(u, v, w);
+        ......
+    }
+    ......
+    for(int i = head[u]; ~i; i = E[i].next) {  // 遍历u的所有出边的方法
+        int v = E[i].to, w = E[i].w;
+        ......
+    }
+}
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/4ab5d9ec4f3945829d259dc8c23dc5fa">Poj 3159</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="五-判断二分图">五、判断二分图</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>判断一个图是否为二分图。</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<ul>
+<li>通过 <strong>染色法</strong> 实现。<br>
+用 1 和 -1 两种颜色给图的点染色，用col[maxn]来存放点的颜色, 0 表示还没染色。</li>
+<li><strong>若无法相间染色，则不是二分图，否则是</strong>。</li>
+</ul>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>bool dye(int u, int color){
+	col[u] = color; // 先染色
+	for(int v : G[u]){
+		if(!col[v] &amp;&amp; !dye(v, -color)) return 0; // 下一个点没染色 就染上不同色，染不上则失败
+		else if(col[v] == color) return 0; // 若下一个点染了色且和当前点颜色相同， 则必不是二分图 
+	} 
+	return 1;
+}
+
+int main() {
+    ......
+    bool ok = 1;  // 是否是二分图
+    for(int i = 1; ok &amp;&amp; i &lt;= n; i ++) {
+	    if(!col[i] &amp;&amp; !dye(i, 1)) ok = 0;
+    } 
+    ......
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-dfs">一、dfs</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-bfs">二、bfs</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E5%8F%98%E5%BC%8F">3. 变式</a></li>
+<li><a href="#4-%E6%A8%A1%E6%9D%BF">4. 模板</a></li>
+<li><a href="#5-%E4%BE%8B%E9%A2%98">5. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%B9%B6%E6%9F%A5%E9%9B%86">三、并查集</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-3">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-3">2. 解析</a></li>
+<li><a href="#3-%E5%8F%98%E5%BC%8F-2">3. 变式</a></li>
+<li><a href="#4-%E6%A8%A1%E6%9D%BF-2">4. 模板</a></li>
+<li><a href="#5-%E4%BE%8B%E9%A2%98-2">5. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E9%93%BE%E5%BC%8F%E5%89%8D%E5%90%91%E6%98%9F">四、链式前向星</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-4">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-4">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-2">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E5%88%A4%E6%96%AD%E4%BA%8C%E5%88%86%E5%9B%BE">五、判断二分图</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-5">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-5">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-3">3. 模板</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/tu-lun-fu-za-de-tu-lun-wen-ti-gui-na/" class="post-title gt-a-link">
+                    [图论] 复杂的图论问题归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

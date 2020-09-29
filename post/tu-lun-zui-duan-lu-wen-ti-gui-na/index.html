@@ -1,0 +1,517 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[图论] 最短路问题归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [图论] 最短路问题归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-04
+					  </span>
+					  <span>
+						9 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>包括Dijkstra算法、Spfa算法、Floyd算法以及它们的变形。</p>
+<!-- more -->
+<h3 id="基本原则">基本原则</h3>
+<ul>
+<li>
+<p>首先看题目n的数量级，当 <strong>n&lt;1000</strong> 时，可以使用 [Floyd算法] 快速秒杀几乎所有题型</p>
+</li>
+<li>
+<p>否则 若题目中所有边全为正权，则使用 [Dijkstra算法]</p>
+</li>
+<li>
+<p>否则 当出现负权时，使用 [spfa算法]</p>
+</li>
+<li>
+<p>注意一些隐蔽的最短路问题，比如题目会换一种问法。详见最短路的各种变形题。</p>
+</li>
+</ul>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="一-正权单源最短路-dijkstra算法">一、正权单源最短路 —— Dijkstra算法</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>计算正权图上的单源最短路，即从单个源点出发到所有结点的最短路。包含无向图或有向图。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p>使用Dijkstra算法。时间复杂度O(mlgn)，一般够用。</p>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>struct node {  // node结构是存放在优先队列中的结构
+    int u, d;
+    node(int u, int d) : u(u), d(d) {}
+    bool operator &lt; (const node&amp; rhs) const {
+        return d &gt; rhs.d;  // 由于默认为最大堆, 而我们希望最小的先出列
+    }
+};
+struct edge {  //edge结构仅用于存图
+    int to, w;
+    edge(int to, int w) : to(to), w(w) {}
+};
+vector&lt;edge&gt; G[maxn];
+int n, m, vis[maxn], d[maxn];
+ 
+void Dij(int s) {
+    fill(d, d + n + 1, INF), d[s] = 0;  // 初始化d数组
+    fill(vis, vis + n + 1, 0);
+    priority_queue&lt;node&gt; que;
+    que.push(node(s, 0));
+    while(!que.empty()) {
+        int u = que.top().u;
+        que.pop();
+        if(vis[u]) continue;  // vis就写在这两行，是为了忽略掉松弛前的结点（因为并没有从队列中删除，只是压入了d更小的状态而已），
+        vis[u] = 1;           // 因此放在这里进行判断，这是和bfs不同的
+        for(const edge&amp; e : G[u]) {
+            if(d[e.to] &gt; d[u] + e.w) {  // 松弛操作
+                d[e.to] = d[u] + e.w;
+                que.push(node(e.to, d[e.to]));  // 压入了松弛后的结点，然而并没有删除原结点，因此要依靠上面的vis
+            }
+        }
+    }
+}
+ 
+int main() {
+    ......
+    Dij(1);
+    ......
+}
+</code></pre>
+<p>注意Dijkstra的模板和bfs有点像，但是还是不一样的：</p>
+<ul>
+<li>一个用优先队列，一个用普通队列</li>
+<li>使用vis数组的原因不同</li>
+</ul>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/6b480880426c40aa85364d69565b621e">Poj 2397</a><br>
+Poj 1847<br>
+Poj 1502</p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-带负权的单源最短路-spfa算法">二、带负权的单源最短路 —— spfa算法</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>计算带负权的图上的单源最短路，由于可能存在负环，因此Dijkstra算法不可用。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p>这时可以使用spfa算法。最坏时间复杂度O(nm)。</p>
+<ul>
+<li>
+<p>带负权的最短路径问题，可以使用Bellman-Ford或它的优化版本，即spfa算法。spafa算法能解决带负权的单源最短路问题，同时判断是否存在负环。最坏时间复杂度为O(nm)。比Dijkstra慢，因此对于正权的单源最短路我们使用Dijkstra，而对于带负权的就只能使用spfa算法了。</p>
+</li>
+<li>
+<p><strong>spfa算法的原理</strong>：先从Bellman-Ford算法的原理开始，Bellman-Ford算法通过将每条边松弛n-1次来求出每个点的最终d[maxn]，即松弛到不能再松弛了。而如果第n次还存在边可以继续松弛，说明存在负环。而spfa通过让已经松弛得不能再松弛的边不再入队来实现减少冗余的松弛操作，用队列来存储每一轮迭代后还需要继续松弛的边，就是这样一个优化。</p>
+</li>
+</ul>
+<p>spfa的模板与Dijkstra有点像，需要注意区分。</p>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>struct edge {  // 用于存图的edge结构
+    int to, w;
+    edge(int to, int w) : to(to), w(w) {}
+};
+vector&lt;edge&gt; G[maxn];
+int n, inq[maxn], cnt[maxn], d[maxn];
+ 
+bool spfa(int s) {
+    fill(d, d + n + 1, INF); d[s] = 0;
+    fill(inq, inq + n + 1, 0);  // inq用于标记每个点是否在队列中
+    fill(cnt, cnt + n + 1, 0);  // cnt用于统计每个点的入队次数
+    queue&lt;int&gt; que;  // 只需要使用普通队列
+    que.push(s), inq[s] = 1, ++ cnt[s];
+    while(!que.empty()) {
+        int u = que.front(); que.pop();
+        inq[u] = 0;  // 可以重复入队
+        for(const edge&amp; e : G[u]) {
+            if(d[e.to] &gt; d[u] + e.w) {  // 松弛操作
+                d[e.to] = d[u] + e.w;
+                que.push(e.to), inq[e.to] = 1;
+                if(++ cnt[e.to] &gt; n) return 1;  // 入队超过n次说明有负环
+            }
+        }
+    }
+    return 0;
+}
+ 
+int main() {
+    ......
+    spfa(1);
+    ......
+}
+</code></pre>
+<ul>
+<li>要注意区分Dijkstra模板和spafa模板：
+<ul>
+<li>Dijkstra使用优先队列，spfa使用普通队列</li>
+<li>Dijkstra使用vis数组排出重复点；spfa使用inq记录是否在队列中，用cnt记录入队次数，允许重复入队</li>
+</ul>
+</li>
+<li>若原图不连通，需要加一个点使得原图连通后再用spfa算法来判断负环，否则会漏判。</li>
+</ul>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/cea9e8a2dc5b4edea95df9a3f9a57119">Poj 3259</a><br>
+Poj 3169<br>
+LightOJ 1074</p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="三-多源最短路-floyd算法">三、多源最短路 —— Floyd算法</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>求任意两点之间的最短路。包含无向图或有向图，正权图、负权图。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p>使用Floyd算法。时间复杂度O(n^3)。对于多源最短路问题只能使用Floyd算法，对于单源最短路问题，若n比较小，也可以使用Floyd算法来快速解决。因为代码简单啊😀</p>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>const int INF = 1 &lt;&lt; 29;
+int n, d[maxn][maxn];
+
+void init() {
+    for(int i = 1; i &lt;= n; i ++) {  // 初始化d
+        for(int j = 1; j &lt;= n; j ++) d[i][j] = INF;
+        d[i][i] = 0;
+    }
+}
+
+void Floyd() {
+    for(int k = 1; k &lt;= n; k ++) {  // 枚举中间点
+        for(int i = 1; i &lt;= n; i ++) {
+            for(int j = 1; j &lt;= n; j ++) {
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+            }
+        }
+    }
+}
+
+int main() {
+    ......
+    init();
+    Floyd();
+    ......
+}
+</code></pre>
+<ul>
+<li>要注意Floyd中会有INF相加的情况，因此INF值不能太大，这里取的是1&lt;&lt; 29.</li>
+</ul>
+<h4 id="4-例题-3">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/693ed45e3cad49b4b7e51e525bea3de7">Uva 567</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="四-差分约束问题与最短路的关系">四、差分约束问题与最短路的关系</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>即给出对n个数m组约束不等式，求其中某两个数的最值。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<ul>
+<li>
+<p>差分约束问题可以转化为最短路/最长路问题解决。</p>
+</li>
+<li>
+<p>原理：以问最大值为例，问x-y&lt;=多少时，肯定是通过若干B-A&lt;=w的约束条件才可能获得，而B-A&lt;=w这一不等式可以理解为d[B]&lt;=d[A]+w，这正好符合与最短路问题中的松弛操作的条件（d[u]&gt;d[v]+w）相反，也就是松弛操作会使得这一个个约束条件被满足，因此最短路问题的算法就可以得到满足所有约束条件的不等式的一组解。这样就可以得到d[x]与d[y]的差值了。</p>
+</li>
+</ul>
+<h4 id="3-模板-4">3. 模板</h4>
+<p>具体规则如下：</p>
+<ol>
+<li>首先看问题，若问题<strong>问最大值则可以转化为最短路问题</strong>；<strong>问最小值则可以转化为最长路问题</strong>；</li>
+<li>若为最短路问题，则将所有约束转化为B-A&lt;=w的形式；最长路问题则转化为B-A&gt;=w的形式；</li>
+<li><strong>B-A&lt;=w对应于d[B]&lt;=d[A]+w，也就是从点A到B的有向路径权值为w</strong>；<br>
+然后就可以用Dijkstra、spfa或Floyd算法来秒杀了。</li>
+<li><strong>若存在负环，则表示无解；若d为INF，表示有无限个解</strong>。</li>
+</ol>
+<h4 id="4-例题-4">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/4ab5d9ec4f3945829d259dc8c23dc5fa">Poj 3159</a></p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="五-几种常见的最短路变形题">五、几种常见的最短路变形题</h3>
+<h4 id="1-求最大边权的最小值-最小边权的最大值">1. 求最大边权的最小值 / 最小边权的最大值</h4>
+<ul>
+<li>
+<p><strong>做法</strong><br>
+以求最大边权的最小值为例：</p>
+<ul>
+<li>Floyd做法：<br>
+原松弛操作：d[i][j]= min(d[i][j], d[i][k] + d[k][j]);<br>
+变形后的松弛操作：d[i][j]= min(d[i][j] ,max( d[i][k] , d[k][j]));</li>
+<li>Dijkstra/spfa算法：<br>
+原松弛操作 ： d[v]= min(d[v], d[u]+w);<br>
+变形后的松弛操作 ： d[v]= min(d[v] , max(d[u], w));</li>
+</ul>
+</li>
+<li>
+<p><strong>例题</strong><br>
+Poj 2253<br>
+Poj 1797</p>
+</li>
+</ul>
+<h4 id="2-求往返最短路的最大值-和">2. 求往返最短路的最大值 / 和</h4>
+<ul>
+<li>
+<p><strong>做法</strong></p>
+<ul>
+<li>数据量小的用Floyd算法秒杀；</li>
+<li>否则通过对原图和反图（所有有向边反向）各做一次Dijkstra/spfa来解决。</li>
+</ul>
+</li>
+<li>
+<p><strong>例题</strong><br>
+Poj 1511<br>
+Poj 3268</p>
+</li>
+</ul>
+<h4 id="3-确定排名">3. 确定排名</h4>
+<ul>
+<li>
+<p><strong>做法</strong><br>
+用Floyd算法，dp[u][v]表示u打败了v：</p>
+<ul>
+<li>原松弛操作 ： d[i][j]= min(d[i][j], d[i][k] + d[k][j]);</li>
+<li>变形后的松弛操作 ： d[i][j] = (d[i][k] &amp;&amp; d[k][j]) ? 1 : 0;</li>
+</ul>
+</li>
+<li>
+<p><strong>例题</strong><br>
+Poj 3660</p>
+</li>
+</ul>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+<p><a href="https://blog.csdn.net/JiangHxin/article/details/101999496">最短路变形-参考博客</a><br>
+<a href="https://blog.csdn.net/whereisherofrom/article/details/78922648">差分约束-参考博客</a></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99">基本原则</a></li>
+<li><a href="#%E4%B8%80-%E6%AD%A3%E6%9D%83%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-dijkstra%E7%AE%97%E6%B3%95">一、正权单源最短路 —— Dijkstra算法</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E5%B8%A6%E8%B4%9F%E6%9D%83%E7%9A%84%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-spfa%E7%AE%97%E6%B3%95">二、带负权的单源最短路 —— spfa算法</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-2">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%A4%9A%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-floyd%E7%AE%97%E6%B3%95">三、多源最短路 —— Floyd算法</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-3">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-3">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-3">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-3">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E9%97%AE%E9%A2%98%E4%B8%8E%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%9A%84%E5%85%B3%E7%B3%BB">四、差分约束问题与最短路的关系</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-4">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-4">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-4">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-4">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%8F%98%E5%BD%A2%E9%A2%98">五、几种常见的最短路变形题</a>
+<ul>
+<li><a href="#1-%E6%B1%82%E6%9C%80%E5%A4%A7%E8%BE%B9%E6%9D%83%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC-%E6%9C%80%E5%B0%8F%E8%BE%B9%E6%9D%83%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC">1. 求最大边权的最小值 / 最小边权的最大值</a></li>
+<li><a href="#2-%E6%B1%82%E5%BE%80%E8%BF%94%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC-%E5%92%8C">2. 求往返最短路的最大值 / 和</a></li>
+<li><a href="#3-%E7%A1%AE%E5%AE%9A%E6%8E%92%E5%90%8D">3. 确定排名</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/tu-lun-zui-xiao-sheng-cheng-shu-wen-ti-gui-na/" class="post-title gt-a-link">
+                    [图论] 最小生成树问题归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

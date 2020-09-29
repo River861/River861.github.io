@@ -1,0 +1,494 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[区间问题] 树状数组与线段树归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [区间问题] 树状数组与线段树归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-13
+					  </span>
+					  <span>
+						9 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>用树状数组和线段树解决一些区间问题。</p>
+<!-- more -->
+<h3 id="一-树状数组">一、树状数组</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>用一个数组C[maxn]模拟树状结构，来表示原数组A[maxn]的区间信息。各操作的复杂度为O(lgn)。</p>
+<h4 id="2-解析">2. 解析</h4>
+<ul>
+<li>lowbit(x) 指一个数x的二进制中，最靠右的1的权值大小。如lowbit(6)=2^1, lowbit(7)=2^0，lowbit(8)=8。</li>
+<li>树状数组就是用一个C[maxn]数组来存放原数组A[maxn]的去区间信息。具体而言，C[x]存放了从A[(x-lowbit(x))...x]区间中各元素之和。 A[0]为0，不存放有效值。</li>
+<li><strong>[单点更新 区间查询]</strong> 求A[1...x]的区间和就需要求出它所对应的那几个C[j]区间之和，这几个区间通过lowbit向下枚举即可得出；而更改一个值A[i]时就需要更改所有包含了A[i]的C[j]区间，同样可以通过lowit线上枚举来获得。</li>
+</ul>
+<h4 id="3-变式">3. 变式</h4>
+<ul>
+<li>
+<p><strong>[区间更新 单点查询]</strong><br>
+树状数组中存放 <strong>差分值</strong> D[i] = A[i] - A[i - 1]，这样区间更新只用更新区间两端，单点查值就是getSum。</p>
+</li>
+<li>
+<p><strong>[区间更新 区间查询]</strong></p>
+<ol>
+<li>维护两个数组
+<ul>
+<li>sum1[maxn]存放差值 D[1]、D[2]、D[3]... 的树状数组；</li>
+<li>sum2[maxn]存放 0 * D[1]、1 * D[2]、2 * D[3]... 的树状数组</li>
+</ul>
+</li>
+<li>更新操作要同时更新 sum1[maxn]、sum2[maxn]</li>
+<li>查询区间的和为：n * ∑D[i] - ∑[(i - 1) * D[i]] = n * sum1[i] - sum2[i]
+<ul>
+<li>证明如下：</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>A[1] + A[2] + ... + A[n]<br>
+= (D[1]) + (D[1] + D[2]) + ... + (D[1] + D[2] + ... + D[n])<br>
+= n * D[1] + (n - 1) * D[2] + ... + D[n]<br>
+= n * (D[1] + D[2] + ... + D[n]) - (0 * D[1] + 1 * D[2] + ... + (n - 1) * D[n])</p>
+</blockquote>
+<h4 id="4-模板">4. 模板</h4>
+<ul>
+<li><strong>[单点更新 区间查询]</strong></li>
+</ul>
+<pre><code>int A[100010], C[100010]; // 原数组 和 树状数组 A[1...n]有效 
+
+int lowbit(int x){
+	return x &amp; -x;
+} 
+
+void add(int k, int v){ // 当 A[k] += v时 
+	for(int i = k; i &lt;= n; i += lowbit(i)) C[i] += v; 
+}
+
+int getSum(int k){ // 求 A[1]+...+A[k]时 
+	int res = 0;
+	for(int i = k; i; i -= lowbit(i)) res += C[i];
+	return res;
+}
+</code></pre>
+<ul>
+<li><strong>[区间更新 单点查询]</strong></li>
+</ul>
+<pre><code>int A[100010], C[100010];
+
+int lowbit(int x){
+	return x &amp; -x;
+}
+
+void add(int k, int v){  // 不变
+	for(int i = k; i &lt;= n; i += lowbit(i)) C[i] += v;
+}
+
+int getSum(int k){  // 不变
+	int res = 0;
+	for(int i = k; i; i -= lowbit(i)) res += C[i];
+	return res;
+}
+
+int main(){
+	......
+	for(int i = 1; i &lt;= n; i ++){  //从1开始放 
+		cin &gt;&gt; A[i];
+		add(i, A[i] - A[i - 1]);   // 树状数组放差值 
+	}
+	......
+	add(x, k);  // 在[x, y]区间加上k, 即让这个区间向上突出 
+	add(y + 1, -k);
+	......
+	int ans = getSum(q);  // 查询q位置的值
+    ......
+}
+</code></pre>
+<ul>
+<li><strong>[区间更新 区间查询]</strong></li>
+</ul>
+<pre><code>int A[100010];
+int sum1[100010]; // 存放了差值D[1]、D[2]、D[3]...的树状数组 
+int sum2[100010]; // 存放了0*D[1]、1*D[2]、2*D[3]...的树状数组 
+
+int lowbit(int x){
+	return x &amp; -x;
+}
+
+void add(int k, int v){   // 加差值和sum2的同时还要加sum2
+	for(int i = k; i &lt;= n; i += lowbit(i)) sum1[i] += v, sum2[i] += (k - 1) * v;
+}
+
+int getSum(int k){  //  区间和为 n*∑D[i] - ∑[(i-1)*D[i]] = n*sum1[i] - sum2[i]
+	int res = 0;
+	for(int i = k; i; i -= lowbit(i)) res += k * sum1[i] - sum2[i];
+	return res;
+}
+
+int main(){
+	for(int i = 1; i &lt;= n; i ++){  //从1开始放 
+		cin &gt;&gt; A[i];
+		add(i, A[i] - A[i - 1]);   // 树状数组放差值 
+	}
+	......
+	add(x, k);  //在[x, y]区间加上k 
+	add(y + 1, -k);
+	......
+	int ans = getSum(q) - getSum(p - 1);  //查询[p, q]位置的值
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<h3 id="二-线段树">二、线段树</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>一种强大的能解决区间的修改、查询问题的方法。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p>与树状数组相比，线段树代码量更大，但是适用范围更广。</p>
+<ul>
+<li>
+<p>k为结点编号 根节点为1, 左孩子为 k<em>2, 右孩子为 k</em>2+1<br>
+每个函数都包含参数k</p>
+</li>
+<li>
+<p>除建树外共4种情形：单点查询 单点更新 区间查询 区间更新(要用到懒标记f)<br>
+一个题目一般只会用到两种</p>
+</li>
+<li>
+<p>线段树一般保持 <strong>左闭右闭</strong> 区间，这样代码会好写一点</p>
+</li>
+<li>
+<p>注意：</p>
+<ul>
+<li>无论是<strong>更新还是查询，都要down懒标记</strong></li>
+<li>一些线段树的变形主要需要特别注意 状态归并 和 <strong>懒标记的更新</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+using ll = long long;
+const int maxn = 5e5 + 5;
+struct node {
+    int l, r, f = 0;
+    ll w;
+    node() {}
+    node(int l, int r, ll w) : l(l), r(r), w(w) {}
+} Tree[4 * maxn];
+int n, m;
+ll a[maxn];
+
+void down(int k) {
+    int &amp; v = Tree[k].f;
+    Tree[k * 2].w += v * (Tree[k * 2].r - Tree[k * 2].l + 1);
+    Tree[k * 2].f += v;
+    Tree[k * 2 + 1].w += v * (Tree[k * 2 + 1].r - Tree[k * 2 + 1].l + 1);
+    Tree[k * 2 + 1].f += v;
+    v = 0;
+}
+
+void build(int l, int r, int k) {  // 建树
+    if(l == r) {
+        Tree[k] = node(l, r, a[l]);
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(l, mid, k * 2);
+    build(mid + 1, r, k * 2 + 1);
+    Tree[k] = node(l, r, Tree[k * 2].w + Tree[k * 2 + 1].w);
+}
+
+void update(int x, int v, int k) {  // 单点更新
+    if(Tree[k].l == Tree[k].r) {
+        Tree[k].w += v;
+        return;
+    }
+    int mid = (Tree[k].l + Tree[k].r) / 2;
+    if(x &lt;= mid) update(x, v, k * 2);
+    else update(x, v, k * 2 + 1);
+    Tree[k].w = Tree[k * 2].w + Tree[k * 2 + 1].w;
+}
+
+ll query(int l, int r, int k) {  // 区间查值
+    if(l &lt;= Tree[k].l &amp;&amp; r &gt;= Tree[k].r) return Tree[k].w;
+    if(Tree[k].f) down(k); // 查询时也要记得更新懒标记下移！！！
+    int mid = (Tree[k].l + Tree[k].r) / 2;
+    ll res = 0;
+    if(l &lt;= mid) res += query(l, r, k * 2);
+    if(r &gt; mid) res += query(l, r, k * 2 + 1);
+    return res;
+}
+
+void update(int l, int r, int v, int k) {  // 区间更新
+    if(l &lt;= Tree[k].l &amp;&amp; r &gt;= Tree[k].r) {
+        Tree[k].w += v * (Tree[k].r - Tree[k].l + 1);  // 注意是多个值更新
+        Tree[k].f += v;  // 懒标记： 预记儿子们的变化
+        return;
+    }
+    if(Tree[k].f) down(k);  // 懒标记下传
+    int mid = (Tree[k].l + Tree[k].r) / 2;
+    if(l &lt;= mid) update(l, r, v, k * 2);
+    if(r &gt; mid) update(l, r, v, k * 2 + 1);
+    Tree[k].w = Tree[k * 2].w + Tree[k * 2 + 1].w;
+}
+
+ll query(int x, int k) {  // 单点查值
+    if(Tree[k].l == Tree[k].r) return Tree[k].w;
+    if(Tree[k].f) down(k); // 查询时也要记得更新懒标记下移！！！
+    int mid = (Tree[k].l + Tree[k].r) / 2;
+    if(x &lt;= mid) return query(x, k * 2);
+    else return query(x, k * 2 + 1);
+}
+
+int main() {
+    ios::sync_with_stdio(0), cin.tie(0);
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i &lt;= n; i ++) cin &gt;&gt; a[i];
+    build(1, n, 1);
+    while(m --) {
+        int f, x, y, k;
+        // 单点更新 + 区间查值
+        // cin &gt;&gt; f;
+        // if(f == 1) cin &gt;&gt; x &gt;&gt; y, update(x, y, 1);
+        // else cin &gt;&gt; x &gt;&gt; y, cout &lt;&lt; query(x, y, 1) &lt;&lt; endl;
+
+        // 区间更新 + 单点查值
+        // cin &gt;&gt; f;
+        // if(f == 1) cin &gt;&gt; x &gt;&gt; y &gt;&gt; k, update(x, y, k, 1);
+        // else cin &gt;&gt; x, cout &lt;&lt; query(x, 1) &lt;&lt; endl;
+
+        // 区间更新 + 区间查值
+        cin &gt;&gt; f;
+        if(f == 1) cin &gt;&gt; x &gt;&gt; y &gt;&gt; k, update(x, y, k, 1);
+        else cin &gt;&gt; x &gt;&gt; y, cout &lt;&lt; query(x, y, 1) &lt;&lt; endl;
+    }
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84">一、树状数组</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E5%8F%98%E5%BC%8F">3. 变式</a></li>
+<li><a href="#4-%E6%A8%A1%E6%9D%BF">4. 模板</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%BA%BF%E6%AE%B5%E6%A0%91">二、线段树</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/dong-tai-gui-hua-jing-dian-chang-jian-de-dong-tai-gui-hua-wen-ti-gui-na/" class="post-title gt-a-link">
+                    [动态规划][经典] 常见的动态规划问题归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

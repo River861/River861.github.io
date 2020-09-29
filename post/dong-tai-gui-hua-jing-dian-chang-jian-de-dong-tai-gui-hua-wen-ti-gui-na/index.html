@@ -1,0 +1,306 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[动态规划][经典] 常见的动态规划问题归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601373602578">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601373602578" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [动态规划][经典] 常见的动态规划问题归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-13
+					  </span>
+					  <span>
+						3 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>比如LIS问题</p>
+<!-- more -->
+<h3 id="一-最长上升子序列lis">一、最长上升子序列（LIS）</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>给出一个序列a[1...n]，要求你求出其中最长的递增子序列的长度。</p>
+<h4 id="2-简单的-on2-算法">2. 简单的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 算法</h4>
+<ul>
+<li>
+<p><strong>原理</strong>：<br>
+设 dp[i] 为把<strong>下标i作为最长上升子序列结尾位置</strong> 的最大长度，则 dp[i] = max(dp[1..i]+1)，所有dp[i]初始为1.</p>
+</li>
+<li>
+<p><strong>模板</strong>：</p>
+</li>
+</ul>
+<pre><code>int n, num[maxn], dp[maxn];  // num[maxn]存放了序列，dp[i]表示以a[i]为结尾的最长子序列长度
+
+int main() {
+    ......
+    int ans = 0;
+    for(int i = 1; i &lt;= n; i ++) {
+        dp[i] = 1;
+        for(int j = 1; j &lt; i; j ++) {
+            if(num[i] &gt;= num[j]) dp[i] = max(dp[i], dp[j] + 1);
+        }
+        ans = max(ans, dp[i]);
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+}
+</code></pre>
+<h4 id="3-最快的-onlgn-算法">3. 最快的 O(nlgn) 算法</h4>
+<ul>
+<li><strong>原理</strong>：<br>
+以非严格递增子序列为例，主要思想是 <strong>贪心 + 二分</strong>。这种方法不需要dp数组，取而代之，使用的是一个low数组。</li>
+</ul>
+<ol>
+<li>
+<p><strong>维护一个 low数组 和 ans</strong><br>
+<strong>low[i]表示到当前为止，长度为i的LIS结尾元素的最小值</strong>；<strong>ans为 当前最长LIS长度</strong><br>
+对于一个上升子序列，显然其结尾元素越小，越有利于在后面接其他的元素，也就越可能变得更长，因此该算法贪心地维护出每个长度最小的结尾元素，存放在low[i]中</p>
+</li>
+<li>
+<p><strong>维护方法</strong><br>
+对于每一个a[i]，如果a[i] &gt; low[ans]，就把 a[i]接到当前最长的LIS后面，即 low[++ ans] = a[i]；否则， 用 a[i] 更新 low数组 中第一个大于 a[i] 的元素 low[j] = a[i]</p>
+</li>
+<li>
+<p><strong>举个例子</strong><br>
+比如1 5 6 3 4，假设当前已经遍历到下标3，则low[] = {1, 5, 6}，下一个数字3将会把5更新为3，表示到目前为止（1 5 6 3），长度为2的结尾最小的上升子序列为 1 3 。更新后下一个4才会有可能成为长度为3的上升子序列的末尾（1 3 4），这就是贪心起到的作用（总是维护最小的结尾值）。</p>
+</li>
+</ol>
+<ul>
+<li><strong>模板</strong>：</li>
+</ul>
+<pre><code>int nums[maxn], low[maxn];  // num[maxn]存放了序列，low[i]表示长度为i的LIS结尾元素的最小值
+
+// 贪心 + 二分 解法 O(nlogn) 
+int main(){
+	fill(low + 1, low + n + 1, INF);
+	int ans = 0;  // low和ans搭配使用，ans就是当前维护到的最长长度
+	for(int i = 1; i &lt;= n; i ++){
+		if(ans == 0 || num[i] &gt;= low[ans]) low[++ ans] = nums[i];                            // 若为严格递增，改为 &gt;
+		else{
+			int j = upper_bound(low + 1, low + n + 1, nums[i]) - low;    // 若为严格递增，改为 lower_bound
+			low[j] = nums[i];
+		}
+	}
+	cout &lt;&lt; ans &lt;&lt; endl;
+} 
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p>Nowcoder 旅行青蛙</p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+<p><a href="https://www.cnblogs.com/mengxm-lincf/archive/2011/07/12/2104745.html">LIS-参考博客</a></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97lis">一、最长上升子序列（LIS）</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E7%AE%80%E5%8D%95%E7%9A%84-on2-%E7%AE%97%E6%B3%95">2. 简单的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 算法</a></li>
+<li><a href="#3-%E6%9C%80%E5%BF%AB%E7%9A%84-onlgn-%E7%AE%97%E6%B3%95">3. 最快的 O(nlgn) 算法</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/dong-tai-gui-hua-shu-wei-dp-fang-fa-gui-na/" class="post-title gt-a-link">
+                    [动态规划] 数位dp方法归纳
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>
