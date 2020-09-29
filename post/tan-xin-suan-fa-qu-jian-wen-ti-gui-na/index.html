@@ -1,0 +1,399 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>[贪心算法] 区间问题归纳 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601364666806">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/cpp.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601364666806" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  [贪心算法] 区间问题归纳
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-09-04
+					  </span>
+					  <span>
+						7 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/tazjCHBPT/" class="post-tag">
+						  # 算法
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>贪心算法中的区间问题归纳</p>
+<!-- more -->
+<h3 id="基本定义">基本定义</h3>
+<ul>
+<li>区间用一个结构体来表示：</li>
+</ul>
+<pre><code>struct Internal {
+    int l, r;
+    bool operator &lt; (const Internal&amp; rhs) const {
+        return ......; // 按左端点 或 右端点 或其它排序
+    }
+};
+vector&lt;Internal&gt; vec; // 存放所有区间的容器
+</code></pre>
+<ul>
+<li>以下代码只使用一个int类型的ans进行计数，若题目需要打印出所选择的区间/点，则改成用一个vector类型的ans存储即可。</li>
+</ul>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="一-区间不相交问题">一、区间不相交问题</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>数轴上有n个区间（li, ri），选择尽量多的区间，使得这些区间两两不相交。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序，即总是先选取r小的区间，这样就能给后面的区间留下更多空间。</p>
+<p>当r相等时，l无所谓，因为只要选择其中不与前一个区间相交的任意一个即可。</p>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按r排序
+int ans = 0, cur = -INF;  // cur表示当前已选择的最大右端点
+for(const auto &amp; p : vec) if(p.l &gt;= cur) ans ++, cur = p.r;
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/55899ecc076a4580b5154adf3e6d5f77">UvaLive 6606</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="二-区间选点问题">二、区间选点问题</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>数轴上有n个区间[li, ri]，选择尽量少的点，使得每个区间内都至少有一个点。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序。每次选点时，总是选取第一个不被包含的区间的最右端点处。这样能让这个点接触到最多区间。</p>
+<p>当r相等时，l无所谓，因为不影响点数。</p>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按r排序
+int ans = 0, cur = -INF;  // cur表示当前已选择的最右的点
+for(const auto&amp; p : vec) if(cur &lt; p.l || cur &gt; p.r) ans ++, cur = p.r;
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/533e51de360e47989013da008947bd11">Uva 1615</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="三-区间覆盖问题">三、区间覆盖问题</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>数轴上有n个区间[li, ri]，选择尽量少的区间覆盖一条指定线段[s,t]。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p><strong>贪心策略</strong>：按l从小到大进行排序。将l&lt;s的这些区间的小于s的部分截掉（因为这部分没有用），然后从这些区间中选择出剩余长度最长的进行覆盖，然后将s更新为该区间的右端点。接下来继续遍历以此类推，直到</p>
+<!-- more -->
+<p>s&gt;=t，说明已经覆盖完毕。</p>
+<p>这道题贪心策略稍微复杂，代码写起来也稍微麻烦，要好好记忆。</p>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按l排序
+int s = 0, t = M, ans = 0;  // 目标区间[s,t]
+auto L = vec.begin();
+while(s &lt; t &amp;&amp; L != vec.end()) {  // 右端点无法覆盖
+    auto R = upper_bound(L, vec.end(), Internal(s, s));  // [L,R)表示容器下标范围
+    if(L == R) break;  // 左端点无法覆盖
+    auto chosen = *max_element(L, R, [](const Internal&amp; a, const Internal&amp; b) {
+        return a.r &lt; b.r;
+    });  // 找到最长的那个
+    ans ++;
+    L = R, s = chosen.r;
+}
+
+if(s &lt; t) cout &lt;&lt; -1 &lt;&lt; endl;  // 无法覆盖完全
+</code></pre>
+<h4 id="4-例题-3">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/922860bcfe724bdc8ced0de456766754">Uva 10020</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="四-区间限制问题-之-用时相等">四、区间限制问题 之 用时相等</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>有若干个任务，每个任务有一段执行的时间区间[li, ri]限制，每个任务的用时都相等，比如都为1。<br>
+问能否完成所有任务。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序（r相等时，按从长到短排序），每次尽量早地执行任务（可能就是从l开始，也可能不是，因为被之前的任务占用）。这里的r实际上就是ddl，总是先处理快到“ddl”的区间。ps：结合实际生活来看，这的确是显然的。</p>
+<p>r相等时，l按照从小到大排序，这是为了能让任务地起始时间有可能更早。</p>
+<h4 id="3-模板-4">3. 模板</h4>
+<pre><code>struct task {  // 一个任务
+    int l, r, idx;
+    task(int l, int r, int idx) : l(l), r(r), idx(idx) {}
+    bool operator &lt; (const task&amp; rhs) const {
+        return r &lt; rhs.r || r == rhs.r &amp;&amp; l &lt; rhs.l;
+    }
+};
+vector&lt;task&gt; vec;
+......
+fill(vis, vis + n + 1, 0);  // 用来标记某个时间是否被占用
+sort(vec.begin(), vec.end());  // 按照 (r, l) 排序
+for(const auto&amp; p : vec) {
+    int j = p.l;
+    while(j &lt;= p.r &amp;&amp; vis[j]) j ++;  // 找第一个没被占用地时间点执行任务
+    if(j == p.r + 1) return 0;
+    ans[p.idx] = j, vis[j] = 1;  // 用ans记录任务p的执行时间
+}
+......
+</code></pre>
+<h4 id="4-例题-4">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/db0fa9391c414281a899097aeb67c0c8">Uva 11134</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="五-区间限制问题-之-用时不等">五、区间限制问题 之 用时不等</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>有若干个工作，只能串行进行，已知每个工作的用时need[i]和截止期限ddl[i]，问最多能完成多少个工作？</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<p>这个是超典型的工作安排贪心问题。</p>
+<p>一个比较简单的版本是给出工作的确切开始时间和结束时间，这种问题就是典型的区间限制问题，我们按照ddl排序，然后先完成ddl早的任务即可。</p>
+<p>但是在这道题中，任务的开始时间是可以任意决定的（只要结束时不超过ddl期限），因此我们还应该结合考虑另一种贪心：即让短的任务优先。</p>
+<p>也就是说，对于一个给定的时间点之前，我们需要先执行短的任务，这样才能让任务完成数量最大化。这里 <strong>需要用一个优先队列来存放到当前时间点为止，所有已经选择的任务</strong> 。<strong>用这个优先队列的目的是为了能获得已经选择的任务中用时最长的那一个，这样就能在当发现一个任务由于超时无法选择时可以有尝试替换的机会（即从之前选择的任务中挑一个用时长的取消掉，从而使得当前任务不会超时）</strong>。</p>
+<p><strong>贪心策略</strong>：按r从小到大进行排序，每次尽量早地执行任务。当碰到一个任务超时，尝试从之前选择的任务中挑一个用时长的取消掉，从而使得当前任务不会超时。</p>
+<h4 id="3-模板-5">3. 模板</h4>
+<pre><code>struct task {
+    int need, ddl;
+    task(int need, int ddl) : need(need), ddl(ddl) {}
+    bool operator &lt; (const task&amp; rhs) const {
+        return ddl &lt; rhs.ddl;
+    }
+};
+
+......
+sort(vec.begin(), vec.end());
+
+priority_queue&lt;int&gt; que;
+int cur = 0;  // 当前时间点
+for(const task&amp; t : vec) {  // 总体上还是优先考虑ddl早的任务
+    if(cur + t.need &lt;= t.ddl) {  // 不超时
+        cur += t.need;
+        que.push(t.need);
+    }
+    else if(!que.empty() &amp;&amp; que.top() &gt; t.need) {  // 反正都会有一个任务不能完成，不如留下用时短的任务（当前任务）
+        cur += t.need - que.top();                 // 即用这个ddl更晚的但用时更短的task替换一个ddl早一些但是用时长的task
+        que.pop();                                 // 由于当前任务的ddl更晚，用时也更短，因此替换后必然不会超时
+        que.push(t.need);
+    }
+}
+cout &lt;&lt; que.size() &lt;&lt; endl;
+......
+</code></pre>
+<h4 id="4-例题-5">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/11e430dc6b5f4a6e8b7fbc9a45e29ebf">Uva 1153</a></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89">基本定义</a></li>
+<li><a href="#%E4%B8%80-%E5%8C%BA%E9%97%B4%E4%B8%8D%E7%9B%B8%E4%BA%A4%E9%97%AE%E9%A2%98">一、区间不相交问题</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E5%8C%BA%E9%97%B4%E9%80%89%E7%82%B9%E9%97%AE%E9%A2%98">二、区间选点问题</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-2">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-2">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-2">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-2">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98">三、区间覆盖问题</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-3">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-3">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-3">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-3">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E5%8C%BA%E9%97%B4%E9%99%90%E5%88%B6%E9%97%AE%E9%A2%98-%E4%B9%8B-%E7%94%A8%E6%97%B6%E7%9B%B8%E7%AD%89">四、区间限制问题 之 用时相等</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-4">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-4">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-4">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-4">4. 例题</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E5%8C%BA%E9%97%B4%E9%99%90%E5%88%B6%E9%97%AE%E9%A2%98-%E4%B9%8B-%E7%94%A8%E6%97%B6%E4%B8%8D%E7%AD%89">五、区间限制问题 之 用时不等</a>
+<ul>
+<li><a href="#1-%E5%AE%9A%E4%B9%89-5">1. 定义</a></li>
+<li><a href="#2-%E8%A7%A3%E6%9E%90-5">2. 解析</a></li>
+<li><a href="#3-%E6%A8%A1%E6%9D%BF-5">3. 模板</a></li>
+<li><a href="#4-%E4%BE%8B%E9%A2%98-5">4. 例题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

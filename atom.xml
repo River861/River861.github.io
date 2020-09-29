@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://river861.github.io</id>
     <title>River&apos;s Blog</title>
-    <updated>2020-09-28T09:16:26.391Z</updated>
+    <updated>2020-09-29T07:34:13.359Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://river861.github.io"/>
     <link rel="self" href="https://river861.github.io/atom.xml"/>
@@ -11,35 +11,802 @@
     <icon>https://river861.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, River&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://river861.github.io/post/hello-gridea/</id>
-        <link href="https://river861.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[[经典] 常见的高效算法归纳]]></title>
+        <id>https://river861.github.io/post/jing-dian-chang-jian-de-gao-xiao-suan-fa-gui-na/</id>
+        <link href="https://river861.github.io/post/jing-dian-chang-jian-de-gao-xiao-suan-fa-gui-na/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <updated>2020-09-04T03:43:50.000Z</updated>
+        <summary type="html"><![CDATA[<p>滑动窗口、哈希表、拓扑排序、单调栈、KMP、RMQ、最小表示法、二分答案、Cantor等。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <content type="html"><![CDATA[<p>滑动窗口、哈希表、拓扑排序、单调栈、KMP、RMQ、最小表示法、二分答案、Cantor等。</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h3 id="一-滑动窗口">一、滑动窗口</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>滑动窗口法（又叫双指针法），即用i,j双指针（一般用下标）对数组进行遍历，同时要需要一个额外的比如vis数组维护窗口中的元素信息，是一种O(n)的扫描方法。</p>
+<h4 id="2-解析">2. 解析</h4>
+<ul>
+<li>
+<p>一般比较常见的问题就是，维护窗口中的元素各不相同。<br>
+既可以用一个vis[maxn]数组来表示窗口中是否存在某个元素，也可以用一个pos[maxn]数组来存储上一次遇见某个元素的位置（为-1表示不在窗口中）。本质是一样的。</p>
+</li>
+<li>
+<p>当元素数值比较大时，用unordered_map来实现vis或pos即可。</p>
+</li>
+<li>
+<p>最好统一一下开闭区间，比如总是使用<strong>闭区间</strong>[i, j]作为窗口范围。</p>
+</li>
+<li>
+<p>最好统一一下判断顺序，比如<strong>总是先处理当前元素已经在窗口中出现过的情况</strong></p>
+</li>
+</ul>
+<h4 id="3-大致模板">3. 大致模板</h4>
+<ul>
+<li>额外维护pos</li>
+</ul>
+<pre><code>ll n, a[maxn];
+unordered_map&lt;ll, ll&gt; pos;
+
+int main() {
+    ......
+    ll i = 0, j = 0, ans = 0;
+    while(j &lt; n) {  // 维护闭区间窗口[i, j]
+        ll num = a[j];
+        if(pos.count(num) &amp;&amp; pos[num] != -1) {  // 先判断在数组中的情况
+            for(; i &lt;= pos[num]; i ++) pos[a[i]] = -1;  // 注意一定要逐个退出并消除pos
+        }
+        pos[num] = j;
+        ans = max(ans, j - i + 1);
+        j ++;
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+}
+</code></pre>
+<ul>
+<li>额外维护vis</li>
+</ul>
+<pre><code>ll n, a[maxn];
+unordered_map&lt;int, int&gt; vis;
+
+int main() {
+    ......
+    ll i = 0, j = 0, ans = 0;
+    while(j &lt; n) {
+        ll num = a[j];
+        if(vis[num]) {  // 先判断在数组中的情况
+            while(i &lt; j &amp;&amp; a[i] != num) vis[a[i]] = 0, i ++; // 注意一定要逐个退出并消除vis
+            i ++;
+        }
+        else vis[num] = 1;
+        ans = max(ans, j - i + 1);
+        j ++;
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+}
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/d9001a8fe2ee42909a67adfe7233a1bd">Uva 11572</a><br>
+<a href="https://ac.nowcoder.com/acm/problem/20863">Nowcoder 数糖纸</a><br>
+<a href="https://blog.nowcoder.net/n/f721ce2cd3b940039ddcfbda27f7b8b2">Uva 12174</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="二-哈希表">二、哈希表</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>当你希望定义一个数组（比如vis数组），但是下标范围很大（比如1e9），这个时候就没有办法开一个vis[maxn]的数组了，因为会爆内存。<br>
+这时我们就可以通过hash的方式把下标映射到一个可以接受的小范围，比如[0...200003]。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<ul>
+<li>一般情况下优先使用 <strong>unordered_map 或 unordered_set</strong></li>
+<li>但也不排除出题人把 map 和 set 给卡了...这个时候就用哈希表吧，使用最简单的开放寻址法来解决冲突， 其实就是一个链表数组。</li>
+</ul>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>const int HASH = 2000003;
+ 
+class Vis {
+public:
+    list&lt;ll&gt; vis[HASH];
+    void insert(ll x) {  // 插入
+        if(!query(x)) vis[x % HASH].push_back(x);
+    }
+     
+    bool query(ll x) {  // 查询
+        for(ll y : vis[x % HASH]) if(x == y) return 1;
+        return 0;
+    }
+} vis;
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/7589/A">Nocoder 眼花缭乱的街市（卡STL）</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="三-拓扑排序">三、拓扑排序</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>给出n个点，然后给出m个依赖关系，比如（u, v）表示必须先有u才有v，要求你输出一个满足依赖的点序列，或者输出无解。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p>拓扑排序是一种经典的模板题，来源于图论，一般有队列或dfs两种不同的写法（个人比较喜欢队列写法😀）。</p>
+<ul>
+<li>
+<p>需要维护的结构</p>
+<ul>
+<li>int in[maxn]：维护每个点的入度数目</li>
+<li>vector<int> Next[maxn]：记录每个点的所有出度点</li>
+<li>queue<int> ready：维护依赖被满足的点（若题目需要按某种排序输出，则改成优先队列）</li>
+</ul>
+</li>
+<li>
+<p>当题目中的“点”不是整型，而是用字符串表示时，需额外维护：</p>
+<ul>
+<li>vector<string> id2str</li>
+<li>unordered_map&lt;string, int&gt; str2id</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>int in[maxn];
+vector&lt;int&gt; Next[maxn];
+
+void solve() {  // 拓扑排序
+    priority_queue&lt;int, vector&lt;int&gt;, cmp&gt; ready;
+    for(int i = 0; i &lt; n; i ++) if(in[i] == 0) ready.push(i);  // 压入一开始就没依赖的点
+    vector&lt;int&gt; ans;
+    while(!ready.empty()) {
+        int u = ready.top(); ready.pop();
+        ans.push_back(u);  // 记录到答案序列中
+        for(int v : Next[u]) {
+            in[v] --;  // 入度减1
+            if(in[v] == 0) ready.push(v);  // 新的无依赖结点
+        }
+    }
+    if(ans.size() != n) ......  // 无解
+    else ....  // 打印ans
+}
+</code></pre>
+<h4 id="4-例题-3">4. 例题</h4>
+<p><a href="https://ac.nowcoder.com/acm/contest/5678/B">Nowcoder 烦人的依赖</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="四-单调栈">四、单调栈</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>维护一个栈（或双向队列），保持栈内元素的单调性，存放下标还是值可以依情况而定。由于每个元素最多弹出一次，因此单调栈算法是O(n)的。</p>
+<ul>
+<li>单调递增栈作用：O(1)时间获取离当前位置最近的一个小于当前值的元素。</li>
+<li>单调递减栈作用：O(1)时间获取离当前位置最近的一个大于当前值的元素。</li>
+</ul>
+<h4 id="2-解析-4">2. 解析</h4>
+<p>以<strong>单调递增栈</strong>为例。</p>
+<ul>
+<li>通过这个栈，可以得到到当前元素为止的单调递增序列，<strong>从而能得到左侧离自己最近的比自己小的元素</strong>。</li>
+<li><strong>原理</strong>：只有 [比自己大的元素]， 或者 [比自己小但是却被离得更近的更小的元素弹走的元素] 才不会出现在栈中。</li>
+</ul>
+<h4 id="3-模板-3">3. 模板</h4>
+<p>存放下标，非严格单调递增栈：</p>
+<pre><code>stack&lt;int&gt; stk;
+for(int i = 0; i &lt;= n; i ++) {
+    while(!stk.empty() &amp;&amp; a[stk.top()] &gt; a[i]) {  // 先将大于当前值的元素弹出
+        int temp = stk.top();
+        stk.pop();
+        ......  // Do something else | 可以在这里对弹出的元素temp进行一些操作
+    }
+    ......  // Do something else | 此时栈顶为左侧离自己最近的比自己小的元素
+    stk.push(i);  // 把当前值压栈
+}
+</code></pre>
+<h4 id="4-例题-4">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/cbe8d3249bf144ca9d50fba75d8415a9">Hdu 1506</a><br>
+<a href="https://blog.nowcoder.net/n/454506c0ff7d45e2ad73b85389befe94">Uva 1619</a><br>
+<a href="https://blog.nowcoder.net/n/93348010c6a941af9505e5a66eefff26">Uva 12265</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="五-kmp算法">五、KMP算法</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>在O(n)时间实现从长串test中找到一个匹配子串pattern。</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<ul>
+<li>由pattern串生成一个Next[maxn]数组，表示匹配失败时，下标回溯到的位置。</li>
+<li><strong>Next[maxn]的含义</strong>: 当前匹配串的<strong>相同前后缀的前缀末端位置</strong>。<br>
+比如字符串 aabcaad，假设在匹配d时失败，下标位于6，则对于当前匹配串p[0...5]，相同的前后缀为aa，则将会回溯到前缀的末端位置，即b处，即下标2，因此有Next[6]=2。</li>
+</ul>
+<h4 id="3-变式">3. 变式</h4>
+<ol>
+<li>
+<p><strong>循环节</strong> 问题 （只需要Next数组）<br>
+根据Next数组的定义，Next[i]=j表示j为s[i]匹配失败后需要跳回的位置，也即是i之前和j之前可能为相同的串。</p>
+<ul>
+<li>对于一个循环串来说，它的Next数组“跳回”的长度正好就是一个循环节。因此<strong>通过 i-Next[i] 即可计算出s[1..i)的循环节长度</strong>。</li>
+<li>但注意可能字符串不是循环字符串，因此还要<strong>判定字符串长度i是否能被循环节长度 i-Next[i] 整除</strong>。</li>
+<li>注意这样算出来的循环节长度是最小循环节长度，如果需要算出所有可能循环节长度的话，就要用一个while循环一节一节往回跳+判定，由于往回跳的长度就是循环节的长度，因此实际上这是一个枚举循环节长度的过程。比如字符串aaaa，用KMP算法求出的循环节长度为1，但实际上2也是一个循环节长度，此时就要往回跳+判定来枚举全。</li>
+</ul>
+</li>
+<li>
+<p>扩展KMP算法（需要求出每个位置匹配的长度）</p>
+<ul>
+<li>通过一个Extend[maxn]数组来记录test串从每个位置开始的匹配长度</li>
+<li>其中注意要通过 j = Next[j] 来回溯，避免遗漏记录，具体见代码EKMP</li>
+</ul>
+</li>
+</ol>
+<h4 id="4-模板">4. 模板</h4>
+<ul>
+<li>普通KMP</li>
+</ul>
+<pre><code>int KMP(const string&amp; t, int n, const string&amp; p, int m, int* Next) {
+  // 直接返回第一次匹配的写法
+  int i = 0, j = 0;
+  while(i &lt; n &amp;&amp; j &lt; m) {
+      if(j == -1 || t[i] == p[j]) i ++, j ++;
+      else j = Next[j];
+  }
+  if(j == m) return i - j;
+  return -1;
+}
+
+int KMP(const string&amp; t, int n, const string&amp; p, int m, int* Next) {
+  // 返回匹配次数的写法
+  int i = 0, j = 0;
+  while(i &lt; n) {
+      if(j == -1 || t[i] == p[j]) i ++, j ++;
+      else j = Next[j];
+      if(j == m) cnt ++, j = Next[j];
+  }
+  return cnt;
+}
+
+void getNext(string&amp; p, int m) {  // 求Next数组，在KMP之前调用
+  Next[0] = -1;
+  int i = 0, j = -1;
+  while(i &lt; m) {
+      if(j == -1 || p[i] == p[j]) i ++, j ++, Next[i] = j;
+      else j = Next[j];
+  }
+}
+</code></pre>
+<ul>
+<li>拓展KMP</li>
+</ul>
+<pre><code>void EKMP(const string&amp; t, int n, const string&amp; p, int m, int* Next, int* Extend){
+	int i = 0, j = 0;
+	while(i &lt; n){
+		if(j == -1 || t[i] == p[j]) i ++, j ++;
+		else j = Next[j];
+		Extend[i - j] = j; // Extend数组记录test串每个位置匹配了多长的pattern前缀
+		if(j == m){
+			j = Next[j]; // 继续匹配
+			for(int k = j; k; k = Next[k]) Extend[i - k] = k;  // 回溯 使记录完整 
+		} 
+	}
+} 
+</code></pre>
+<h4 id="5-例题">5. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/a968f57eef8a4faf9289125fd2fba650">Uva 1328</a><br>
+<a href="https://blog.nowcoder.net/n/2215034090934224b754e338d73fa84b">Uva 12012</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="六-rmq算法">六、RMQ算法</h3>
+<h4 id="1-定义-6">1. 定义</h4>
+<p>通过动态规划在O(nlgn)时间内对一个序列进行RMQ-init预处理，然后就可以在O(1)时间内得到这个序列中任意区间[l, r)中的最值！</p>
+<p><strong>注意</strong>：为了避免混淆，RMQ算法中所有的区间使用 <strong>左闭右开</strong>。</p>
+<h4 id="2-解析-6">2. 解析</h4>
+<ol>
+<li>
+<p>O(nlgn)时间预处理</p>
+<ul>
+<li>用 dp[i][j] 表示从下标 i 开始的连续 2^j 个数中的最小（大）值，下面以最小值为例。</li>
+<li><strong>转移方程</strong>：dp[i][j] = min(dp[i][j - 1], dp[i + (1 &lt;&lt; j-1)][j - 1])<br>
+即将区间 [i, i + 2^j) 分为 [i, i + 2^(j-1)) 和 [i + 2^(j-1), i + 2^j) 两段.</li>
+</ul>
+</li>
+<li>
+<p>O(1)时间查区间 [i，j) 中的最值</p>
+<ul>
+<li>求区间长度的log值，即 k = log(r - l)。（取整后会偏小，所以第2步中要求两段）</li>
+<li>最值为 dp[l][k] 和 dp[r - (1 &lt;&lt; k)][k] 中更小的那个。</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-变式-2">3. 变式</h4>
+<p>有时候题目中区间的“值”是比较抽象的，这个时候可以考虑<strong>在dp[i][j]中存放区间中取到最值时的下标值</strong>，而不是区间中的最值。这样的话 预处理 和 取最值 的函数都需要做出相应修改。</p>
+<p>一个最典型的变式例子就是<strong>树中求LCA</strong>的问题。</p>
+<h4 id="4-模板-2">4. 模板</h4>
+<pre><code>const int maxn = 5e3 + 5, log2_maxn = 15;
+int n, a[maxn], dp[maxn][log2_maxn];  // 序列为a[0...(n-1)]
+
+void rmq_init(){		
+	for(int i = 0; i &lt; n; i ++) dp[i][0] = a[i];   // 初始化最短区间
+	for(int j = 1; (1 &lt;&lt; j) &lt;= n; j ++)            //  区间长度由小到大， 大区间的最值由小区间获得
+		for(int i = 0; i + (1 &lt;&lt; j) - 1 &lt; n; i ++)  // 循环条件：右端点&lt;n
+			dp[i][j] = min(dp[i][j - 1], dp[i + (1 &lt;&lt; j-1)][j - 1]);     // 注意加减法优先级大于&lt;&lt;
+}
+
+int rmq_min(int l, int r){  // 返回闭区间 [l ,r) 中的最小值
+	int k = log2(r - l);
+	return min(dp[l][k], dp[r - (1 &lt;&lt; k)][k]);	
+}
+</code></pre>
+<h4 id="5-例题-2">5. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/54d9a96eee0e4ab1a25327af1d9dfad1">LCA问题</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="七-on时间求最小大循环字符串">七、O(n)时间求最小（大）循环字符串</h3>
+<h4 id="1-定义-7">1. 定义</h4>
+<p>给定一个循环字符串，要求你输出它字典序最小（大）的表示方法，即确定一个开始位置。</p>
+<h4 id="2-解析-7">2. 解析</h4>
+<p>以最小表示为例。<br>
+基本思想是双指针i, j，用k表示从i、j开始的子串的当前比对到的完全一样的长度，当判断出i、j的某一条子串的i+k、j+k位置有所不同时，大的那一条（比如是j）就可以往后跳k+1个字符，因为以这些字符起始的循环字符串已经不可能是最小的（比它们小的在i开始的串的子串中）。用这样的方法当i、j串中的某一个超过n时就不用再判断了（因为n个可能的起始位置都判断过了）。此时剩余的那个串就是最小的循环字符串。</p>
+<h4 id="3-模板-4">3. 模板</h4>
+<pre><code>//求循环字符串的最小字典序 最大类似
+int getMin(const string&amp; s, int n){
+	int i = 0, j = 1, k = 0; // i, j为双指针, k为当前匹配长度
+	while(i &lt; n &amp;&amp; j &lt; n &amp;&amp; k &lt; n){
+		int temp = s[(i + k) % n] - s[(j + k) % n];
+		if(temp == 0) k ++; //若当前位匹配, k ++
+		else{
+			if(temp &gt; 0) i += k + 1;
+			else j += k + 1;
+			/*
+			若 s[i...i+k]比s[j...j+k]更大, 设 i&lt;p&lt;i+k 
+			则s[p..i+k]都比s[p-i+j, j+k]大
+			即前者不可能为最小字典序, 因此全部跳过, 即i += k+1
+			j同理 
+			*/
+			if(i == j) j ++; // 避免死循环
+			k = 0; // 更改i、j后重头匹配 
+		} 
+	} 
+	return min(i, j);
+} 
+</code></pre>
+<h4 id="4-例题-5">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/e4c744f1694449cead8dd9a716087132">Uva 1584</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="八-二分答案">八、二分答案</h3>
+<h4 id="1-定义-8">1. 定义</h4>
+<p>顾名思义，通过枚举答案的方法，将原先的最值为题转化为判定问题。时间复杂度为 O(lgN * 判定的时间复杂度)。</p>
+<h4 id="2-解析-8">2. 解析</h4>
+<ul>
+<li><strong>[最大值尽可能小]、[最小值尽可能大]</strong>, 这类问题时，可以考虑二分答案。</li>
+<li>注意二分时判断OK后r等于多少，l等于多少不要搞错了。一般我们把范围想为[l, r]闭区间不容易错。所以不OK时 l=mid+1，因为不应该包含mid。此为，最好用l=1, r=2来验证一下是否会陷入死循环。</li>
+</ul>
+<h4 id="3-模板-5">3. 模板</h4>
+<pre><code>        ......
+        LL l = 0, r = INF;
+        while(l &lt; r) {
+            LL mid = l + (r - l) / 2;
+            if(isOK(mid)) r = mid;
+            else l = mid + 1;
+        }
+        ......
+</code></pre>
+<h4 id="4-例题-6">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/818816be14bf4638bcc57c890e0a1404">Uva 714</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="九-康托展开cantor">九、康托展开（Cantor）</h3>
+<h4 id="1-定义-9">1. 定义</h4>
+<p>全排列与整数的一种完美双向Hash方法。</p>
+<h4 id="2-解析-9">2. 解析</h4>
+<ul>
+<li>
+<p><strong>正变换</strong> （排列 -&gt; 整数）<br>
+双重循环，数出每一位后面有几个比它小的数，据此算出当前排列为第几小的排列（从0计起）<br>
+res += small * （当前位后面一共有多少位）！</p>
+</li>
+<li>
+<p><strong>逆变换</strong> （整数 -&gt; 排列）<br>
+令 temp 为原序列从小到大的排列。<br>
+逆循环除，商为下一个被除数，余数为small<br>
+取temp中剩余数第small+1小的数（index为small）<br>
+在temp中删去该数</p>
+</li>
+</ul>
+<h4 id="3-模板-6">3. 模板</h4>
+<pre><code>int cantor(vector&lt;char&gt;&amp; a, int n){ // 由字符数组 转化为 对应的排序数 
+	int res = 0; // res为 比当前排列要小的 排列的个数 
+	for(int i = 0; i &lt; n; i ++){
+		int small = 0;
+		for(int j = i + 1; j &lt; n; j ++){
+			if(a[j] &lt; a[i]) small ++;  // 对每一位数(或字符), 数它后面有几个比它小 
+		}
+		res += small * Fac[n - 1 - i]; // Fac为阶乘 
+	} 
+	return res;
+}
+
+vector&lt;char&gt; decantor(int num, int n){ // 把排序数 还原为 数组 
+	vector&lt;char&gt; temp = a, res;
+	sort(temp.begin(), temp.end()); //temp为按从小到大排列的数组
+	for(int i = n - 1; i &gt;= 0; i --){
+		int y = num % Fac[i], s = num / Fac[i]; // s即为small 
+		num = y;
+		res.push_back(temp[s]); // 当前第s小的数 即为当前位
+		temp.erase(temp.begin() + s); // 删去temp[s], 避免影响之后判断 
+	} 
+	return res; 
+} 
+</code></pre>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[动态规划] 背包问题归纳]]></title>
+        <id>https://river861.github.io/post/dong-tai-gui-hua-bei-bao-wen-ti-gui-na/</id>
+        <link href="https://river861.github.io/post/dong-tai-gui-hua-bei-bao-wen-ti-gui-na/">
+        </link>
+        <updated>2020-09-04T03:00:01.000Z</updated>
+        <summary type="html"><![CDATA[<p>背包问题是非常经典的一类动态规划题目，包括01背包、完全背包、多重背包等。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>背包问题是非常经典的一类动态规划题目，包括01背包、完全背包、多重背包等。</p>
+<!-- more -->
+<h3 id="一-01背包问题">一、01背包问题</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>有n件物品和一个容量为V的背包。第i件物品的体积（volumn）是v[i]，价值（worth）是w[i]，问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析">2. 解析</h4>
+<ul>
+<li>每种物品只有选和不选两种。我们可以使用多阶段动态规划的思想来解决。<br>
+用dp[i][j]表示前i个物品（或用“从第i个物品开始的后面所有物品”的反向定义也行）装入容量为j的背包中的最大价值量。<br>
+则转移方程为：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>−</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>w</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[i][j]=max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i])
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中每多考虑一个物品i，代表一个“阶段”。括号第一项表示选，第二项表示不选。</p>
+<ul>
+<li>**（优化）**由于每一项都是依赖于i-1，因此可以使用滚动数组来优化空间复杂度：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>−</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>w</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[j] = max(dp[j], dp[j - v[i]] + w[i])
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中注意使用滚动数组时，j的遍历必须逆序，来保证等号右边使用的dp值是上一阶段的结果值.</p>
+<ul>
+<li>如果需要打印路径，则必须使用第一种写法，否则可以使用优化写法来节省空间。</li>
+</ul>
+<h4 id="3-模板">3. 模板</h4>
+<ul>
+<li>普通写法</li>
+</ul>
+<pre><code>int V, n, v[maxn], w[maxn], dp[maxn][maxv];
+
+for(int j = 0; j &lt;= V; j ++) dp[0][j] = 0;
+for (int i = 1; i &lt;= n; i ++) {
+    for (int j = v[i]; j &lt;= V; j ++) {
+        dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i]);
+    }
+}
+</code></pre>
+<ul>
+<li>优化写法</li>
+</ul>
+<pre><code>int V, n, v[maxn], w[maxn], dp[maxv];
+
+for (int i = 1; i &lt;= n; i ++) {
+    for (int j = V; j &gt;= w[i]; j --) {  // 逆序遍历
+        dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
+    }
+}
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/a80587c9c2204f40bc802e4403db9587">Uva 624</a><br>
+Luogu 2925 干草出售<br>
+Luogu 1616 疯狂的采药<br>
+Hdu 3466 Proud Merchants</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="二-完全背包问题">二、完全背包问题</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>有n种物品和一个容量为V的背包，每种物品都有无限个。第i种物品的体积为v[i]，价值是w[i]。问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<ul>
+<li>由于有无限个，所以每种物品的选择就有无限种了，因此我们不能用01背包的套路了，需要换一种思路。我们先回顾一下01背包中的优化写法，之所以j要逆序遍历是为了使得等号右边的dp值对应的是上一物品计算完后的dp值。而回到完全背包问题，由于物品有无限个，因此对于已经选择了当前物品的dp值，我们依然可以继续添加当前物品，直到达到背包上限为止。这样一想，完全背包问题的递推式就大概是：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>−</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>w</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>−</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>w</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i], dp[i][j - v[i]] + w[j])
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中第1、2项和01背包一样，第3项表示继续添加当前物品。</p>
+<ul>
+<li>然而上述递推式实在是比较混乱，因此实际上大多数情况下使用的是滚动数组的版本：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>−</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>w</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[j] = max(dp[j], dp[j - v[i]] + w[i])
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span></span></p>
+<p>可以看到这里和01背包的转移方程是一样的，但是实际用的时候这里j的遍历顺序必须为正序。</p>
+<ul>
+<li>
+<p>在笔者看来，完全背包问题的写法其实还可以通过刷表法来理解。就是对于每一种新的物品i，用它来不断刷新所有体积的背包的状态（最大价值量）。j的顺序遍历使得刷新的效果可以“叠加”，从而实现放入多个物品的效果。</p>
+</li>
+<li>
+<p>实际上紫薯还提供里完全背包的另一种思路，即看成是带权的DAG的最长路问题，不过其代码量相比于递推式要稍微大一些，因此这里略。感兴趣的可以看一下下面的例题，有使用了这种方法的题解。</p>
+</li>
+</ul>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>int V, n, v[maxn], w[maxn], dp[maxv];
+
+fill(dp, dp + V + 1, 0);
+for(int i = 1; i &lt;= n; i ++) {
+    for(int j = v[i]; j &lt;= V; j ++) {  // 顺序遍历
+        dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
+    }
+}
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/f52f039856de40f798b881ac15e0a346">Hdu 4508</a><br>
+Hdu 1114 Piggy-Bank<br>
+Luogu 1853 投资的最大效益</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="三-多重背包问题">三、多重背包问题</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>有n种物品和一个容量为V的背包。第i种物品最多有p[i]件可用，每件体积是v[i]，价值是w[i]。问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<ul>
+<li>
+<p>多重背包问题限制了物品的数目，这里有一种显然的思路就是，把每一“个”物品看作一个不同的“种”物品，然后用01背包去做，但是这样大概率为超时（笑），时间复杂度为O(V*∑p[i])</p>
+</li>
+<li>
+<p>顺着上述思路，有一种二进制法可以将时间复杂度降到O(V*∑lgp[i])，并且一般够用了😀。<br>
+它的原理就是将一个数量为p[i]，价值为v[i]的物体拆分成 1、2、4、8...这若干份（每一份右2的幂次份原物体构成，构成的新物体价值为kw[i]，体积为kv[i]），然后 注意最后不足2的幂次的数量也单独做成1份，这样物体的总数量就降为了 O(∑lgn)。然后就可以按照01背包问题的套路来处理这∑lgn个新物体了。<br>
+正确性是由二进制原理保证的：因为原来可能选择的1~p[i]个原物体一定可以被替换为新物体的组合。</p>
+</li>
+<li>
+<p>实际上还有一种使用单调队列的优化方式，但由于技巧性比较高，一般用不到</p>
+</li>
+</ul>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>int V, n, v[n], w[n], p[n], dp[maxv];  // p[i]表示原物体i的数量限制
+
+fill(dp, dp + V + 1, 0);
+for(int i = 0; i &lt; n; i ++) {
+    for(int k = 1, num = min(p[i], V / v[i]); num &gt; 0; k &lt;&lt;= 1) {  // 每一个新物体由k个原物体组成
+        if(k &gt; num) k = num;  // 最后不足2的幂次的单独一份
+        num -= k;
+        for(int j = V; j &gt;= k * v[i]; j --) {  // 对新物体使用01背包问题处理，这里使用的是01背包问题的滚动数组模板，当然也可以不用
+            dp[j] = max(dp[j], dp[j - k * v[i]] + k * w[i]);
+        }
+    }
+}
+</code></pre>
+<p>其实还有另一种写法是将原物体分为新物体后用一个新数组装起来，然后再进行01背包操作，区别其实不大。这里直接写在外层嵌套了，因为代码量少一些所以我喜欢😀。</p>
+<h4 id="4-例题-3">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/435420c882a44e2881fa142ebf83ba94">Hdu1059</a><br>
+Luogu P1776 宝物筛选</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="四-混合背包问题">四、混合背包问题</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>如果将前面三种背包问题混合起来，有的物品只可以取一次（01背包），有的物品可以取无限次（完全背包），有的物品可以取的有限次（多重背包），问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<ul>
+<li>
+<p>首先01背包和多重背包在模板上只有j的遍历顺序不同，因此我们可以通过一个if语句来区分这两种背包，然后分别进行不同顺序的内层循环即可</p>
+</li>
+<li>
+<p>然后其实01背包是一种特殊的多重背包，即01背包是数量上限为1的多重背包问题，这样一想其实就只用写多重背包的代码即可</p>
+</li>
+</ul>
+<h4 id="3-模板-4">3. 模板</h4>
+<pre><code>int V, n, v[n], w[n], p[n], dp[maxv];  // p[i]表示每个物品的件数，-1代表无穷个
+
+for (int i = 1; i &lt;= n; i++)
+    if (p[i] == -1)  // 完全背包
+        for (int j = v[i]; j &lt;= V; j++)
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
+    else {
+        for(int k = 1, num = min(p[i], V / v[i]); num &gt; 0; k &lt;&lt;= 1) {  // 01背包和多重背包
+            if(k &gt; num) k = num;
+            num -= k;
+            for(int j = V; j &gt;= k * v[i]; j --) {  // 01背包只会执行k=1这一次
+                dp[j] = max(dp[j], dp[j - k * v[i]] + k * w[i]);
+            }
+        }
+    }
+</code></pre>
+<h4 id="4-例题-4">4. 例题</h4>
+<p>Luogu P1833 樱花<br>
+HDU 3535 AreYouBusy</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="五-二维背包问题">五、二维背包问题</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>对于每件物品，具有两种不同的代价v[i], g[i]，选择这件物品必须同时付出这两种代价，对于每种代价都有一个可付出的最大值（背包容量）V, G，物品的价值为v[i]v[i]。问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<p>这个其实比较简单，就是让dp数组增加一维度即可。<br>
+即dp[i][j][k]表示前i件物品装入两种代价分别为j和k的背包时可获得的最大价值量。滚动数组后就变成dp[j][k]。直接看代码会就一目了然了。</p>
+<h4 id="3-模板-5">3. 模板</h4>
+<pre><code>int V, n, v[n], g[maxn], w[n], p[n], dp[maxv][maxg];  // v[i]和g[i]分别为两种代价
+for (int i = 1; i &lt;= n; i ++)
+    for (int j = V; j &gt;= v[i]; j --)
+        for (int k = G; k &gt;= g[i]; k --)
+            dp[j][k] = max(dp[j][k], dp[j - v[i]][k - g[i]] + w[i]);
+</code></pre>
+<h4 id="4-例题-5">4. 例题</h4>
+<p>Luogu 1507 NASA的食物计划<br>
+HDU 2159 FATE</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="六-分组背包问题">六、分组背包问题</h3>
+<h4 id="1-定义-6">1. 定义</h4>
+<p>有n件物品和一个容量为V的背包。第i件物品的体积是v[i]，价值是w[i]。这些物品被划分为若干组，每组中的物品互相冲突，最多选一件。问如何选择物品装入背包可使价值总和最大。</p>
+<h4 id="2-解析-6">2. 解析</h4>
+<p>其实分组背包可以把每个组看作一个物体，即这其实就是一个01背包问题，每个物体依然还是选和不选两种状态，只不过选的时候可以从组内的多个原物体种任意选一个。同样看代码就一目了然了。</p>
+<h4 id="3-模板伪代码">3. 模板（伪代码）</h4>
+<pre><code>for (所有的组k)
+    for (int j = V; j &gt;= 0; j--)
+        for (所有属于组k的i)
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i])
+</code></pre>
+<h4 id="4-例题-6">4. 例题</h4>
+<p>Luogu 1757 通天之分组背包<br>
+HDU 1712 ACboy needs your help</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="七-背包问题的其它要素">七、背包问题的其它要素</h3>
+<h4 id="1-问法不同">1. 问法不同</h4>
+<ul>
+<li>最大值、最小值： 一次对应max、min即可</li>
+<li>方案数目：改为sum，同时注意初始化可能需要改变</li>
+</ul>
+<h4 id="2-范围不同">2. 范围不同</h4>
+<ul>
+<li>
+<p>最大化、最小化：<br>
+初始化时对于前0个物品的价值量dp[i][0...V]全部初始化为0，这样即使最终的dp[n][V]未达到边界值也能有最值答案（根据提问内容不同可能会有所改变）</p>
+</li>
+<li>
+<p>恰好装满<br>
+初始化时dp[i][0]=0, dp[i][1...V]全部初始化为 -INF或INF，这样不能刚好达到V的方案的最终价值量就为 -INF或INF（根据提问内容不同可能会有所改变）</p>
+</li>
+</ul>
+<h4 id="3-打印路径">3. 打印路径</h4>
+<ul>
+<li>
+<p>不使用滚动数组的写法，即有完整的dp[i][j]记录，然后通过递归的方法print_ans打印路径。这是我个人比较喜欢的写法，因为不用额外维护存储路径信息的数组😀</p>
+</li>
+<li>
+<p>维护一个记录路径信息的数组<br>
+记录下每个状态的最优值是由状态转移方程的哪一项推出来的。然后就可以根据这条记录找到上一个状态，从上一个状态接着向上推，得到整条路径。</p>
+</li>
+</ul>
+<h4 id="3-情景">3. 情景</h4>
+<p>区分背包问题是简单的，但是.....<br>
+如何才能发现一道题考察的是背包问题呢？<br>
+这就需要多刷题目，直到看到题目的某个情景就能反应出是在考察背包问题。</p>
+<p>当然我还没到那种境界就是了hhh😀</p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<p><a href="https://blog.csdn.net/yandaoqiusheng/article/details/84782655">参考博客</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[贪心算法] 区间问题归纳]]></title>
+        <id>https://river861.github.io/post/tan-xin-suan-fa-qu-jian-wen-ti-gui-na/</id>
+        <link href="https://river861.github.io/post/tan-xin-suan-fa-qu-jian-wen-ti-gui-na/">
+        </link>
+        <updated>2020-09-04T02:38:35.000Z</updated>
+        <summary type="html"><![CDATA[<p>贪心算法中的区间问题归纳</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>贪心算法中的区间问题归纳</p>
+<!-- more -->
+<h3 id="基本定义">基本定义</h3>
+<ul>
+<li>区间用一个结构体来表示：</li>
+</ul>
+<pre><code>struct Internal {
+    int l, r;
+    bool operator &lt; (const Internal&amp; rhs) const {
+        return ......; // 按左端点 或 右端点 或其它排序
+    }
+};
+vector&lt;Internal&gt; vec; // 存放所有区间的容器
+</code></pre>
+<ul>
+<li>以下代码只使用一个int类型的ans进行计数，若题目需要打印出所选择的区间/点，则改成用一个vector类型的ans存储即可。</li>
+</ul>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="一-区间不相交问题">一、区间不相交问题</h3>
+<h4 id="1-定义">1. 定义</h4>
+<p>数轴上有n个区间（li, ri），选择尽量多的区间，使得这些区间两两不相交。</p>
+<h4 id="2-解析">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序，即总是先选取r小的区间，这样就能给后面的区间留下更多空间。</p>
+<p>当r相等时，l无所谓，因为只要选择其中不与前一个区间相交的任意一个即可。</p>
+<h4 id="3-模板">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按r排序
+int ans = 0, cur = -INF;  // cur表示当前已选择的最大右端点
+for(const auto &amp; p : vec) if(p.l &gt;= cur) ans ++, cur = p.r;
+</code></pre>
+<h4 id="4-例题">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/55899ecc076a4580b5154adf3e6d5f77">UvaLive 6606</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="二-区间选点问题">二、区间选点问题</h3>
+<h4 id="1-定义-2">1. 定义</h4>
+<p>数轴上有n个区间[li, ri]，选择尽量少的点，使得每个区间内都至少有一个点。</p>
+<h4 id="2-解析-2">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序。每次选点时，总是选取第一个不被包含的区间的最右端点处。这样能让这个点接触到最多区间。</p>
+<p>当r相等时，l无所谓，因为不影响点数。</p>
+<h4 id="3-模板-2">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按r排序
+int ans = 0, cur = -INF;  // cur表示当前已选择的最右的点
+for(const auto&amp; p : vec) if(cur &lt; p.l || cur &gt; p.r) ans ++, cur = p.r;
+</code></pre>
+<h4 id="4-例题-2">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/533e51de360e47989013da008947bd11">Uva 1615</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="三-区间覆盖问题">三、区间覆盖问题</h3>
+<h4 id="1-定义-3">1. 定义</h4>
+<p>数轴上有n个区间[li, ri]，选择尽量少的区间覆盖一条指定线段[s,t]。</p>
+<h4 id="2-解析-3">2. 解析</h4>
+<p><strong>贪心策略</strong>：按l从小到大进行排序。将l&lt;s的这些区间的小于s的部分截掉（因为这部分没有用），然后从这些区间中选择出剩余长度最长的进行覆盖，然后将s更新为该区间的右端点。接下来继续遍历以此类推，直到</p>
+<!-- more -->
+<p>s&gt;=t，说明已经覆盖完毕。</p>
+<p>这道题贪心策略稍微复杂，代码写起来也稍微麻烦，要好好记忆。</p>
+<h4 id="3-模板-3">3. 模板</h4>
+<pre><code>sort(vec.begin(), vec.end());  // 按l排序
+int s = 0, t = M, ans = 0;  // 目标区间[s,t]
+auto L = vec.begin();
+while(s &lt; t &amp;&amp; L != vec.end()) {  // 右端点无法覆盖
+    auto R = upper_bound(L, vec.end(), Internal(s, s));  // [L,R)表示容器下标范围
+    if(L == R) break;  // 左端点无法覆盖
+    auto chosen = *max_element(L, R, [](const Internal&amp; a, const Internal&amp; b) {
+        return a.r &lt; b.r;
+    });  // 找到最长的那个
+    ans ++;
+    L = R, s = chosen.r;
+}
+
+if(s &lt; t) cout &lt;&lt; -1 &lt;&lt; endl;  // 无法覆盖完全
+</code></pre>
+<h4 id="4-例题-3">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/922860bcfe724bdc8ced0de456766754">Uva 10020</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="四-区间限制问题-之-用时相等">四、区间限制问题 之 用时相等</h3>
+<h4 id="1-定义-4">1. 定义</h4>
+<p>有若干个任务，每个任务有一段执行的时间区间[li, ri]限制，每个任务的用时都相等，比如都为1。<br>
+问能否完成所有任务。</p>
+<h4 id="2-解析-4">2. 解析</h4>
+<p><strong>贪心策略</strong>：按r从小到大进行排序（r相等时，按从长到短排序），每次尽量早地执行任务（可能就是从l开始，也可能不是，因为被之前的任务占用）。这里的r实际上就是ddl，总是先处理快到“ddl”的区间。ps：结合实际生活来看，这的确是显然的。</p>
+<p>r相等时，l按照从小到大排序，这是为了能让任务地起始时间有可能更早。</p>
+<h4 id="3-模板-4">3. 模板</h4>
+<pre><code>struct task {  // 一个任务
+    int l, r, idx;
+    task(int l, int r, int idx) : l(l), r(r), idx(idx) {}
+    bool operator &lt; (const task&amp; rhs) const {
+        return r &lt; rhs.r || r == rhs.r &amp;&amp; l &lt; rhs.l;
+    }
+};
+vector&lt;task&gt; vec;
+......
+fill(vis, vis + n + 1, 0);  // 用来标记某个时间是否被占用
+sort(vec.begin(), vec.end());  // 按照 (r, l) 排序
+for(const auto&amp; p : vec) {
+    int j = p.l;
+    while(j &lt;= p.r &amp;&amp; vis[j]) j ++;  // 找第一个没被占用地时间点执行任务
+    if(j == p.r + 1) return 0;
+    ans[p.idx] = j, vis[j] = 1;  // 用ans记录任务p的执行时间
+}
+......
+</code></pre>
+<h4 id="4-例题-4">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/db0fa9391c414281a899097aeb67c0c8">Uva 11134</a></p>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<h3 id="五-区间限制问题-之-用时不等">五、区间限制问题 之 用时不等</h3>
+<h4 id="1-定义-5">1. 定义</h4>
+<p>有若干个工作，只能串行进行，已知每个工作的用时need[i]和截止期限ddl[i]，问最多能完成多少个工作？</p>
+<h4 id="2-解析-5">2. 解析</h4>
+<p>这个是超典型的工作安排贪心问题。</p>
+<p>一个比较简单的版本是给出工作的确切开始时间和结束时间，这种问题就是典型的区间限制问题，我们按照ddl排序，然后先完成ddl早的任务即可。</p>
+<p>但是在这道题中，任务的开始时间是可以任意决定的（只要结束时不超过ddl期限），因此我们还应该结合考虑另一种贪心：即让短的任务优先。</p>
+<p>也就是说，对于一个给定的时间点之前，我们需要先执行短的任务，这样才能让任务完成数量最大化。这里 <strong>需要用一个优先队列来存放到当前时间点为止，所有已经选择的任务</strong> 。<strong>用这个优先队列的目的是为了能获得已经选择的任务中用时最长的那一个，这样就能在当发现一个任务由于超时无法选择时可以有尝试替换的机会（即从之前选择的任务中挑一个用时长的取消掉，从而使得当前任务不会超时）</strong>。</p>
+<p><strong>贪心策略</strong>：按r从小到大进行排序，每次尽量早地执行任务。当碰到一个任务超时，尝试从之前选择的任务中挑一个用时长的取消掉，从而使得当前任务不会超时。</p>
+<h4 id="3-模板-5">3. 模板</h4>
+<pre><code>struct task {
+    int need, ddl;
+    task(int need, int ddl) : need(need), ddl(ddl) {}
+    bool operator &lt; (const task&amp; rhs) const {
+        return ddl &lt; rhs.ddl;
+    }
+};
+
+......
+sort(vec.begin(), vec.end());
+
+priority_queue&lt;int&gt; que;
+int cur = 0;  // 当前时间点
+for(const task&amp; t : vec) {  // 总体上还是优先考虑ddl早的任务
+    if(cur + t.need &lt;= t.ddl) {  // 不超时
+        cur += t.need;
+        que.push(t.need);
+    }
+    else if(!que.empty() &amp;&amp; que.top() &gt; t.need) {  // 反正都会有一个任务不能完成，不如留下用时短的任务（当前任务）
+        cur += t.need - que.top();                 // 即用这个ddl更晚的但用时更短的task替换一个ddl早一些但是用时长的task
+        que.pop();                                 // 由于当前任务的ddl更晚，用时也更短，因此替换后必然不会超时
+        que.push(t.need);
+    }
+}
+cout &lt;&lt; que.size() &lt;&lt; endl;
+......
+</code></pre>
+<h4 id="4-例题-5">4. 例题</h4>
+<p><a href="https://blog.nowcoder.net/n/11e430dc6b5f4a6e8b7fbc9a45e29ebf">Uva 1153</a></p>
 ]]></content>
     </entry>
 </feed>
