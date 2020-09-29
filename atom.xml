@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://river861.github.io</id>
     <title>River&apos;s Blog</title>
-    <updated>2020-09-29T10:00:35.882Z</updated>
+    <updated>2020-09-29T11:53:12.217Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://river861.github.io"/>
     <link rel="self" href="https://river861.github.io/atom.xml"/>
@@ -10,6 +10,124 @@
     <logo>https://river861.github.io/images/avatar.png</logo>
     <icon>https://river861.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, River&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[[图论] 最大匹配问题归纳]]></title>
+        <id>https://river861.github.io/post/tu-lun-zui-da-pi-pei-wen-ti-gui-na/</id>
+        <link href="https://river861.github.io/post/tu-lun-zui-da-pi-pei-wen-ti-gui-na/">
+        </link>
+        <updated>2020-09-26T11:47:05.000Z</updated>
+        <summary type="html"><![CDATA[<p>包括匈牙利算法和Hopcroft_karp算法。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>包括匈牙利算法和Hopcroft_karp算法。</p>
+<!-- more -->
+<h3 id="一-定义">一、定义</h3>
+<p>即在一个二分图中，找到最大的匹配对数。每个点只能最多和另外一个点配对。</p>
+<h3 id="二-情景">二、情景</h3>
+<p>为了方便理解，这里考虑一下最大匹配场景：</p>
+<ul>
+<li>有一列男生1..n，还有一列女生女生n + 1..n + m。即结点分开存；</li>
+<li>愿意配对的男女会有边相连；</li>
+<li>要求出男女配对的最大匹配数目。</li>
+</ul>
+<h3 id="三-解析">三、解析</h3>
+<p>有两种方法可以解决最大匹配问题：匈牙利算法、Hopcroft_karp算法。</p>
+<ul>
+<li>
+<p>匈牙利算法</p>
+<ul>
+<li>时间复杂度O(VE)</li>
+<li>优点是代码简单，不超时时优先使用</li>
+</ul>
+</li>
+<li>
+<p>Hopcroft_karp算法</p>
+<ul>
+<li>时间复杂度O(sqrt(V)*E)</li>
+<li>优先时更快，缺点是代码复杂，类似最大流</li>
+<li>其实该算法就是将匈牙利算法中的find部分通过bfs分段，一点点来找匹配而已。</li>
+</ul>
+</li>
+</ul>
+<h3 id="四-匈牙利算法-模板">四、匈牙利算法 模板</h3>
+<pre><code>bool find(int u){
+	for(int v : G[u]){
+		if(vis[v]) continue; 
+		vis[v] = 1;
+		if(belong[v] == 0 || find(belong[v])){
+		// 若对象名花无主 或 对象能重新找到npy, 则 可以匹配该对象 
+			belong[v] = u, belong[u] = v;
+			return 1;
+		}
+	}
+	return 0;
+} 
+
+int maxMatch(){
+	int res = 0;
+	for(int i = 1; i &lt;= n; i ++){  // 男生逐个去邀请追女生
+		memset(vis, 0, sizeof(vis)); // vis用于标记对象点是否判断过, 每次都要清零
+		if(find(i)) res ++;  // 找到一个心仪的女生了
+	}
+	return res;
+} 
+</code></pre>
+<h3 id="五-hopcroft_karp算法-模板">五、Hopcroft_karp算法 模板</h3>
+<pre><code>/*
+类似最大流算法 数组解释：
+dist[i]: 层数标记
+belong[i]: i 的对象
+*/
+bool bfs(){
+	queue&lt;int&gt; queue;
+	memset(dist, -1, sizeof(dist));
+	fin_dist = INF; // dist为当前终点的层数标记
+	for(int u = 1; u &lt;= n; u ++) if(!belong[u]) que.push(u), dist[u] = 0; // 若干起点
+	while(!que.empty()){
+		int u = que.front();
+		que.pop();
+		if(dist[u] &gt; fin_dist) break; // 到增广路终点层数的点都标记好了就跳出, 后面不再标记
+		for(int v : G[u]){
+			if(dist[v] == -1){  // 未被标记 
+				dist[v] = dist[u] + 1;
+				if(!belong[v]) fin_dist = dist[v]; // 找到增广路, 确定增广路终点层数
+				else dist[belong[v]] = dist[v] + 1, que.push(belong[v]); // 继续bfs 
+			}
+		} 
+	} 
+	return dist != INF;
+}
+
+bool find(int u){
+    if(dist[u] &gt; fin_dist) return 0；
+    for(int v : G[u]){
+		if(vis[v] || dist[v] != dist[u] + 1) continue;
+		//  询问过 ||  不是上下层关系    则跳过
+		vis[v]  = 1;
+		if(belong[v] == 0 || find(belong[v])){
+            // 若对象名花无主 或 对象能重新找到npy, 则 可以匹配该对象 
+			belong[v] = u, belong[u] = v;
+			return 1;
+		} 
+    }
+    return 0;
+} 
+
+int Hopcroft_karp(){
+	int res = 0;
+	while(bfs()){ // 搜索有无增广路 
+		memset(vis, 0, sizeof(vis));
+		for(int i = 1; i &lt;= n; i ++)
+			if(!belong[i] &amp;&amp; find(i)) res ++; 
+			// 若没有女朋友 &amp;&amp; 能找到 
+	}
+	return res; 
+}
+</code></pre>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[图论][经典] 常见的图论方法归纳]]></title>
         <id>https://river861.github.io/post/tu-lun-jing-dian-chang-jian-de-tu-lun-fang-fa-gui-na/</id>
@@ -1654,416 +1772,6 @@ int main() {
 <p><a href="https://blog.nowcoder.net/n/6aeaadbaf50347a7979571da59dce6b3">Uva 12558</a><br>
 <a href="https://vjudge.net/problem/UVA-1343">Uva 1343</a></p>
 <p><br><center><strong>*   *   *</strong></center></br></p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[经典] 常见的高效算法归纳]]></title>
-        <id>https://river861.github.io/post/jing-dian-chang-jian-de-gao-xiao-suan-fa-gui-na/</id>
-        <link href="https://river861.github.io/post/jing-dian-chang-jian-de-gao-xiao-suan-fa-gui-na/">
-        </link>
-        <updated>2020-09-04T03:43:50.000Z</updated>
-        <summary type="html"><![CDATA[<p>包括滑动窗口、哈希表、拓扑排序、单调栈、KMP、RMQ、最小表示法、二分答案、Cantor等算法。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>包括滑动窗口、哈希表、拓扑排序、单调栈、KMP、RMQ、最小表示法、二分答案、Cantor等算法。</p>
-<!-- more -->
-<h3 id="一-滑动窗口">一、滑动窗口</h3>
-<h4 id="1-定义">1. 定义</h4>
-<p>滑动窗口法（又叫双指针法），即用i,j双指针（一般用下标）对数组进行遍历，同时要需要一个额外的比如vis数组维护窗口中的元素信息，是一种O(n)的扫描方法。</p>
-<h4 id="2-解析">2. 解析</h4>
-<ul>
-<li>
-<p>一般比较常见的问题就是，维护窗口中的元素各不相同。<br>
-既可以用一个vis[maxn]数组来表示窗口中是否存在某个元素，也可以用一个pos[maxn]数组来存储上一次遇见某个元素的位置（为-1表示不在窗口中）。本质是一样的。</p>
-</li>
-<li>
-<p>当元素数值比较大时，用unordered_map来实现vis或pos即可。</p>
-</li>
-<li>
-<p>最好统一一下开闭区间，比如总是使用<strong>闭区间</strong>[i, j]作为窗口范围。</p>
-</li>
-<li>
-<p>最好统一一下判断顺序，比如<strong>总是先处理当前元素已经在窗口中出现过的情况</strong></p>
-</li>
-</ul>
-<h4 id="3-大致模板">3. 大致模板</h4>
-<ul>
-<li>额外维护pos</li>
-</ul>
-<pre><code>ll n, a[maxn];
-unordered_map&lt;ll, ll&gt; pos;
-
-int main() {
-    ......
-    ll i = 0, j = 0, ans = 0;
-    while(j &lt; n) {  // 维护闭区间窗口[i, j]
-        ll num = a[j];
-        if(pos.count(num) &amp;&amp; pos[num] != -1) {  // 先判断在数组中的情况
-            for(; i &lt;= pos[num]; i ++) pos[a[i]] = -1;  // 注意一定要逐个退出并消除pos
-        }
-        pos[num] = j;
-        ans = max(ans, j - i + 1);
-        j ++;
-    }
-    cout &lt;&lt; ans &lt;&lt; endl;
-}
-</code></pre>
-<ul>
-<li>额外维护vis</li>
-</ul>
-<pre><code>ll n, a[maxn];
-unordered_map&lt;int, int&gt; vis;
-
-int main() {
-    ......
-    ll i = 0, j = 0, ans = 0;
-    while(j &lt; n) {
-        ll num = a[j];
-        if(vis[num]) {  // 先判断在数组中的情况
-            while(i &lt; j &amp;&amp; a[i] != num) vis[a[i]] = 0, i ++; // 注意一定要逐个退出并消除vis
-            i ++;
-        }
-        else vis[num] = 1;
-        ans = max(ans, j - i + 1);
-        j ++;
-    }
-    cout &lt;&lt; ans &lt;&lt; endl;
-}
-</code></pre>
-<h4 id="4-例题">4. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/d9001a8fe2ee42909a67adfe7233a1bd">Uva 11572</a><br>
-<a href="https://ac.nowcoder.com/acm/problem/20863">Nowcoder 数糖纸</a><br>
-<a href="https://blog.nowcoder.net/n/f721ce2cd3b940039ddcfbda27f7b8b2">Uva 12174</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="二-哈希表">二、哈希表</h3>
-<h4 id="1-定义-2">1. 定义</h4>
-<p>当你希望定义一个数组（比如vis数组），但是下标范围很大（比如1e9），这个时候就没有办法开一个vis[maxn]的数组了，因为会爆内存。<br>
-这时我们就可以通过hash的方式把下标映射到一个可以接受的小范围，比如[0...200003]。</p>
-<h4 id="2-解析-2">2. 解析</h4>
-<ul>
-<li>一般情况下优先使用 <strong>unordered_map 或 unordered_set</strong></li>
-<li>但也不排除出题人把 map 和 set 给卡了...这个时候就用哈希表吧，使用最简单的开放寻址法来解决冲突， 其实就是一个链表数组。</li>
-</ul>
-<h4 id="3-模板">3. 模板</h4>
-<pre><code>const int HASH = 2000003;
- 
-class Vis {
-public:
-    list&lt;ll&gt; vis[HASH];
-    void insert(ll x) {  // 插入
-        if(!query(x)) vis[x % HASH].push_back(x);
-    }
-     
-    bool query(ll x) {  // 查询
-        for(ll y : vis[x % HASH]) if(x == y) return 1;
-        return 0;
-    }
-} vis;
-</code></pre>
-<h4 id="4-例题-2">4. 例题</h4>
-<p><a href="https://ac.nowcoder.com/acm/contest/7589/A">Nocoder 眼花缭乱的街市（卡STL）</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="三-拓扑排序">三、拓扑排序</h3>
-<h4 id="1-定义-3">1. 定义</h4>
-<p>给出n个点，然后给出m个依赖关系，比如（u, v）表示必须先有u才有v，要求你输出一个满足依赖的点序列，或者输出无解。</p>
-<h4 id="2-解析-3">2. 解析</h4>
-<p>拓扑排序是一种经典的模板题，来源于图论，一般有队列或dfs两种不同的写法（个人比较喜欢队列写法😀）。</p>
-<ul>
-<li>
-<p>需要维护的结构</p>
-<ul>
-<li>int in[maxn]：维护每个点的入度数目</li>
-<li>vector<int> Next[maxn]：记录每个点的所有出度点</li>
-<li>queue<int> ready：维护依赖被满足的点（若题目需要按某种排序输出，则改成优先队列）</li>
-</ul>
-</li>
-<li>
-<p>当题目中的“点”不是整型，而是用字符串表示时，需额外维护：</p>
-<ul>
-<li>vector<string> id2str</li>
-<li>unordered_map&lt;string, int&gt; str2id</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-模板-2">3. 模板</h4>
-<pre><code>int in[maxn];
-vector&lt;int&gt; Next[maxn];
-
-void solve() {  // 拓扑排序
-    priority_queue&lt;int, vector&lt;int&gt;, cmp&gt; ready;
-    for(int i = 0; i &lt; n; i ++) if(in[i] == 0) ready.push(i);  // 压入一开始就没依赖的点
-    vector&lt;int&gt; ans;
-    while(!ready.empty()) {
-        int u = ready.top(); ready.pop();
-        ans.push_back(u);  // 记录到答案序列中
-        for(int v : Next[u]) {
-            in[v] --;  // 入度减1
-            if(in[v] == 0) ready.push(v);  // 新的无依赖结点
-        }
-    }
-    if(ans.size() != n) ......  // 无解
-    else ....  // 打印ans
-}
-</code></pre>
-<h4 id="4-例题-3">4. 例题</h4>
-<p><a href="https://ac.nowcoder.com/acm/contest/5678/B">Nowcoder 烦人的依赖</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="四-单调栈">四、单调栈</h3>
-<h4 id="1-定义-4">1. 定义</h4>
-<p>维护一个栈（或双向队列），保持栈内元素的单调性，存放下标还是值可以依情况而定。由于每个元素最多弹出一次，因此单调栈算法是O(n)的。</p>
-<ul>
-<li>单调递增栈作用：O(1)时间获取离当前位置最近的一个小于当前值的元素。</li>
-<li>单调递减栈作用：O(1)时间获取离当前位置最近的一个大于当前值的元素。</li>
-</ul>
-<h4 id="2-解析-4">2. 解析</h4>
-<p>以<strong>单调递增栈</strong>为例。</p>
-<ul>
-<li>通过这个栈，可以得到到当前元素为止的单调递增序列，<strong>从而能得到左侧离自己最近的比自己小的元素</strong>。</li>
-<li><strong>原理</strong>：只有 [比自己大的元素]， 或者 [比自己小但是却被离得更近的更小的元素弹走的元素] 才不会出现在栈中。</li>
-</ul>
-<h4 id="3-模板-3">3. 模板</h4>
-<p>存放下标，非严格单调递增栈：</p>
-<pre><code>stack&lt;int&gt; stk;
-for(int i = 0; i &lt;= n; i ++) {
-    while(!stk.empty() &amp;&amp; a[stk.top()] &gt; a[i]) {  // 先将大于当前值的元素弹出
-        int temp = stk.top();
-        stk.pop();
-        ......  // Do something else | 可以在这里对弹出的元素temp进行一些操作
-    }
-    ......  // Do something else | 此时栈顶为左侧离自己最近的比自己小的元素
-    stk.push(i);  // 把当前值压栈
-}
-</code></pre>
-<h4 id="4-例题-4">4. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/cbe8d3249bf144ca9d50fba75d8415a9">Hdu 1506</a><br>
-<a href="https://blog.nowcoder.net/n/454506c0ff7d45e2ad73b85389befe94">Uva 1619</a><br>
-<a href="https://blog.nowcoder.net/n/93348010c6a941af9505e5a66eefff26">Uva 12265</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="五-kmp算法">五、KMP算法</h3>
-<h4 id="1-定义-5">1. 定义</h4>
-<p>在O(n)时间实现从长串test中找到一个匹配子串pattern。</p>
-<h4 id="2-解析-5">2. 解析</h4>
-<ul>
-<li>由pattern串生成一个Next[maxn]数组，表示匹配失败时，下标回溯到的位置。</li>
-<li><strong>Next[maxn]的含义</strong>: 当前匹配串的<strong>相同前后缀的前缀末端位置</strong>。<br>
-比如字符串 aabcaad，假设在匹配d时失败，下标位于6，则对于当前匹配串p[0...5]，相同的前后缀为aa，则将会回溯到前缀的末端位置，即b处，即下标2，因此有Next[6]=2。</li>
-</ul>
-<h4 id="3-变式">3. 变式</h4>
-<ol>
-<li>
-<p><strong>循环节</strong> 问题 （只需要Next数组）<br>
-根据Next数组的定义，Next[i]=j表示j为s[i]匹配失败后需要跳回的位置，也即是i之前和j之前可能为相同的串。</p>
-<ul>
-<li>对于一个循环串来说，它的Next数组“跳回”的长度正好就是一个循环节。因此<strong>通过 i-Next[i] 即可计算出s[1..i)的循环节长度</strong>。</li>
-<li>但注意可能字符串不是循环字符串，因此还要<strong>判定字符串长度i是否能被循环节长度 i-Next[i] 整除</strong>。</li>
-<li>注意这样算出来的循环节长度是最小循环节长度，如果需要算出所有可能循环节长度的话，就要用一个while循环一节一节往回跳+判定，由于往回跳的长度就是循环节的长度，因此实际上这是一个枚举循环节长度的过程。比如字符串aaaa，用KMP算法求出的循环节长度为1，但实际上2也是一个循环节长度，此时就要往回跳+判定来枚举全。</li>
-</ul>
-</li>
-<li>
-<p>扩展KMP算法（需要求出每个位置匹配的长度）</p>
-<ul>
-<li>通过一个Extend[maxn]数组来记录test串从每个位置开始的匹配长度</li>
-<li>其中注意要通过 j = Next[j] 来回溯，避免遗漏记录，具体见代码EKMP</li>
-</ul>
-</li>
-</ol>
-<h4 id="4-模板">4. 模板</h4>
-<ul>
-<li>普通KMP</li>
-</ul>
-<pre><code>int KMP(const string&amp; t, int n, const string&amp; p, int m, int* Next) {
-  // 直接返回第一次匹配的写法
-  int i = 0, j = 0;
-  while(i &lt; n &amp;&amp; j &lt; m) {
-      if(j == -1 || t[i] == p[j]) i ++, j ++;
-      else j = Next[j];
-  }
-  if(j == m) return i - j;
-  return -1;
-}
-
-int KMP(const string&amp; t, int n, const string&amp; p, int m, int* Next) {
-  // 返回匹配次数的写法
-  int i = 0, j = 0;
-  while(i &lt; n) {
-      if(j == -1 || t[i] == p[j]) i ++, j ++;
-      else j = Next[j];
-      if(j == m) cnt ++, j = Next[j];
-  }
-  return cnt;
-}
-
-void getNext(string&amp; p, int m) {  // 求Next数组，在KMP之前调用
-  Next[0] = -1;
-  int i = 0, j = -1;
-  while(i &lt; m) {
-      if(j == -1 || p[i] == p[j]) i ++, j ++, Next[i] = j;
-      else j = Next[j];
-  }
-}
-</code></pre>
-<ul>
-<li>拓展KMP</li>
-</ul>
-<pre><code>void EKMP(const string&amp; t, int n, const string&amp; p, int m, int* Next, int* Extend){
-	int i = 0, j = 0;
-	while(i &lt; n){
-		if(j == -1 || t[i] == p[j]) i ++, j ++;
-		else j = Next[j];
-		Extend[i - j] = j; // Extend数组记录test串每个位置匹配了多长的pattern前缀
-		if(j == m){
-			j = Next[j]; // 继续匹配
-			for(int k = j; k; k = Next[k]) Extend[i - k] = k;  // 回溯 使记录完整 
-		} 
-	}
-} 
-</code></pre>
-<h4 id="5-例题">5. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/a968f57eef8a4faf9289125fd2fba650">Uva 1328</a><br>
-<a href="https://blog.nowcoder.net/n/2215034090934224b754e338d73fa84b">Uva 12012</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="六-rmq算法">六、RMQ算法</h3>
-<h4 id="1-定义-6">1. 定义</h4>
-<p>通过动态规划在O(nlgn)时间内对一个序列进行RMQ-init预处理，然后就可以在O(1)时间内得到这个序列中任意区间[l, r)中的最值！</p>
-<p><strong>注意</strong>：为了避免混淆，RMQ算法中所有的区间使用 <strong>左闭右开</strong>。</p>
-<h4 id="2-解析-6">2. 解析</h4>
-<ol>
-<li>
-<p>O(nlgn)时间预处理</p>
-<ul>
-<li>用 dp[i][j] 表示从下标 i 开始的连续 2^j 个数中的最小（大）值，下面以最小值为例。</li>
-<li><strong>转移方程</strong>：dp[i][j] = min(dp[i][j - 1], dp[i + (1 &lt;&lt; j-1)][j - 1])<br>
-即将区间 [i, i + 2^j) 分为 [i, i + 2^(j-1)) 和 [i + 2^(j-1), i + 2^j) 两段.</li>
-</ul>
-</li>
-<li>
-<p>O(1)时间查区间 [i，j) 中的最值</p>
-<ul>
-<li>求区间长度的log值，即 k = log(r - l)。（取整后会偏小，所以第2步中要求两段）</li>
-<li>最值为 dp[l][k] 和 dp[r - (1 &lt;&lt; k)][k] 中更小的那个。</li>
-</ul>
-</li>
-</ol>
-<h4 id="3-变式-2">3. 变式</h4>
-<p>有时候题目中区间的“值”是比较抽象的，这个时候可以考虑<strong>在dp[i][j]中存放区间中取到最值时的下标值</strong>，而不是区间中的最值。这样的话 预处理 和 取最值 的函数都需要做出相应修改。</p>
-<p>一个最典型的变式例子就是<strong>树中求LCA</strong>的问题。</p>
-<h4 id="4-模板-2">4. 模板</h4>
-<pre><code>const int maxn = 5e3 + 5, log2_maxn = 15;
-int n, a[maxn], dp[maxn][log2_maxn];  // 序列为a[0...(n-1)]
-
-void rmq_init(){		
-	for(int i = 0; i &lt; n; i ++) dp[i][0] = a[i];   // 初始化最短区间
-	for(int j = 1; (1 &lt;&lt; j) &lt;= n; j ++)            //  区间长度由小到大， 大区间的最值由小区间获得
-		for(int i = 0; i + (1 &lt;&lt; j) - 1 &lt; n; i ++)  // 循环条件：右端点&lt;n
-			dp[i][j] = min(dp[i][j - 1], dp[i + (1 &lt;&lt; j-1)][j - 1]);     // 注意加减法优先级大于&lt;&lt;
-}
-
-int rmq_min(int l, int r){  // 返回闭区间 [l ,r) 中的最小值
-	int k = log2(r - l);
-	return min(dp[l][k], dp[r - (1 &lt;&lt; k)][k]);	
-}
-</code></pre>
-<h4 id="5-例题-2">5. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/54d9a96eee0e4ab1a25327af1d9dfad1">LCA问题</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="七-on时间求最小大循环字符串">七、O(n)时间求最小（大）循环字符串</h3>
-<h4 id="1-定义-7">1. 定义</h4>
-<p>给定一个循环字符串，要求你输出它字典序最小（大）的表示方法，即确定一个开始位置。</p>
-<h4 id="2-解析-7">2. 解析</h4>
-<p>以最小表示为例。<br>
-基本思想是双指针i, j，用k表示从i、j开始的子串的当前比对到的完全一样的长度，当判断出i、j的某一条子串的i+k、j+k位置有所不同时，大的那一条（比如是j）就可以往后跳k+1个字符，因为以这些字符起始的循环字符串已经不可能是最小的（比它们小的在i开始的串的子串中）。用这样的方法当i、j串中的某一个超过n时就不用再判断了（因为n个可能的起始位置都判断过了）。此时剩余的那个串就是最小的循环字符串。</p>
-<h4 id="3-模板-4">3. 模板</h4>
-<pre><code>//求循环字符串的最小字典序 最大类似
-int getMin(const string&amp; s, int n){
-	int i = 0, j = 1, k = 0; // i, j为双指针, k为当前匹配长度
-	while(i &lt; n &amp;&amp; j &lt; n &amp;&amp; k &lt; n){
-		int temp = s[(i + k) % n] - s[(j + k) % n];
-		if(temp == 0) k ++; //若当前位匹配, k ++
-		else{
-			if(temp &gt; 0) i += k + 1;
-			else j += k + 1;
-			/*
-			若 s[i...i+k]比s[j...j+k]更大, 设 i&lt;p&lt;i+k 
-			则s[p..i+k]都比s[p-i+j, j+k]大
-			即前者不可能为最小字典序, 因此全部跳过, 即i += k+1
-			j同理 
-			*/
-			if(i == j) j ++; // 避免死循环
-			k = 0; // 更改i、j后重头匹配 
-		} 
-	} 
-	return min(i, j);
-} 
-</code></pre>
-<h4 id="4-例题-5">4. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/e4c744f1694449cead8dd9a716087132">Uva 1584</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="八-二分答案">八、二分答案</h3>
-<h4 id="1-定义-8">1. 定义</h4>
-<p>顾名思义，通过枚举答案的方法，将原先的最值为题转化为判定问题。时间复杂度为 O(lgN * 判定的时间复杂度)。</p>
-<h4 id="2-解析-8">2. 解析</h4>
-<ul>
-<li><strong>[最大值尽可能小]、[最小值尽可能大]</strong>, 这类问题时，可以考虑二分答案。</li>
-<li>注意二分时判断OK后r等于多少，l等于多少不要搞错了。一般我们把范围想为[l, r]闭区间不容易错。所以不OK时 l=mid+1，因为不应该包含mid。此为，最好用l=1, r=2来验证一下是否会陷入死循环。</li>
-</ul>
-<h4 id="3-模板-5">3. 模板</h4>
-<pre><code>        ......
-        LL l = 0, r = INF;
-        while(l &lt; r) {
-            LL mid = l + (r - l) / 2;
-            if(isOK(mid)) r = mid;
-            else l = mid + 1;
-        }
-        ......
-</code></pre>
-<h4 id="4-例题-6">4. 例题</h4>
-<p><a href="https://blog.nowcoder.net/n/818816be14bf4638bcc57c890e0a1404">Uva 714</a></p>
-<p><br><center><strong>*    *   *</strong></center><br></p>
-<h3 id="九-康托展开cantor">九、康托展开（Cantor）</h3>
-<h4 id="1-定义-9">1. 定义</h4>
-<p>全排列与整数的一种完美双向Hash方法。</p>
-<h4 id="2-解析-9">2. 解析</h4>
-<ul>
-<li>
-<p><strong>正变换</strong> （排列 -&gt; 整数）<br>
-双重循环，数出每一位后面有几个比它小的数，据此算出当前排列为第几小的排列（从0计起）<br>
-res += small * （当前位后面一共有多少位）！</p>
-</li>
-<li>
-<p><strong>逆变换</strong> （整数 -&gt; 排列）<br>
-令 temp 为原序列从小到大的排列。<br>
-逆循环除，商为下一个被除数，余数为small<br>
-取temp中剩余数第small+1小的数（index为small）<br>
-在temp中删去该数</p>
-</li>
-</ul>
-<h4 id="3-模板-6">3. 模板</h4>
-<pre><code>int cantor(vector&lt;char&gt;&amp; a, int n){ // 由字符数组 转化为 对应的排序数 
-	int res = 0; // res为 比当前排列要小的 排列的个数 
-	for(int i = 0; i &lt; n; i ++){
-		int small = 0;
-		for(int j = i + 1; j &lt; n; j ++){
-			if(a[j] &lt; a[i]) small ++;  // 对每一位数(或字符), 数它后面有几个比它小 
-		}
-		res += small * Fac[n - 1 - i]; // Fac为阶乘 
-	} 
-	return res;
-}
-
-vector&lt;char&gt; decantor(int num, int n){ // 把排序数 还原为 数组 
-	vector&lt;char&gt; temp = a, res;
-	sort(temp.begin(), temp.end()); //temp为按从小到大排列的数组
-	for(int i = n - 1; i &gt;= 0; i --){
-		int y = num % Fac[i], s = num / Fac[i]; // s即为small 
-		num = y;
-		res.push_back(temp[s]); // 当前第s小的数 即为当前位
-		temp.erase(temp.begin() + s); // 删去temp[s], 避免影响之后判断 
-	} 
-	return res; 
-} 
-</code></pre>
-<p><br><center><strong>*    *   *</strong></center><br></p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
 ]]></content>

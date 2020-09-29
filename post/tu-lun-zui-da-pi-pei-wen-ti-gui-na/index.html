@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>[动态规划][经典] 常见的动态规划问题归纳 | River&#39;s Blog</title>
+<title>[图论] 最大匹配问题归纳 | River&#39;s Blog</title>
 
 <link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601380241882">
 
@@ -90,11 +90,11 @@
 			<div class="post-detail gt-bg-theme-color-second">
 				<article class="gt-post-content">
 					<h2 class="post-title">
-					  [动态规划][经典] 常见的动态规划问题归纳
+					  [图论] 最大匹配问题归纳
 					</h2>
 					<div class="post-info">
 					  <span>
-						2020-09-13
+						2020-09-26
 					  </span>
 					  <span>
 						3 min read
@@ -107,81 +107,114 @@
 					</div>
 					
 					<div class="post-content">
-						<p>比如LIS问题</p>
+						<p>包括匈牙利算法和Hopcroft_karp算法。</p>
 <!-- more -->
-<h3 id="一-最长上升子序列lis">一、最长上升子序列（LIS）</h3>
-<h4 id="1-定义">1. 定义</h4>
-<p>给出一个序列a[1...n]，要求你求出其中最长的递增子序列的长度。</p>
-<h4 id="2-简单的-on2-算法">2. 简单的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 算法</h4>
+<h3 id="一-定义">一、定义</h3>
+<p>即在一个二分图中，找到最大的匹配对数。每个点只能最多和另外一个点配对。</p>
+<h3 id="二-情景">二、情景</h3>
+<p>为了方便理解，这里考虑一下最大匹配场景：</p>
+<ul>
+<li>有一列男生1..n，还有一列女生女生n + 1..n + m。即结点分开存；</li>
+<li>愿意配对的男女会有边相连；</li>
+<li>要求出男女配对的最大匹配数目。</li>
+</ul>
+<h3 id="三-解析">三、解析</h3>
+<p>有两种方法可以解决最大匹配问题：匈牙利算法、Hopcroft_karp算法。</p>
 <ul>
 <li>
-<p><strong>原理</strong>：<br>
-设 dp[i] 为把<strong>下标i作为最长上升子序列结尾位置</strong> 的最大长度，则 dp[i] = max(dp[1..i]+1)，所有dp[i]初始为1.</p>
-</li>
-<li>
-<p><strong>模板</strong>：</p>
-</li>
-</ul>
-<pre><code>int n, num[maxn], dp[maxn];  // num[maxn]存放了序列，dp[i]表示以a[i]为结尾的最长子序列长度
-
-int main() {
-    ......
-    int ans = 0;
-    for(int i = 1; i &lt;= n; i ++) {
-        dp[i] = 1;
-        for(int j = 1; j &lt; i; j ++) {
-            if(num[i] &gt;= num[j]) dp[i] = max(dp[i], dp[j] + 1);
-        }
-        ans = max(ans, dp[i]);
-    }
-    cout &lt;&lt; ans &lt;&lt; endl;
-}
-</code></pre>
-<h4 id="3-最快的-onlgn-算法">3. 最快的 O(nlgn) 算法</h4>
+<p>匈牙利算法</p>
 <ul>
-<li><strong>原理</strong>：<br>
-以非严格递增子序列为例，主要思想是 <strong>贪心 + 二分</strong>。这种方法不需要dp数组，取而代之，使用的是一个low数组。</li>
+<li>时间复杂度O(VE)</li>
+<li>优点是代码简单，不超时时优先使用</li>
 </ul>
-<ol>
-<li>
-<p><strong>维护一个 low数组 和 ans</strong><br>
-<strong>low[i]表示到当前为止，长度为i的LIS结尾元素的最小值</strong>；<strong>ans为 当前最长LIS长度</strong><br>
-对于一个上升子序列，显然其结尾元素越小，越有利于在后面接其他的元素，也就越可能变得更长，因此该算法贪心地维护出每个长度最小的结尾元素，存放在low[i]中</p>
 </li>
 <li>
-<p><strong>维护方法</strong><br>
-对于每一个a[i]，如果a[i] &gt; low[ans]，就把 a[i]接到当前最长的LIS后面，即 low[++ ans] = a[i]；否则， 用 a[i] 更新 low数组 中第一个大于 a[i] 的元素 low[j] = a[i]</p>
-</li>
-<li>
-<p><strong>举个例子</strong><br>
-比如1 5 6 3 4，假设当前已经遍历到下标3，则low[] = {1, 5, 6}，下一个数字3将会把5更新为3，表示到目前为止（1 5 6 3），长度为2的结尾最小的上升子序列为 1 3 。更新后下一个4才会有可能成为长度为3的上升子序列的末尾（1 3 4），这就是贪心起到的作用（总是维护最小的结尾值）。</p>
-</li>
-</ol>
+<p>Hopcroft_karp算法</p>
 <ul>
-<li><strong>模板</strong>：</li>
+<li>时间复杂度O(sqrt(V)*E)</li>
+<li>优先时更快，缺点是代码复杂，类似最大流</li>
+<li>其实该算法就是将匈牙利算法中的find部分通过bfs分段，一点点来找匹配而已。</li>
 </ul>
-<pre><code>int nums[maxn], low[maxn];  // num[maxn]存放了序列，low[i]表示长度为i的LIS结尾元素的最小值
-
-// 贪心 + 二分 解法 O(nlogn) 
-int main(){
-	fill(low + 1, low + n + 1, INF);
-	int ans = 0;  // low和ans搭配使用，ans就是当前维护到的最长长度
-	for(int i = 1; i &lt;= n; i ++){
-		if(ans == 0 || num[i] &gt;= low[ans]) low[++ ans] = nums[i];                            // 若为严格递增，改为 &gt;
-		else{
-			int j = upper_bound(low + 1, low + n + 1, nums[i]) - low;    // 若为严格递增，改为 lower_bound
-			low[j] = nums[i];
+</li>
+</ul>
+<h3 id="四-匈牙利算法-模板">四、匈牙利算法 模板</h3>
+<pre><code>bool find(int u){
+	for(int v : G[u]){
+		if(vis[v]) continue; 
+		vis[v] = 1;
+		if(belong[v] == 0 || find(belong[v])){
+		// 若对象名花无主 或 对象能重新找到npy, 则 可以匹配该对象 
+			belong[v] = u, belong[u] = v;
+			return 1;
 		}
 	}
-	cout &lt;&lt; ans &lt;&lt; endl;
+	return 0;
+} 
+
+int maxMatch(){
+	int res = 0;
+	for(int i = 1; i &lt;= n; i ++){  // 男生逐个去邀请追女生
+		memset(vis, 0, sizeof(vis)); // vis用于标记对象点是否判断过, 每次都要清零
+		if(find(i)) res ++;  // 找到一个心仪的女生了
+	}
+	return res;
 } 
 </code></pre>
-<h4 id="4-例题">4. 例题</h4>
-<p>Nowcoder 旅行青蛙</p>
+<h3 id="五-hopcroft_karp算法-模板">五、Hopcroft_karp算法 模板</h3>
+<pre><code>/*
+类似最大流算法 数组解释：
+dist[i]: 层数标记
+belong[i]: i 的对象
+*/
+bool bfs(){
+	queue&lt;int&gt; queue;
+	memset(dist, -1, sizeof(dist));
+	fin_dist = INF; // dist为当前终点的层数标记
+	for(int u = 1; u &lt;= n; u ++) if(!belong[u]) que.push(u), dist[u] = 0; // 若干起点
+	while(!que.empty()){
+		int u = que.front();
+		que.pop();
+		if(dist[u] &gt; fin_dist) break; // 到增广路终点层数的点都标记好了就跳出, 后面不再标记
+		for(int v : G[u]){
+			if(dist[v] == -1){  // 未被标记 
+				dist[v] = dist[u] + 1;
+				if(!belong[v]) fin_dist = dist[v]; // 找到增广路, 确定增广路终点层数
+				else dist[belong[v]] = dist[v] + 1, que.push(belong[v]); // 继续bfs 
+			}
+		} 
+	} 
+	return dist != INF;
+}
+
+bool find(int u){
+    if(dist[u] &gt; fin_dist) return 0；
+    for(int v : G[u]){
+		if(vis[v] || dist[v] != dist[u] + 1) continue;
+		//  询问过 ||  不是上下层关系    则跳过
+		vis[v]  = 1;
+		if(belong[v] == 0 || find(belong[v])){
+            // 若对象名花无主 或 对象能重新找到npy, 则 可以匹配该对象 
+			belong[v] = u, belong[u] = v;
+			return 1;
+		} 
+    }
+    return 0;
+} 
+
+int Hopcroft_karp(){
+	int res = 0;
+	while(bfs()){ // 搜索有无增广路 
+		memset(vis, 0, sizeof(vis));
+		for(int i = 1; i &lt;= n; i ++)
+			if(!belong[i] &amp;&amp; find(i)) res ++; 
+			// 若没有女朋友 &amp;&amp; 能找到 
+	}
+	return res; 
+}
+</code></pre>
 <p><br><center><strong>*   *   *</strong></center></br></p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
-<p><a href="https://www.cnblogs.com/mengxm-lincf/archive/2011/07/12/2104745.html">LIS-参考博客</a></p>
 
 					</div>
 				</article>
@@ -192,14 +225,11 @@ int main(){
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%80-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97lis">一、最长上升子序列（LIS）</a>
-<ul>
-<li><a href="#1-%E5%AE%9A%E4%B9%89">1. 定义</a></li>
-<li><a href="#2-%E7%AE%80%E5%8D%95%E7%9A%84-on2-%E7%AE%97%E6%B3%95">2. 简单的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 算法</a></li>
-<li><a href="#3-%E6%9C%80%E5%BF%AB%E7%9A%84-onlgn-%E7%AE%97%E6%B3%95">3. 最快的 O(nlgn) 算法</a></li>
-<li><a href="#4-%E4%BE%8B%E9%A2%98">4. 例题</a></li>
-</ul>
-</li>
+<li><a href="#%E4%B8%80-%E5%AE%9A%E4%B9%89">一、定义</a></li>
+<li><a href="#%E4%BA%8C-%E6%83%85%E6%99%AF">二、情景</a></li>
+<li><a href="#%E4%B8%89-%E8%A7%A3%E6%9E%90">三、解析</a></li>
+<li><a href="#%E5%9B%9B-%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95-%E6%A8%A1%E6%9D%BF">四、匈牙利算法 模板</a></li>
+<li><a href="#%E4%BA%94-hopcroft_karp%E7%AE%97%E6%B3%95-%E6%A8%A1%E6%9D%BF">五、Hopcroft_karp算法 模板</a></li>
 </ul>
 </li>
 </ul>
@@ -212,8 +242,8 @@ int main(){
         
             <div class="next-post">
                 <div class="next gt-c-content-color-first">下一篇</div>
-                <a href="https://river861.github.io/post/dong-tai-gui-hua-shu-wei-dp-fang-fa-gui-na/" class="post-title gt-a-link">
-                    [动态规划] 数位dp方法归纳
+                <a href="https://river861.github.io/post/tu-lun-jing-dian-chang-jian-de-tu-lun-fang-fa-gui-na/" class="post-title gt-a-link">
+                    [图论][经典] 常见的图论方法归纳
                 </a>
             </div>
         
