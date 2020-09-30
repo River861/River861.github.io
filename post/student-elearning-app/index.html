@@ -1,0 +1,481 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Student Elearning App | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601459450352">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于我
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601459450352" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  Student Elearning App
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-06-29
+					  </span>
+					  <span>
+						11 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/lPp4DqtrM/" class="post-tag">
+						  # 项目
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>复旦elearning系统的安卓app版，网络创新实验 PJ。</p>
+<!-- more -->
+<h4 id="一-项目名称">一、项目名称</h4>
+<p>​		Student   Elearning  App</p>
+<h4 id="二-项目介绍">二、项目介绍</h4>
+<h5 id="1-项目功能-用途与设计思想">1. 项目功能、用途与设计思想</h5>
+<ul>
+<li>
+<p>本项目为学校elearning系统的手机App版，使掌上浏览elearning成为了可能。在实现elearning大部分原有功能的基础上，本项目还针对elearning现有的缺陷做出有针对性地改进，实现对elearning功能的筛选、发扬和再创造。</p>
+</li>
+<li>
+<p>在用途方面，就是让学生们能十分便捷地浏览elearning上的课件、作业等信息，另一方面，还可以通过日历功能进行待办的记录等，具体的功能与效果将在后面叙述。</p>
+</li>
+<li>
+<p>本项目的设计思想为用户至上。即尽可能地提升用户的使用体验，在界面上做到尽可能的美观，在功能上做到尽可能的人性化。</p>
+</li>
+</ul>
+<h5 id="2-总体设计与框图">2. 总体设计与框图</h5>
+<figure data-type="image" tabindex="1"><img src="https://river861.github.io/post-images/1601459155765.png" alt="" loading="lazy"></figure>
+<p>​        框图中客户端为用户的手机客户端，服务端为服务器端。</p>
+<ul>
+<li>
+<p>在客户端，Login模块负责用户的登陆界面，它包含的信息管理模块用于在用户手机上储存用户的用户名、密码；主模块即用户登录成功后进入的主界面，它包含Dashboard、Calendar、Home三个功能区，分别用于用户的课程管理、代办管理、个人信息管理。</p>
+</li>
+<li>
+<p>其中，Dashboard功能区由若干个Course模块组成，每个Course模块代表用户所选的一门课程。在每个Course模块中，用户可以分别浏览公告、作业、人员、文件信息，这些分别由相应的模块实现，还可以通过Color模块为课程卡片换色。Home功能区除了复用的Files模块和Color模块外，还包含一个All-to-do模块，主要是用于对用户所有待办事项的集中显示。Calendar功能区由于功能之间联系紧密，因此没有子模块。</p>
+</li>
+<li>
+<p>在服务端，按处理方式主要分两类请求。若是对TOKEN的请求，则利用爬虫的手段，通过用户的用户名和密码获取用户TOKEN，然后将其返回给客户端。在这之后的所有客户端请求都将附带TOKEN。对于这些其它请求，服务端将根据请求的内容构造相应的新请求，然后将之发送给Elearning-API文档所提供的相应接口获取用户数据，然后将数据清理、整理后发送回客户端。</p>
+</li>
+</ul>
+<h5 id="3-功能的效果展示">3. 功能的效果展示</h5>
+<h5 id="1-登录">1） 登录</h5>
+<p><img src="https://river861.github.io/post-images/1601459169749.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459175811.PNG" alt="" loading="lazy"></p>
+<p>若之前已登录过，则用户名和密码将会被自动填充；每当进行数据请求时界面都会有loading动画。</p>
+<h5 id="2dashboard功能区">2）Dashboard功能区</h5>
+<p><img src="https://river861.github.io/post-images/1601459186621.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459190807.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459195013.PNG" alt="" loading="lazy"></p>
+<ul>
+<li>查看公告（Announcements）</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459204015.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459208270.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459213612.PNG" alt="" loading="lazy"></p>
+<p>可以在公告列表中查看该课程的公告，长公告支持滚动，同时支持图片渲染。这里是通过HTML模块实现的。</p>
+<ul>
+<li>查看文件（Files）</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459225979.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459231804.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459237750.PNG" alt="" loading="lazy"></p>
+<p>如果是文件夹则可以继续打开，如果是文件则可以点击进行在线浏览，各类型文件用图标区分。在线浏览的功能在模拟器中无法运行，在真机上则可以，如下图：</p>
+<p><img src="https://river861.github.io/post-images/1601459248955.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459253903.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459258801.PNG" alt="" loading="lazy"></p>
+<p>在线浏览时可以放大、滚动。</p>
+<ul>
+<li>查看作业（Homework）</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459270115.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459275333.PNG" alt="" loading="lazy"></p>
+<p>可以在作业列表中查看该课程的作业，列表项中绿色图标表示已完成，未完成将是红色。点击进入可以查看该项作业的详细要求，这里也是通过HTML模块渲染实现的。</p>
+<ul>
+<li>查看人员（Members）</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://river861.github.io/post-images/1601459285229.PNG" alt="" loading="lazy"></figure>
+<p>在人员列表中可以查看该课程的人员信息，包括老师、助教和学生的头像、姓名、学号信息。</p>
+<ul>
+<li>修改课程卡片颜色</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459296791.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459303185.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459311108.PNG" alt="" loading="lazy"></p>
+<p>点击右上角的颜色板按键，可以为该课程换色，除了选择颜色，还可以调节亮度。如图换成了深粉色。</p>
+<h5 id="3calendar功能区">3）Calendar功能区</h5>
+<p><img src="https://river861.github.io/post-images/1601459328752.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459334090.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459339947.PNG" alt="" loading="lazy"></p>
+<p>上下滑动切换周视图和月视图；左右滑动则是进入上一周/月和进入下一周/月。</p>
+<ul>
+<li>一句话任务的新增、删除、查询</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459351353.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459358536.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459365266.PNG" alt="" loading="lazy"></p>
+<ul>
+<li>
+<p>日历右上角3个按键分别为：跳到今日，新增任务，切换周月视图</p>
+</li>
+<li>
+<p>每个任务项右边的2个按键分别为：设为已完成，删除任务</p>
+</li>
+<li>
+<p>每日任务的完成情况用颜色标记</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://river861.github.io/post-images/1601459376677.PNG" alt="" loading="lazy"></figure>
+<ul>
+<li>绿色：表示过去某一天的任务全部完成</li>
+<li>红色：表示过去某一天还有任务没有完成</li>
+<li>蓝色：表示将来某一天有计划</li>
+</ul>
+<h5 id="4home功能区">4）Home功能区</h5>
+<p><img src="https://river861.github.io/post-images/1601459386541.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459392120.PNG" alt="" loading="lazy"></p>
+<ul>
+<li>个人界面的右上角3个按键分别为：退出登录，清空文件缓存，修改个人颜色</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459405402.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459411307.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459417072.PNG" alt="" loading="lazy"></p>
+<ul>
+<li>个人代办事项的集中显示</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://river861.github.io/post-images/1601459425719.PNG" alt="" loading="lazy"></figure>
+<p>包括未完成的作业，以及在日历中进行的计划，都会在这里集中显示。</p>
+<ul>
+<li>个人文件夹</li>
+</ul>
+<p><img src="https://river861.github.io/post-images/1601459437447.PNG" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601459443826.PNG" alt="" loading="lazy"></p>
+<p>这里复用的和课程文件一样的Files模块，可以在这里找到自己提交的课程作业文件。</p>
+<h5 id="4-项目部署方法">4. 项目部署方法</h5>
+<p>部署前的说明：</p>
+<p>a. 保持网络连接，若是模拟器要注意设置好网络，确保网络能连接到服务端（特别是对于android自带的模拟器，可以使用 <code>emulator @[模拟器设备名] -dns-server 8.8.8.8,114.114.114.114</code> 指令来使用Google提供的DNS地址启动模拟器）</p>
+<p>b. 第一次登陆会有点慢，因为需要爬虫获取TOKEN，请耐心等待</p>
+<h5 id="1方法一使用远端服务器">1）方法一：使用远端服务器</h5>
+<p>这种方法将使用我已经在阿里云服务器上搭建的服务端。（2020.10到期）</p>
+<p>如果认为不够安全，则可以在自己的服务器上将后端代码进行部署，然后修改源码中的 <code>com.example.elearning.ElearningApi</code> 中开头的 <code>MyBackend</code> 字符串并重新build出apk来安装运行。</p>
+<ul>
+<li>将 <code>elearning.apk</code> 直接安装在真机或模拟器上即可登录运行。</li>
+</ul>
+<h5 id="2方法二使用本地服务端">2）方法二：使用本地服务端</h5>
+<ul>
+<li>
+<p>使用python3运行 <code>ElearningBackend\MyBackend.py</code> 来在本机启动服务端；</p>
+</li>
+<li>
+<p>使用 <code>ipconfig</code> 找到本机的 IP 地址；</p>
+</li>
+<li>
+<p>检查网络：在要运行 app 的设备（真机或模拟器）上访问 <code>http://[本机IP地址]:5555/hello</code>，若能访问成功，说明本地服务端可用，则可以直接进行下一步；若访问失败，请检查真机或模拟器的网络设置；</p>
+</li>
+<li>
+<p>修改源码中的 <code>com.example.elearning.ElearningApi</code> 中开头的 <code>MyBackend</code> 字符串为 <code>http://[本机IP地址]:5555</code>，它表示服务端的 url；</p>
+</li>
+<li>
+<p>重新 run 源代码即可启动 app 并登录运行（这里要注意 gradle 版本等问题）。</p>
+</li>
+</ul>
+<h4 id="三-项目难点与解决技术">三、项目难点与解决技术</h4>
+<h5 id="1-登录比较麻烦">1. 登录比较麻烦</h5>
+<ul>
+<li>难点描述：学校elearning的所有api都需要用TOKEN作为请求的凭证，而获取TOKEN的api又需要用学校elearning系统的 <code>Develop Key</code> 作为请求的凭证。即没有权限的问题。</li>
+<li>解决方法：
+<ul>
+<li>通过爬虫手段获取TOKEN信息。本项目直接使用的是 <code>Selenium</code> 自动化工具来爬取用户的TOKEN。这种方法优点是简单直接，缺点是有点慢。</li>
+<li>解决爬取慢的问题。我在手机客户端实现了信息管理模块，不仅用来存储用户名和密码，还将用户第一次登录所获取的TOKEN也存储在了手机客户端中（具体为存储在 <code>SharedPreferences</code> 中），由于爬虫获取的是无限期的TOKEN，因此理论上一部手机安装完这个app后就只需要爬虫一次，之后的请求就直接使用本地已经存储的TOKEN即可。</li>
+</ul>
+</li>
+<li>技术总结：<code>Selenium</code>、<code>android.content.SharedPreferences</code></li>
+</ul>
+<h5 id="2-在线浏览如何实现">2. 在线浏览如何实现</h5>
+<ul>
+<li>
+<p>难点描述：android原生的web浏览器是没有办法打开复杂的文档的，比如elearning中常见的ppt、pdf类型的文件。</p>
+</li>
+<li>
+<p>解决方法：</p>
+<ul>
+<li>使用第三方的文件在线浏览技术，这里选择的是 <code>腾讯TBS服务</code>。腾讯TBS服务简单来说就是使用一种基于<code>x5</code> 内核的web浏览器来实现文件的在线浏览，目前可以支持多达46种文件的打开，像在微信、QQ等中打开文件都是使用的这种技术。缺点是由于模拟器中不支持x5内核，因此在模拟器中无法使用该功能。</li>
+<li>解决模拟器无法使用的问题。即进行真机调试。由于我没有安卓手机，因此这里需要请有安卓手机的同学帮忙远程调试。</li>
+</ul>
+</li>
+<li>
+<p>技术总结：<code>腾讯TBS服务</code>。接入教程参考官网 https://x5.tencent.com/tbs/guide/sdkInit.html</p>
+</li>
+</ul>
+<h5 id="3-需要实现的模块太多了">3. 需要实现的模块太多了</h5>
+<ul>
+<li>
+<p>难点描述：由于app的功能繁多，项目工程量实在巨大。具体见前面的设计框图。</p>
+</li>
+<li>
+<p>解决方法：</p>
+<ul>
+<li>尽可能复用模块。在设计时，我将大部分界面设计为相似的列表结构，比如Course模块中的公告列表、文件列表、作业列表、人员列表以及Home模块中的待办列表，最终复用了同一个 <code>ListView</code>，只是每种列表项的布局和点击效果不同罢了。而要实现一个能装入不同类型Item的ListView，就需要设计一个可复用的自定义 <code>BaseAdapter</code>， Adapter是一种用来帮助填充数据的中间桥梁。</li>
+<li>多使用第三方库。
+<ul>
+<li>为简化网络请求代码的复杂性，使用了开源的网络框架<code>okhttp3</code></li>
+<li>为简化json数据解析的复杂性，使用了第三方库<code>fastjson</code></li>
+<li>为简化图片的加载和缓冲的复杂性，使用了第三方库 <code>glide</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>技术总结：</p>
+<p>1） <code>可复用的自定义BaseAdapter</code>。参考教程：https://www.runoob.com/w3cnote/android-tutorial-customer-baseadapter.html。最终的实现位于 <code>com.example.elearning.util.SuperAdapter</code></p>
+<p>2）好用的网络请求框架 <code>okhttp3</code>。导入包：<code>com.squareup.okhttp3:okhttp:4.4.0</code></p>
+<p>3）好用的json解析第三方库 <code>fastjson</code>。导入包：<code>com.alibaba:fastjson:1.1.55.android</code></p>
+<p>4）好用的图片处理第三方库 <code>glide</code>。导入包：<code>com.github.bumptech.glide:glide:3.7.0</code></p>
+</li>
+</ul>
+<h5 id="4-界面美化太难了">4. 界面美化太难了</h5>
+<ul>
+<li>
+<p>难点描述：安卓原生开发的界面美化实在困难，很难达到像网页那样的界面质量。</p>
+</li>
+<li>
+<p>解决方法：</p>
+<ul>
+<li>尽可能挖掘可以美化的地方。例如我在课程卡片上增加了阴影效果，点击时增加了涟漪效果等，并且还重新自定义了toast的样式，这些是原生android可以实现的技术。</li>
+<li>排版时设计尽可能规整。排版时大部分使用的是 <code>LinearLayout</code> 和 <code>RelativeLayout</code>，也因此支持横屏。</li>
+<li>多使用第三方库。如 <code>Loading</code> 界面、<code>Calendar</code> 界面、<code>Color</code> 选择器，都使用了相应第三方库。</li>
+</ul>
+</li>
+<li>
+<p>技术总结：</p>
+<p>1）<code>涟漪效果</code>。最终实现的类位于 <code>com.example.elearning.util.MyButton</code></p>
+<p>2）好看的 <code>Loading</code> 界面。导入包：<code>com.zyao89:zloading:1.2.0</code></p>
+<p>3）好看的 <code>Calendar</code> 界面。导入包：<code>com.haibin:calendarview:3.6.6</code></p>
+<p>4）好看的 <code>Color</code> 选择器。导入包：<code>com.github.QuadFlask:colorpicker:0.0.15</code></p>
+</li>
+</ul>
+<h4 id="四-项目总结">四、项目总结</h4>
+<ul>
+<li>选择一个有趣的项目内容很重要。若不是觉得有趣，我一定是做不完这个项目的。</li>
+<li>多利用第三方库很重要。若不是借用了许多好用或好看的第三方库，我一定是做不到这样的效果的。并且学习的这些第三方库若以后还做app的话一定还能用上的。</li>
+<li>一些遗憾。可惜这个app只能用在安卓手机上，并且我也不是用的安卓手机...不过感觉如果能给周围的同学带来便利，就已经很满足了！</li>
+</ul>
+<p><br><center><strong>*    *   *</strong></center><br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+<p><a href="https://github.com/River861/Student_Elearning_App">Github源码</a></p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0">一、项目名称</a></li>
+<li><a href="#%E4%BA%8C-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D">二、项目介绍</a>
+<ul>
+<li><a href="#1-%E9%A1%B9%E7%9B%AE%E5%8A%9F%E8%83%BD-%E7%94%A8%E9%80%94%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3">1. 项目功能、用途与设计思想</a></li>
+<li><a href="#2-%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%A1%86%E5%9B%BE">2. 总体设计与框图</a></li>
+<li><a href="#3-%E5%8A%9F%E8%83%BD%E7%9A%84%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA">3. 功能的效果展示</a></li>
+<li><a href="#1-%E7%99%BB%E5%BD%95">1） 登录</a></li>
+<li><a href="#2dashboard%E5%8A%9F%E8%83%BD%E5%8C%BA">2）Dashboard功能区</a></li>
+<li><a href="#3calendar%E5%8A%9F%E8%83%BD%E5%8C%BA">3）Calendar功能区</a></li>
+<li><a href="#4home%E5%8A%9F%E8%83%BD%E5%8C%BA">4）Home功能区</a></li>
+<li><a href="#4-%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95">4. 项目部署方法</a></li>
+<li><a href="#1%E6%96%B9%E6%B3%95%E4%B8%80%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8">1）方法一：使用远端服务器</a></li>
+<li><a href="#2%E6%96%B9%E6%B3%95%E4%BA%8C%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E7%AB%AF">2）方法二：使用本地服务端</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E9%A1%B9%E7%9B%AE%E9%9A%BE%E7%82%B9%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%8A%80%E6%9C%AF">三、项目难点与解决技术</a>
+<ul>
+<li><a href="#1-%E7%99%BB%E5%BD%95%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6">1. 登录比较麻烦</a></li>
+<li><a href="#2-%E5%9C%A8%E7%BA%BF%E6%B5%8F%E8%A7%88%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0">2. 在线浏览如何实现</a></li>
+<li><a href="#3-%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%A8%A1%E5%9D%97%E5%A4%AA%E5%A4%9A%E4%BA%86">3. 需要实现的模块太多了</a></li>
+<li><a href="#4-%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E5%A4%AA%E9%9A%BE%E4%BA%86">4. 界面美化太难了</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93">四、项目总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>

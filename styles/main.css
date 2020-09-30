@@ -695,7 +695,6 @@ td {
   /* Safari */
   position: sticky;
   top: 0px;
-  width: 200px;
   font-size: 12px;
   list-style: none;
   padding-left: 0;
@@ -715,7 +714,7 @@ td {
   list-style: none;
 }
 .toc-container li {
-  padding-left: 12px;
+  padding-left: 6px;
 }
 .toc-container li a {
   padding: 4px;
