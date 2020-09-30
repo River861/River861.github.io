@@ -1,0 +1,1377 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>TODO Helper 时间管理助手 | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1601469611284">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于我
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1601469611284" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  TODO Helper 时间管理助手
+					</h2>
+					<div class="post-info">
+					  <span>
+						2019-12-27
+					  </span>
+					  <span>
+						48 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/lPp4DqtrM/" class="post-tag">
+						  # 项目
+						</a>
+					  
+					</div>
+					
+					  <img class="post-feature-image" src="https://river861.github.io/post-images/todo-helper-shi-jian-guan-li-zhu-shou.PNG" alt="">
+					
+					<div class="post-content">
+						<p>一个可以将自然语言转化为待办事项列表的时间管理助手，自然语言处理PJ。</p>
+<!-- more -->
+<h2 id="0-选题动机与项目介绍">0 选题动机与项目介绍</h2>
+<p>时间，作为自然语言中的一个重要成分，应该引起我们的充分关注。然而，jieba分词等大部分分词工具并不能对中文时间的描述进行很好的区分，因此，这就需要通过神经网络来实现对自然语言中时间成分的提取。常见的基于时间提取的自然语言处理项目主要应用于对新闻文本中的时间提取，而在本项目中，我将时间提取应用于更实用的与时间管理相关的应用软件设计中。</p>
+<p>时间管理助手，简单来说即是对未来事件的时间备忘，在许多智能手机和电脑中都有这样的软件。比较成功的时间管理软件的例子为语音助手Siri。用户可以直接通过语音告诉Siri之后的时间安排，并设置闹钟提醒。然而，并不是在所有场合都适合语音输入，因而在本项目中，我实现的是用户通过自然文本的输入来告知之后的时间安排，然后程序自动解析时间并在日历上进行事件标注。当然，语音输入的方式可以作为未来的工作开展。</p>
+<h2 id="1-项目整体框架">1 项目整体框架</h2>
+<figure data-type="image" tabindex="1"><img src="https://river861.github.io/post-images/1601467129190.png" alt="" loading="lazy"></figure>
+<p>用户通过交互界面输入自然文本形式的时间安排叙述后，后端基于神经网络的时间提取器会将文本中的时间成分抽取出来，剩下的部分默认为任务成分。时间成分和任务成分成对出现。之后分别基于正则表达式和句法分析将时间成分和任务成分转化为规范化的表示。多对规范化的时间-任务对将构成任务时间列表。之后根据任务时间列表在交互界面的日历上打上相应记号和说明。用户可以勾选已完成的任务，任务时间列表维护器将动态更新日历上的任务显示。</p>
+<p>其中，时间提取为本项目的重点，而任务解析、时间解析为本项目的难点。</p>
+<h2 id="2-项目实现流程">2 项目实现流程</h2>
+<h3 id="21-语料获取与数据分析">2.1 语料获取与数据分析</h3>
+<h4 id="210-语料来源">2.1.0 语料来源</h4>
+<p>本项目的数据来源为网上一份已经人工进行了时间标注的新闻语料（链接见参考文献[3]）。语料的标注采用的是BIO标记，B-TIME表示时间短语开头，I-TIME表示时间短语中间，O表示不是时间短语，示例如下：</p>
+<pre><code>凌 B-TIME
+晨 I-TIME
+时 I-TIME
+分 I-TIME
+, O
+战 O
+斗 O
+打 O
+响 O
+了 O
+。 O
+</code></pre>
+<p>考虑到人们对于时间表达的相似性，因此将这个语料用于本项目是合适的。语料共有2001段新闻语句，总计114290个字。其中有2888段时间语句。如果训练效果不佳，将会考虑自行扩充语料并进行人工标注。但从结果看，这个语料数量已经能得到很好的时间提取效果了。</p>
+<h4 id="211-数据清洗">2.1.1 数据清洗</h4>
+<ul>
+<li>
+<p>将中文数字转化为阿拉伯数字</p>
+<ul>
+<li>
+<p>将“零”到“三十一” 转化为0到31表示</p>
+<p>年份的中文数字表示为逐位表示的，因此与年份有关的中文数字为零到九；月份的中文数字表示包含一到十二；周号的中文表示包含一到七；日号的中文表示包含一到三十一。</p>
+</li>
+<li>
+<p>一些特殊考虑</p>
+<p>“〇”和“两”这两个特殊数字表示不能遗漏；“(周|星期|礼拜)(日|天|末)”要转化为“(周|星期|礼拜)7”</p>
+</li>
+</ul>
+</li>
+<li>
+<p>标点符号转化为半角表示</p>
+<p>这一点主要是针对冒号表示的时间时刻。比如将“8：00”转化为“8:00”</p>
+</li>
+</ul>
+<h4 id="212-对时间描述方式的分析">2.1.2 对时间描述方式的分析</h4>
+<p>通过观察数据集以及结合自身语言经验，我对日常生活中常见的时间表达进行了粗略归纳，并利用简单的正则表达式对数据集进行了粗分类，统计结果如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://river861.github.io/post-images/1601467168861.png" alt="" loading="lazy"></figure>
+<p>其中一个时间表达可能对应图中的多个表达形式。我们可以看到以准确的“某年某月某日”或“某月某日”的时间表达占据了大多数，之后常见的表达还有“今天”“明天”“后天”等表达和几点钟或几时的表达。这些表达在我们日常的时间规划中都是经常用到的。</p>
+<p>标签未覆盖到（unmatch）的时间描述举例如下：</p>
+<pre><code>南北朝
+122个工作日
+前几天
+1甲子
+连续几年
+南宋之初
+</code></pre>
+<p>我们可以看到，这些时间基本不在本项目需要讨论的范围内，这说明这里归纳的时间表达是比较全面的了。后面基于正则表达式的时间解析器就是以这些表达为基础设计的。</p>
+<h4 id="213-时间描述的复杂程度分析">2.1.3 时间描述的复杂程度分析</h4>
+<p>实际上，上面的每一种表达方式对应于时间表达的一个“粒度”。当一个时间与上面越多种表达式相匹配，它就包含了越多的层次，我们就可以认为这个时间描述得越复杂：</p>
+<figure data-type="image" tabindex="3"><img src="https://river861.github.io/post-images/1601467185028.png" alt="" loading="lazy"></figure>
+<p>我们可以看到，绝大部分时间描述使用了3层或更少更简单的表达，只有少部分时间描述得很复杂。最复杂的几种时间描述举例如下：</p>
+<table>
+<thead>
+<tr>
+<th>时间成分</th>
+<th style="text-align:center">层数</th>
+<th>匹配的表达式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>今日至周7(11日)的早上6时至晚上11时59分期间</td>
+<td style="text-align:center">7</td>
+<td>'XX日/号'、'XX点/时'、'XX分'、'早晨'、'晚上'、'周X'      '[今明后]XX'</td>
+</tr>
+<tr>
+<td>2008年5月12日下午2时28分04秒</td>
+<td style="text-align:center">6</td>
+<td>'XXXX年'、'XX月'、 'XX日/号'、'XX点/时'、'XX分'、'下午'</td>
+</tr>
+<tr>
+<td>昨晚(8月9日)10点半左右</td>
+<td style="text-align:center">6</td>
+<td>'XX月'、'XX日/号'、'XX点/时'、'X点半'、'晚上'、'[今明后]XX'</td>
+</tr>
+<tr>
+<td>8月6日凌晨3点50分左右</td>
+<td style="text-align:center">5</td>
+<td>'XX月'、'XX日/号'、'XX点/时'、'XX分'、'凌晨'</td>
+</tr>
+<tr>
+<td>4月3日下午16点21分</td>
+<td style="text-align:center">5</td>
+<td>'XX月'、'XX日/号'、'XX点/时'、'XX分'、'下午'</td>
+</tr>
+<tr>
+<td>北京时间2019年8月10日下午15:20</td>
+<td style="text-align:center">5</td>
+<td>'XXXX年'、'XX月'、'XX日/号'、'下午'、'XX:XX'</td>
+</tr>
+<tr>
+<td>8月10日下午3时30分</td>
+<td style="text-align:center">5</td>
+<td>'XX月'、'XX日/号'、'XX点/时'、'XX分'、'下午'</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以看到第一个例子为“时间段”的描述，时间段的描述能大幅提高时间描述的复杂度。我们之后的时间解析器将以解析出上述复杂的时间描述作为检验指标。</p>
+<h4 id="214-时间描述的类别分析">2.1.4 时间描述的类别分析</h4>
+<figure data-type="image" tabindex="4"><img src="https://river861.github.io/post-images/1601467201222.png" alt="" loading="lazy"></figure>
+<p>我将给予确切的年月日和时间的时间描述作为accurate类，如2020年1月1号；将模糊的时间描述作为fuzzy类，如早上、夜晚；将相对时间作为relative类，如明天、下个月。绘制饼状图如上所示。可以看到，准确描述的时间占了大多数，其他两类描述相对较少，但是依然不能忽略。</p>
+<h4 id="215-时间词起始位置的分布">2.1.5 时间词起始位置的分布</h4>
+<figure data-type="image" tabindex="5"><img src="https://river861.github.io/post-images/1601467211070.png" alt="" loading="lazy"></figure>
+<p>可以明显地看到，绝大部分的时间词出现在句子的开头；而不在开头出现的时间词也大部分会在句子前三分之一位置出现；只有很少的时间词会出现在句子的后半段。</p>
+<p>结合起始位置和长度的时间词分布图如下：</p>
+<figure data-type="image" tabindex="6"><img src="https://river861.github.io/post-images/1601467219875.png" alt="" loading="lazy"></figure>
+<p>可以看出时间词的长度平均大约占句子长度的0.1~0.2左右。</p>
+<h4 id="216-时间词前后词的词性分析">2.1.6 时间词前后词的词性分析</h4>
+<ul>
+<li>
+<p>时间词前一个词的词性分布</p>
+<figure data-type="image" tabindex="7"><img src="https://river861.github.io/post-images/1601467228126.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<p>在进行统计前，我事先给每个句子的头部和尾部加上了head和tail的标签。可以看到，时间词前一个词以head标签为主。这与前面分析的时间词主要分布在句子开头的结论是相符合的。之后时间词的前一个词的最可能词性分别为动词、介词、名词和标点符号等。</p>
+<ul>
+<li>
+<p>时间词后一个词的词性分布</p>
+<figure data-type="image" tabindex="8"><img src="https://river861.github.io/post-images/1601467237014.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<p>可以看到，时间词后最多的词性为动词。这是符合我们的语言习惯的，即“XX时候做XX”，而这恰好是本项目时间管理助手的期望输入形式。之后最多的词性分别为名词、地名、标点、介词等。其中地名即属于名词，标点为无效信息，因此我们将重点考虑时间词后的动词、名词、介词。这三类词性将作为后面进行基于句法分析的任务解析的重点。它们正好对应于我们期望从时间词后提取出的表示任务成分的动宾短语和介宾短语。</p>
+<h3 id="22-时间提取">2.2 时间提取</h3>
+<h4 id="220-为什么选择基于神经网络">2.2.0 为什么选择基于神经网络？</h4>
+<p>通过上述对时间词的各种分析，我们知道，基于相对完善的正则表达式的匹配也可以匹配到九成左右的时间语句，那么为什么还要利用神经网络呢？</p>
+<p>这是因为，正则表达式只是对时间短语内部的表达形式的匹配，而不能表示出时间短语在句子中的位置信息以及与其他语句成分的关系。而从前面的分析我们可以知道，时间词在位置以及和前后词之间的关系中具有很重要的特征，这些特征是正则表达式所不能表达的，因此我们需要用神经网络来学习这些特征。</p>
+<p>当一个时间词不在正则表达式的匹配范围内时，这个词一定不会被标注；而当一个时间词没有在语料库中出现过时，神经网络仍然有可能给这个词做上正确的标注，因为神经网络不仅学习到的是时间的表达，更重要的是能学到时间成分的上下文。这就是使用神经网络来进行时间提取的优势所在。</p>
+<h4 id="221-模型介绍">2.2.1 模型介绍</h4>
+<p>在本项目中，我选择的使用的模型为目前自然语言处理命名实体识别任务中比较主流的Bert + BiLSTM + CRF模型。本项目中的时间提取实质上就是一种简单的命名实体识别任务。</p>
+<ul>
+<li>CRF模型</li>
+</ul>
+<p>CRF（条件随机场）模型通过构造一组特征函数集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>f</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>f</mi><mn>2</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(f_1, f_2, ...)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>来表示当前标注的“评分”，每个特征函数都会被赋予一个权重<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>λ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\lambda_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，综合所有特征函数得到的综合“评分”再进行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">softmax</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span></span></span></span>处理就能算出当前序列标注的正确概率。训练过程即为训练出最佳特征函数集和最佳权重的过程。预测过程即为选取正确概率最大的标注序列。具体而言：</p>
+<ul>
+<li>
+<p>特征函数的形式为</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>s</mi><mo separator="true">,</mo><msub><mi>W</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>L</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>L</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f(s, W_i, L_i, L_{i-1})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span>为要标注的句子，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>W</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">W_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为句子中的第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个词或字符，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">L_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个词要标注的词性，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">L_{i-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>表示它的前一个词要标注的词性。特征函数可以理解为是第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个词在特征函数的作用下对第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个词的影响，影响的正负结合权重将最终影响该标注的正确概率。</p>
+</li>
+<li>
+<p>由特征函数集得到综合评分</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>(</mo><mi>L</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>λ</mi><mi>j</mi></msub><msub><mi>f</mi><mi>j</mi></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><msub><mi>W</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>L</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>L</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">score(L|s)=\sum^m_{j=1}\sum^n_{i=1}\lambda_jf_j(s, W_i, L_i, L_{i-1})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault">L</span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0651740000000007em;vertical-align:-1.4137769999999998em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000007em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4137769999999998em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>(</mo><mi>L</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">score(L|s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault">L</span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mclose">)</span></span></span></span>表示对句子<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span>进行用标注序列<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span>进行标注的评分。内层求和为综合句子中每个单词标注的评分的过程；外层求和为结合权重<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>λ</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\lambda_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>综合每个特征函数评分的过程。</p>
+</li>
+<li>
+<p>对综合评分进行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">softmax</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span></span></span></span>处理得到该标注的正确概率</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>L</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo><mo>=</mo><mi>s</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>(</mo><mi>L</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo><mo>)</mo><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>(</mo><mi>L</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo></mrow></msup><mrow><munder><mo>∑</mo><msup><mi>L</mi><msup><mrow></mrow><mo mathvariant="normal">′</mo></msup></msup></munder><msup><mi>e</mi><mrow><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>(</mo><msup><mi>L</mi><msup><mrow></mrow><mo mathvariant="normal">′</mo></msup></msup><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(L|s)=softmax(score(L|s))=\frac{e^{score(L|s)}}{\sum_{L^{&#x27;}}e^{score(L^{&#x27;}|s)}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">L</span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault">L</span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.66869em;vertical-align:-1.1036899999999998em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.565em;"><span style="top:-2.1960200000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32526999999999995em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">L</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8928285714285715em;"><span style="top:-2.8928285714285713em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.6068285714285713em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8495600000000001em;"><span style="top:-2.84956em;margin-right:0.1em;"><span class="pstrut" style="height:2.55556em;"></span><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9139799999999999em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathdefault mtight">L</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8928285714285715em;"><span style="top:-2.8928285714285713em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.6068285714285713em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8495600000000001em;"><span style="top:-2.84956em;margin-right:0.1em;"><span class="pstrut" style="height:2.55556em;"></span><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord mtight">∣</span><span class="mord mathdefault mtight">s</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">L</span><span class="mord mtight">∣</span><span class="mord mathdefault mtight">s</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1036899999999998em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+</ul>
+<p>HMM（隐马尔可夫模型）是CRF的一个特例。相比于HMM，CRF能定义丰富的特征函数，并且权重也是没有限制的，因此CRF模型能提取出更丰富的特征。</p>
+<ul>
+<li>
+<p>BiLSTM模型</p>
+<p>（本部分图片与知识来自参考文献 [1]）</p>
+</li>
+</ul>
+<p>BiLSTM由前向LSTM和后向LSTM组合而成，因此我们需要先了解LSTM模型是什么。LSTM是RNN模型的一种。RNN（循环神经网络）是一类用于处理序列数据的神经网络模型，但由于它存在梯度消失的问题，无法处理长时间间隔的数据依赖。而LSTM则通过巧妙的门结构（遗忘门、记忆门、输出门）在一定程度上解决了梯度消失的问题，实现了“长期记忆”。</p>
+<figure data-type="image" tabindex="9"><img src="https://river861.github.io/post-images/1601467342321.png" alt="" loading="lazy"></figure>
+<p>上图中，我们称绿色的大矩形框为一个单元；黄色矩形表示需要学习的神经网络层；粉色圆形表示运算操作；黑色箭头表示向量的传输，其中黑色箭头的合并表示向量的拼接，分开表示向量的复制。</p>
+<figure data-type="image" tabindex="10"><img src="https://river861.github.io/post-images/1601467370815.png" alt="" loading="lazy"></figure>
+<p>LSTM的核心在于它在各个单元中维护并传递了一个细胞状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">C_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>（如图所示横向黑箭头）。每当细胞状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">C_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>经过一个单元时，它会依次受到单元中遗忘门、记忆门的影响而改变，然后还会通过输出门产生当前节点的输出向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>h</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">h_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
+<ul>
+<li>遗忘门</li>
+</ul>
+<figure data-type="image" tabindex="11"><img src="https://river861.github.io/post-images/1601467409083.png" alt="" loading="lazy"></figure>
+<p>遗忘门读取上一单元的输出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>h</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">h_{t-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>和本单元的输入向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，通过一个包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>m</mi><mi>o</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">sigmoid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>函数的神经网络层输出0~1的数值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">f_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，表示之前的内容要记住多少。然后与细胞状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">C_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>相乘即实现了遗忘之前状态的效果。</p>
+<ul>
+<li>记忆门</li>
+</ul>
+<figure data-type="image" tabindex="12"><img src="https://river861.github.io/post-images/1601467443939.png" alt="" loading="lazy"></figure>
+<p>记忆门同样读取上一单元的输出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>h</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">h_{t-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>和本单元的输入向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，但它输入分为两条经过两个不同的神经网络层。其中一条与遗忘门类似，经过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>m</mi><mi>o</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">sigmoid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>函数产生0～1的数值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>i</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">i_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示哪些部分是这次要学习的。而另一条通过一个包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>n</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">tanh</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">h</span></span></span></span>函数的神经网络层产生更新候选值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><msub><mi>C</mi><mi>t</mi></msub><mo>~</mo></mover></mrow><annotation encoding="application/x-tex">\tilde{C_t}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0701899999999998em;vertical-align:-0.15em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9201899999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.6023300000000003em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">~</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span>。二者相乘得到的就是当前单元要新记忆的内容，然后与细胞状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">C_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>相加即实现了记忆的效果。</p>
+<ul>
+<li>输出门</li>
+</ul>
+<figure data-type="image" tabindex="13"><img src="https://river861.github.io/post-images/1601467471399.png" alt="" loading="lazy"></figure>
+<p>输出门和记忆门是十分类似的，不同的地方是，它将包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>n</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">tanh</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">h</span></span></span></span>函数的神经网络层用于从细胞状态中产生输出候选值。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>m</mi><mi>o</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">sigmoid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>函数同样产生0～1的数值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>o</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">o_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，这次表示输出候选中哪些部分是要作为输出的。二者相乘即产生了当前单元的输出向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>h</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">h_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
+<p>LSTM虽然能很好地做到长期记忆，但是它只能捕获从前面到来的信息，而无法获得后面到前面的信息。在自然语言处理中，后向的信息也是很重要的。因此就有了我们在本项目会用到的BiLSTM模型。BiLSTM顾名思义，它是由一个正向LSTM神经网络和一个反向的LSTM神经网络构成的。通过将两条方向相反的LSTM神经网络的各单元输出结合起来，就能够充分地利用到上下文的信息，产生更好的输出结果。</p>
+<figure data-type="image" tabindex="14"><img src="https://river861.github.io/post-images/1601467488998.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>Bert模型</p>
+<p>（本部分图片与知识来自参考文献 [2]）</p>
+</li>
+</ul>
+<p>语言模型的预训练可以显著的提高许多自然语言处理任务的效果，现有的将预训练的语言模型应用到下层任务的方法有两种：基于特征和基于微调。其中，基于特征的例子有ELMo模型，它通过BiLSTM进行预训练，并将预训练的表示作为附加特征；基于微调的例子有OpenAI GPT模型，它通过Transformer编码器作为语言模型进行预训练，下层的自然语言处理任务在其基础上进行微调即可。</p>
+<p>但是上述两种方法都没有进行或没有完全进行同时的双向计算，这给预训练的效果带来了很大的局限性。特别是像本项目这样的标记类的任务中，从两个方向同时分析上下文是至关重要的。因此我们考虑使用的是结合了两者优点又规避了两者缺点的Bert模型。Bert模型改进了基于微调的方法，采用的是多层的双向Transformer编码器：</p>
+<figure data-type="image" tabindex="15"><img src="https://river861.github.io/post-images/1601467504921.png" alt="" loading="lazy"></figure>
+<p>Bert模型主要实现了两个任务，分别是输入表示和预训练：</p>
+<ul>
+<li>输入表示</li>
+</ul>
+<p>Bert的输入表示可以是单个文本或一对文本，对于每一个词或字符，它的输入表示是通过三部分Embedding求和构造而成的：</p>
+<figure data-type="image" tabindex="16"><img src="https://river861.github.io/post-images/1601467592330.png" alt="" loading="lazy"></figure>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>o</mi><mi>k</mi><mi>e</mi><mi>n</mi><mtext> </mtext><mi>E</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>d</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Token\ Embeddings</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">s</span></span></span></span>表示的是词向量，在本项目中，我们的时间标记是基于字的，因此这里将得到字向量；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>e</mi><mi>g</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mtext> </mtext><mi>E</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>d</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Segment\ Embeddings</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">s</span></span></span></span>用于进行两个句子输入时的区分，与本项目无关；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mtext> </mtext><mi>E</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>d</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Position\ Embeddings</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">s</span></span></span></span>表示的是位置信息，这在标记任务中是很重要的。</p>
+<ul>
+<li>预训练</li>
+</ul>
+<p>Bert模型进行了两种巧妙的预训练任务，分别为遮蔽语言模型（Masked LM）和下一句预测：</p>
+<pre><code>  1. Masked LM简单来说就是在训练过程中，Bert会随机遮蔽每个输入序列中15%的标签，让模型来预测这些被覆盖的标签。这样学习到的表示能很好的融合左右两侧的上下文。
+
+  2. 下一句预测是针对一些需要建立两个句子文本之间关系的任务的预处理，简单来说就是输入多句文本时，输入的第二个片段会有50%的概率从全部文本中随机挑选，以此来训练连续性预测的能力。
+</code></pre>
+<ul>
+<li>Bert - BiLSTM - CRF</li>
+</ul>
+<p>我们已经分别介绍了CRF、BiLSTM、Bert，将它们组合起来也是很简单的，即给BiLSTM模型增加基于Bert的Embedding层，然后再在BiLSTM的最后加入一层CRF线性层。</p>
+<p>Bert的强大的预训练效果就不说了，BiLSTM能结合前后上下文给每一个输入字计算出它所有可能的标记的正确概率，CRF能在这些概率的基础上，保证结果的有效性。具体而言，CRF基于前后标注的特征函数让它能学习到各个标签的相邻关系，从而能比较有效地解决标注无效的问题。比如在本项目中，“B-TIME O I-TIME”就是一个无效的时间标注，因为I-TIME标注不应该跟在O标注的后面。</p>
+<h4 id="222-训练相关参数与训练结果">2.2.2 训练相关参数与训练结果</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>字数</th>
+<th>B-TIME</th>
+<th>I-TIME</th>
+<th>O</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练集</td>
+<td>86145</td>
+<td>2166</td>
+<td>9602</td>
+<td>74377</td>
+</tr>
+<tr>
+<td>验证集</td>
+<td>11199</td>
+<td>281</td>
+<td>1213</td>
+<td>9705</td>
+</tr>
+<tr>
+<td>测试集</td>
+<td>16946</td>
+<td>439</td>
+<td>1852</td>
+<td>14655</td>
+</tr>
+</tbody>
+</table>
+<p>Bert模型使用的是Google开源的中文预训练模型chinese_L-12_H-768_A-12（链接见参考文献 [4]）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Layer-num</th>
+<th>Hidden-size</th>
+<th>Heads-num</th>
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BERT-Base, Chinese</td>
+<td>12</td>
+<td>768</td>
+<td>12</td>
+<td>110M</td>
+</tr>
+</tbody>
+</table>
+<p>其他参数：</p>
+<table>
+<thead>
+<tr>
+<th>输入维度sequence_length</th>
+<th>batch_size</th>
+<th>epochs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>128</td>
+<td>16</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>训练后通过测试集得到的模型评估结果如下：</p>
+<figure data-type="image" tabindex="17"><img src="https://river861.github.io/post-images/1601467752142.png" alt="" loading="lazy"></figure>
+<h4 id="223-三种不同模型的对比">2.2.3 三种不同模型的对比</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>精确度</th>
+<th>召回率</th>
+<th>F-度量值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BiLSTM</td>
+<td>0.6938</td>
+<td>0.7426</td>
+<td>0.7174</td>
+</tr>
+<tr>
+<td>BiLSTM-CRF</td>
+<td>0.7035</td>
+<td>0.7370</td>
+<td>0.7198</td>
+</tr>
+<tr>
+<td>Bert-BiLSTM-CRF</td>
+<td>0.8584</td>
+<td>0.9070</td>
+<td>0.8820</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到Bert预处理模型显著地提高了训练的效果，预测精确度将近86%，召回率达到90%左右。相比没有Bert预处理的模型均提高了16%左右。</p>
+<p>而使用BiLSTM和BiLSTM-CRF的训练效果相差不大，且都不是很好。</p>
+<h4 id="224-标注效果">2.2.4 标注效果</h4>
+<p>我们用下面这个复杂的例句来分别检测一下三种模型的实际标注效果：</p>
+<pre><code>明天上午8:15去饭堂吃早餐，下午1:30上课，晚上写pj，周二之前做完pj，然后开始写实验报告，从12月5号到12月20号进行总复习，23号开始考试，3天后继续复习功课。
+</code></pre>
+<ul>
+<li>
+<p>BiLSTM</p>
+<p>标记结果：</p>
+<figure data-type="image" tabindex="18"><img src="https://river861.github.io/post-images/1601467766090.png" alt="" loading="lazy"></figure>
+<p>对应抽取的时间成分为：</p>
+<figure data-type="image" tabindex="19"><img src="https://river861.github.io/post-images/1601467778360.png" alt="" loading="lazy"></figure>
+<p>其中蓝色代表正确标记，黄色代表多余标记，红色代表遗漏标记。</p>
+</li>
+<li>
+<p>BiLSTM-CRF</p>
+<p>标记结果：</p>
+<figure data-type="image" tabindex="20"><img src="https://river861.github.io/post-images/1601467789691.png" alt="" loading="lazy"></figure>
+<p>对应抽取的时间成分为：</p>
+<figure data-type="image" tabindex="21"><img src="https://river861.github.io/post-images/1601467800370.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>Bert-BiLSTM-CRF</p>
+<p>标记结果：</p>
+<figure data-type="image" tabindex="22"><img src="https://river861.github.io/post-images/1601467813055.png" alt="" loading="lazy"></figure>
+<p>对应抽取的时间成分为：</p>
+<figure data-type="image" tabindex="23"><img src="https://river861.github.io/post-images/1601467824682.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<p>可以看到，单独的BiLSTM模型或BiLSTM-CRF模型虽然能大致找到时间成分的位置，但是标记的精细程度较差，不能准确的区分时间成分的边界。并且都有遗漏标记的情况。这就是这两个模型精确度和召回率较低的表现。</p>
+<p>而Bert-BiLSTM-CRF模型在时间标记上做得相当好，不仅找全了所有的时间成分，并且每个成分都做到了精准标注。这样的结果是让人满意的。</p>
+<p>为了避免偶然情况，我多测试了几个句子，结果如下：</p>
+<ul>
+<li>
+<figure data-type="image" tabindex="24"><img src="https://river861.github.io/post-images/1601467843137.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="25"><img src="https://river861.github.io/post-images/1601467854395.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<figure data-type="image" tabindex="26"><img src="https://river861.github.io/post-images/1601467863402.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="27"><img src="https://river861.github.io/post-images/1601467873375.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<figure data-type="image" tabindex="28"><img src="https://river861.github.io/post-images/1601467882370.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="29"><img src="https://river861.github.io/post-images/1601467891092.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+<p>可以看到训练出的Bert-BiLSTM-CRF能正确处理绝大部分句子的时间成分提取，但也依然有极个别时间无法完整获取，比如上面的“下下下下下下”。</p>
+<p>这是由于数据集中没有包含像这样这么长的相对时间描述，并且这样的连续重复的字符干扰了神经网络对语义的分析。考虑到一般用户不太会使用这样的长相对时间描述进行任务安排，因此我认为这类型时间描述的漏判是可以容忍的。总体而言，利用Bert-BiLSTM-CRF模型提取时间成分的效果已经足够好了。</p>
+<h3 id="23-时间与任务的一一配对">2.3 时间与任务的一一配对</h3>
+<p>在前面我们已经成功地利用神经网络从很长的自然文本中准确地标记出了时间成分，接下来我们就要利用这些标记将句子中的时间成分和任务成分分离、配对。</p>
+<figure data-type="image" tabindex="30"><img src="https://river861.github.io/post-images/1601467901301.png" alt="" loading="lazy"></figure>
+<p>以上图的句子为例，根据标注序列，我们可以轻松地提取出句子中蓝框所示的时间成分，考虑到本项目处理的是任务安排类的自然语言文本，因此我们认为除了时间成分之外的部分即为任务成分。</p>
+<p>接下来我们要考虑的就是时间和任务的配对问题。我们考虑以下几个命题：</p>
+<ul>
+<li>
+<p>时间和任务表达总是间隔分布的</p>
+<p>如果我们将时间的表达放一起，任务的表达放一起，则语句变为：</p>
+<pre><code>明天和大后天学习、放假
+</code></pre>
+<p>这时表达中就会出现歧义：是明天和大后天分别进行学习和放假呢？还是明天和大后天每天都要学习+放假呢？由于在进行任务时间安排时，我们是没有语境的，因此我们没有办法通过分析语境来消除这一类的歧义。因此我们不考虑这类有歧义的表达，即我们认为时间和任务的表达总是间隔分布的。</p>
+</li>
+<li>
+<p>时间和其对应的任务总是相邻的</p>
+<p>这里的“相邻”指的是两个成分之间没有其他的时间成分。</p>
+<p>这个结论是显然的，当我们做出“明天学习，大后天放假”的安排时，我们不会将“明天”关联到与其不相邻的“放假”上，因为它们中间存在“大后天”这一个时间成分，因此“放假”这一任务成分只可能从属于“大后天”，而不可能从属于在位置上离得更远的“明天”。</p>
+</li>
+<li>
+<p>一组对应的时间和任务总是时间在前，任务在后的</p>
+<p>我们在一开始进行的数据分析中提到了，时间成分绝大多数分布在一个句子的前半部分。另一方面，由于本项目考虑的仅为任务安排类的自然语言，说出任务在前、时间在后的表达是不符合语言习惯的：</p>
+<pre><code>学习明天，放假大后天
+</code></pre>
+<p>方便起见，我们不考虑这样奇怪的表达方式。</p>
+</li>
+</ul>
+<p>至此，我们就找到了将时间与任务成分一一配对的方法：每个时间成分从它紧接着往后的地方开始，一直到碰到下一个时间成分之前为止，将这样一段语句作为这个时间对应要安排的任务成分。</p>
+<p>这时提取出的任务成分显然是不纯的，比如在这个例子中，明天的任务成分为“学习，”；另一方面，一个任务成分中可以包含多个任务，比如“明天看课本、写报告”，任务成分中包含了“看课本”“写报告”两个任务实体，我们需要将它们拆分开来。以上的问题就需要通过任务解析器来解决。</p>
+<h3 id="24-任务解析">2.4 任务解析</h3>
+<h4 id="240-为什么选择基于句法分析">2.4.0 为什么选择基于句法分析？</h4>
+<p>我们在报告开头提到，像jieba分词等大部分分词工具并不能很好的处理时间词的划分，但它们在其他词性上（如动词、名词、介词等）的标注和划分还是做得很好的。在任务解析中，我们已经分离出了时间成分，因此在这里分词工具就能产生比较准确的词性标注效果。</p>
+<p>有了词性标注的正确性保证，就能使用句法分析来构建任务成分的句法分析树，从而从树中解析出任务成分中的多个有效任务实体。</p>
+<h4 id="241-文法的设计与动态生成">2.4.1 文法的设计与动态生成</h4>
+<ul>
+<li>
+<p>文法的基本设计与优化策略</p>
+<p>在前面数据分析中提到，我们重点关注任务成分中的动词、名词、介词，因此我们的文法也以这三种词性为中心构建。我们将使用VP、NP、PP、V、N、P这六种常见词性，同时，针对本项目的任务表示问题，我定义了以下4种新结构类型：</p>
+<table>
+<thead>
+<tr>
+<th>结构名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPS</td>
+<td>由多个VP组成的结构，这也是我们期望的句法分析树的根节点</td>
+</tr>
+<tr>
+<td>VP1</td>
+<td>不包含介词结构的动词短语</td>
+</tr>
+<tr>
+<td>VP2</td>
+<td>包含介词结构的动词短语</td>
+</tr>
+<tr>
+<td>VP1S</td>
+<td>由多个VP1组成的结构</td>
+</tr>
+</tbody>
+</table>
+<p>这里实际上是将VP分为了VP1和VP2两类，为的是分别处理有介词和无介词的情形。例如，在“在寝室写作业、吃饭和睡觉”这个结构中，“吃饭”和“睡觉”也是在“寝室”中进行的，因此我们不希望将它们与“写作业”分开；而如果没有介词结构的影响，我们则希望将它们分开。</p>
+<p>而定义VP1S来区分VPS是为了简化树的结构，即不考虑一个结构中包含多个介词结构的情形。通过后面的文法定义就可以看出。</p>
+<p>我们以下面这个任务成分为例，引入本项目文法的定义：</p>
+<pre><code>去教室上课，然后在寝室写作业、吃饭和睡觉
+</code></pre>
+<p>进行jieba分词后，抽取我们关注的动词、名词、介词如下：</p>
+<pre><code>去(V) 教室(N) 上课(V) 在(P) 寝室(N) 写(V) 作业(N) 吃饭(V) 睡觉(V)
+</code></pre>
+<p>为了能保证生成有效的句法分析树，本项目使用的是递归下降的分析算法。由于需要分析的任务成分一般较短，因此效率上的缺陷无需担忧。设计的文法如下：</p>
+<pre><code>VPS 	  -&gt;  VP | VP VP | VP VP VP | VP VP VP VP | VP VP VP VP VP
+VP1S     -&gt;  VP1 VP1 VP1 VP1 VP1 | VP1 VP1 VP1 VP1 | VP1 VP1 VP1 | VP1 VP1 | VP1
+VP 	        -&gt;  VP2 | VP1
+VP2       -&gt;  PP VP1S
+VP1       -&gt;  V VP1 | V NP | V
+NP 	       -&gt;  Det N | N N | N
+PP 	       -&gt;  P NP
+P 	         -&gt;  '在'
+N 	         -&gt;  '教室' | '寝室' | '作业'
+V 	         -&gt;  '去' | '上课' | '写' | '吃饭' | '睡觉'
+</code></pre>
+<ul>
+<li><code>VPS</code>的分解即表示将任务成分分解为多个动词结构的任务实体，从少量到大量进行排序是为了让递归下降法首先找到能让介词结构包含多个动词成分的情况。比如，要找到<code>（VP 在寝室写作业、吃饭、睡觉）</code>而不是<code>（VP 在寝室写作业）（VP 吃饭）（VP 睡觉）</code>。</li>
+<li><code>VP</code>简单的分为VP1和VP2两种情形。</li>
+<li><code>VP1 -&gt; V VP1</code>考虑的是连续两个动词成分在语义上不可分割的情形，这在任务表达中比较常见。比如<code>继续（V） 学习（V）</code>应该被分析为<code>（VP 继续学习）</code>而不是<code>（VP 继续）（VP 学习）</code>；而<code>VP -&gt; V NP | V</code>考虑的就是常见的动宾短语和纯动词成分。</li>
+<li><code>VP2 -&gt; PP VP1S</code>表示带介词的动词结构由一个介宾短语和后面跟着的若干个动词成分构成，<code>（VP2 在寝室写作业、吃饭、睡觉）</code>就是典型的例子；这里将后面的动词成分限制为<code>VP1</code>就是不考虑后面的动词部分还存在介词的情形，这样的表达在任务成分中实际上也是不存在的，因为<code>在寝室写作业，在桌子上吃饭、睡觉</code>显然应该被分析为<code>（VP2 在寝室写作业)</code> <code>（VP2 在桌子上吃饭、睡觉）</code>两个成分；另外，这样考虑也能减少递归算法的递归次数，从而提高效率。</li>
+<li><code>VP1S</code>的分解是从大量到少量来排序的，这是为了将<code>VP2</code>结构中的动词成分尽可能的并列存放，因为它们显然是并列关系。</li>
+<li><code>NP -&gt; N N</code>考虑了两个连续名词构成一个名词的情况，这种情况也比较常见。比如，<code>牛肉（N）火锅（N）</code>应该被当做一个完整的名词结构<code>（NP 牛肉火锅）</code>。</li>
+</ul>
+<p>以上对文法中结构的内容和排序上的细致规定，实际上都是对递归下降法的优化策略。通过这些优化策略，递归下降方法就能首先找到我们期望的句法分析结构，因此当找到第一个句法分析树后，就可以直接停止算法，从而提高分析效率。</p>
+<p>例句通过以上文法生成的句法分析树如下：</p>
+<figure data-type="image" tabindex="31"><img src="https://river861.github.io/post-images/1601467938479.png" alt="" loading="lazy"></figure>
+<p>可以看到我们设计的文法很好地分析出了句子的结构。唯一比较令人在意的是“去教室上课”这个短语被分为了“去教室”和“上课”两个不同的动作，在这里实际上是动词结构的划分细致程度超过了我们的预期，不过对于任务的表达影响不大，因此我认为是可以接受的。</p>
+</li>
+<li>
+<p>动态生成方法</p>
+<p>对于不同的任务成分，我们显然需要对文法内容进行相应的修改，因此这需要我们动态地生成文法。动态生成的部分实际上只有两部分：</p>
+<ul>
+<li><code>P、N、V</code>三种词性的文法。这里就需要我们在进行句法分析前，首先对任务成分进行分词和词性标注，然后将相应的词性指向具体的词。</li>
+<li><code>VPS、VP1S</code>的分解数量上限。显然<code>VPS</code>和<code>VP1S</code>的分解数量不可能超过任务成分中动词的数目，因此这就需要我们在进行词性标注的同时统计动词的数目，从而确定分解数量的上限，以便生成具体文法。</li>
+</ul>
+</li>
+</ul>
+<h4 id="242-解析效果">2.4.2 解析效果</h4>
+<p>得到句法分析树后，就可以从树中第二层的VP节点解析出相应的任务实体。一个VP节点即代表一个任务实体。</p>
+<figure data-type="image" tabindex="32"><img src="https://river861.github.io/post-images/1601467949630.png" alt="" loading="lazy"></figure>
+<p>第一个输入即为例句，后面两个输入对应的句法分析树依次如下：</p>
+<p><img src="https://river861.github.io/post-images/1601467965686.png" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601467974194.png" alt="" loading="lazy"></p>
+<p>“找东西吃”和例句中的“去教室上课”一样，被分成了“找”和“吃”两个动作，这对任务的表达影响不大。</p>
+<h3 id="25-时间解析">2.5 时间解析</h3>
+<h4 id="250-为什么选择基于正则表达式">2.5.0 为什么选择基于正则表达式？</h4>
+<p>我们前面提到，正则表达式无法提取出时间成分与上下文之间的关系，因此我们选择使用神经网络来进行时间成分的提取。而现在时间成分已经提取出来了，已经不在需要考虑上下文的联系了，因此这时运用正则表达式就能得到很好的效果。另一方面，由于我们解析的文本范围缩小到了时间，因此编写正则表达式时不需要考虑非时间文本的干扰，这样一来正则表达式的编写将比较简单。另外，人们公认的时间表达方式总是有限的，因此完善的正则表达式总能匹配到绝大部分的时间表达。</p>
+<h4 id="251-时间解析的目标和规定">2.5.1 时间解析的目标和规定</h4>
+<p>时间解析的目标为：将用自然语言表达的时间成分转化为标准时间。比如：</p>
+<table>
+<thead>
+<tr>
+<th>2019年12月1日下午3点一刻</th>
+<th>2019/12/01 15:15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>明天早上到晚上8点</td>
+<td>2019/12/02 09:00 ~ 2019/12/02 20:00</td>
+</tr>
+</tbody>
+</table>
+<p>在本项目中，考虑到我们要做的是时间管理助手，因此我们规定</p>
+<ul>
+<li>最小的时间处理粒度为分钟。因为秒级的任务意义不大。</li>
+<li>只考虑未来的时间。因为过去的时间根本没有安排任务的必要。</li>
+<li>用户输入的时间成分不会出现矛盾冲突。</li>
+</ul>
+<p>有了以上三条规定约束，用正则表达式解析时间能方便不少。</p>
+<h4 id="252-时间解析总框架">2.5.2 时间解析总框架</h4>
+<figure data-type="image" tabindex="33"><img src="https://river861.github.io/post-images/1601467996870.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>首先未解析的时间成分先进入节日节气转换器，将自然语言中的节日、节气表达转化为确切的时间</p>
+</li>
+<li>
+<p>然后进入时间段判断器判断是否为时间段的表达，若是时间段则需要对时间段的首尾时间都进行解析</p>
+</li>
+<li>
+<p>之后获取系统当前时间作为基准时间，然后分别进入三种正则表达式解析器依次从时间文本中解析出确切时间、模糊时间、相对时间<br>
+每当解析出一个时间层次，就覆盖基准时间中相应的时间层次。比如若基准时间为2019/12/01 23:00，当解析出日数为“3日”时，则覆盖基准时间的日数层次，变为2019/12/03 23:00，其它层次同理。<br>
+相对时间也是根据基准时间进行计算的。比如解析出“明天”，则覆盖基准时间，变为2019/12/02 23:00。<br>
+最后更新完成后的基准时间即为时间文本所要表达的规范化时间。<br>
+简而言之，就是通过维护一个初始值为系统当前时间的“状态时间”<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 来计算出最终得到的时间，该时间就是时间成分所要表达的规范化时间。</p>
+</li>
+<li>
+<p>正则表达式解析完毕后进入隐含义处理器，根据得到的解析结果判断是否存在隐含义表达，若有则对解析结果进行相应更正</p>
+</li>
+<li>
+<p>最后进入变化检测器<br>
+若得到的规范化时间与初始的系统基准时间完全一样，说明并没有从时间文本中解析出有效时间，此时即为解析失败，需要进入容错机制模块与用户进行交互。（容错机制并不是自然语言处理的部分，因此还未实现，将作为未来工作）</p>
+<p>若得到的时间与基准时间不同，说明有从时间文本中提取到有效时间，此时从时间解析器中输出规范化的时间并显示到日历中。</p>
+</li>
+</ul>
+<h4 id="253-关于缺省处理机制和继承机制">2.5.3 关于缺省处理机制和继承机制</h4>
+<p>从上面的时间解析器框架中可以知道，本项目中时间解析是通过维护“状态时间”<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 进行的，根据解析的结果对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 进行相应的覆盖更新。通过这样的方式解析时间实际上是为了实现时间表达的缺省处理机制和继承机制。</p>
+<ul>
+<li>
+<p>缺省处理机制<br>
+当用户给出时间安排时，会以当前时间作为“上下文”，这个上下文缺省表达了一些信息。比如：</p>
+<pre><code>26号考自然语言处理
+</code></pre>
+</li>
+</ul>
+<p>实际上缺省表达了年份、月份，即完整语义为“2019年12月26号”考自然语言处理。</p>
+<p>但对于时、分，我们不考虑缺省处理。因为当用户没有提及时、分时，是因为不需要具体安排到小时或分钟，而不是一种缺省表达。</p>
+<ul>
+<li>
+<p>继承机制<br>
+继承机制有点类似缺省机制，但它是发生在前后时间描述的一种缺省。比如：</p>
+<pre><code>12月26号早上9:55到11:35考自然语言处理
+</code></pre>
+</li>
+</ul>
+<p>这里时间段的尾时间会继承首时间的表达。具体而言，这里的尾时间会继承首时间中的“12月26日早上”，即尾时间的完整语义为“2019年12月26号早上11:35”。</p>
+<pre><code>10月1号放假，7天后开学
+</code></pre>
+<p>在这个例子中，“7天后”继承了上一时间描述的上下文，即是“10月1号的7天后”，而不是“当前时间的7天后”。</p>
+<p>上述的两种情况，通过框架中维护的状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 都得到了解决。这样看来，这个状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 类似于LSTM神经网络中的细胞状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">C_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，它们都起着联系上下文的作用。</p>
+<h4 id="254-节日-节气处理器">2.5.4 节日、节气处理器</h4>
+<ul>
+<li>
+<p>节日的转换<br>
+节日的转换比较简单，通过一个节日表直接进行替换即可。举例如下：</p>
+<pre><code>  &quot;元旦&quot;:     &quot;01-01&quot;
+  &quot;春节&quot;:     &quot;01-01&quot; 
+  &quot;元宵节&quot;: &quot;01-15&quot; 
+</code></pre>
+</li>
+<li>
+<p>节气的转换<br>
+节气的转换需要计算。24个节气中，每个节气的月份是固定的，关键是要计算该节气在今年是几号。</p>
+<p>日号计算公式：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>a</mi><mi>y</mi><mo>=</mo><mo>[</mo><mi>Y</mi><mi>D</mi><mo>+</mo><mi>C</mi><mo>]</mo><mo>−</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">day = [YD + C] - L
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span></span></p>
+</li>
+</ul>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi><mo>=</mo><mi mathvariant="normal">年</mi><mi mathvariant="normal">份</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">后</mi><mn>2</mn><mi mathvariant="normal">位</mi></mrow><annotation encoding="application/x-tex">Y=年份的后2位</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord cjk_fallback">年</span><span class="mord cjk_fallback">份</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">后</span><span class="mord">2</span><span class="mord cjk_fallback">位</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>=</mo><mn>0.2422</mn></mrow><annotation encoding="application/x-tex">D=0.2422</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span class="mord">4</span><span class="mord">2</span><span class="mord">2</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo>=</mo><mi mathvariant="normal">闰</mi><mi mathvariant="normal">年</mi><mi mathvariant="normal">数</mi></mrow><annotation encoding="application/x-tex">L=闰年数</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">闰</span><span class="mord cjk_fallback">年</span><span class="mord cjk_fallback">数</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>取决于节气和年份。其中还有部分年份需要特殊考虑，这里不做过多介绍。</p>
+<h4 id="255-正则表达式解析器">2.5.5 正则表达式解析器</h4>
+<p>（正则表达式的书写部分参考了参考文献 [5]）</p>
+<ul>
+<li>
+<p>对时间段的解析</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">正则表达式</th>
+<th style="text-align:left">匹配示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(.+)[至到~](.+)</td>
+<td style="text-align:left">从12月2号到5号</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>若时间成分中存在“至”“到”“~”字符，则该时间成分为时间段。由于数据清洗阶段已经将符号转化为了半角，因此不需要考虑“～”字符了。</p>
+<ul>
+<li>
+<p>对确切时间的解析</p>
+<ol>
+<li>提取汉字表达的确切时间</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>匹配示例</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[0-9]{4}(?=年)</td>
+<td>2019年</td>
+<td>提取几年</td>
+</tr>
+<tr>
+<td>(10|11|12|[1-9])(?=月)</td>
+<td>12月</td>
+<td>提取几月</td>
+</tr>
+<tr>
+<td>(周|星期|礼拜)([1-7])</td>
+<td>周1</td>
+<td>提取周几</td>
+</tr>
+<tr>
+<td>([0-3][0-9]|[1-9])(?=(日|号))</td>
+<td>2日</td>
+<td>提取几号</td>
+</tr>
+<tr>
+<td>([0-2]?[0-9])(?=(点|时))</td>
+<td>2点</td>
+<td>提取几时</td>
+</tr>
+<tr>
+<td>([0-5]?[0-9](?=分(?!钟)))</td>
+<td>18分</td>
+<td>提取几分</td>
+</tr>
+<tr>
+<td>(?&lt;=[点时])1刻(?!钟)</td>
+<td>2点1刻</td>
+<td>1刻 解析为 15分</td>
+</tr>
+<tr>
+<td>(?&lt;=[点时])半</td>
+<td>2点半</td>
+<td>半 解析为 30分</td>
+</tr>
+<tr>
+<td>(?&lt;=[点时])3刻(?!钟)</td>
+<td>2点3刻</td>
+<td>3刻 解析为 45分</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>提取XX:XX表达的确切时间</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>匹配示例</th>
+<th>表示的时段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(晚上|晚|今晚|夜间|夜里|下午|午后)([0-2]?[0-9]): ([0-5]?[0-9])</td>
+<td>晚11:30</td>
+<td>午后</td>
+</tr>
+<tr>
+<td>([0-2]?[0-9]): ([0-5]?[0-9])(PM|pm|p.m)</td>
+<td>2:30pm</td>
+<td>午后</td>
+</tr>
+<tr>
+<td>([0-2]?[0-9]): ([0-5]?[0-9])</td>
+<td>2:30</td>
+<td>午前</td>
+</tr>
+</tbody>
+</table>
+<p>其中前两行为处理“午后XX:XX”的情况，在这种情形下，需要将小于12的时数增加12，变为24小时制；</p>
+<p>在前两行都未匹配上的情形下，剩下的能匹配上第三行的即为“早上XX:XX”的情况，这种情形不需要改变数值。</p>
+<ol start="3">
+<li>提取简易表达的确切时间</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>匹配示例</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>([0-9]{2,4})([-./])(10|11|12|[1-9])([-./])([0-3][0-9]|[1-9])</td>
+<td>2019-12-2</td>
+<td>年月日</td>
+</tr>
+<tr>
+<td>(10|11|12|[1-9])([-./])([0-3][0-9]|[1-9])</td>
+<td>12/2</td>
+<td>月日</td>
+</tr>
+</tbody>
+</table>
+<p>第一行匹配的是“2019-12-2”“2019.12.2”“2019/12/2”这样的简易表达；</p>
+<p>第二行匹配的是“12-2”“12.2”“12/2”这样的简易表达。由于当前处理的仅为时间成分，因此不需要考虑“12.2”与小数12.2的歧义。这就是先用神经网络提取时间成分带来的便利。</p>
+</li>
+<li>
+<p>对模糊时间的解析</p>
+<ol>
+<li>先以匹配到凌晨时段的模糊时间表示为例</li>
+</ol>
+<p>当匹配到凌晨时，分两种情况处理：</p>
+<ol start="2">
+<li>确切时间解析器中没有解析到“几时”</li>
+</ol>
+<pre><code>这时需要缺省赋值，将几时的时间赋值为0。这是必要的，因为在规范化的时间表示中，只有通过“X时”来才能表示出“凌晨”这一信息，这就是模糊时间表达的作用。类似的，后面的“早晨”“上午”“下午”等都会有相应的缺省赋值。
+</code></pre>
+<ol start="3">
+<li>确切时间解析器中解析了“几时”</li>
+</ol>
+<pre><code>这时不需要缺省赋值，但需要进行规范化的判断。当时数为12~23时，我们需要将时数减12。因为当用户提到“凌晨13时”时，指的实际上是“1时”。
+</code></pre>
+<ol start="4">
+<li>各个模糊时段的时间处理</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>时段</th>
+<th>正则表达式</th>
+<th>缺省赋值</th>
+<th>时间调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>凌晨</td>
+<td>(凌晨|黎明)</td>
+<td>0时</td>
+<td>时数为12~23时，将时数减12</td>
+</tr>
+<tr>
+<td>早晨</td>
+<td>(早上|早|今早|早间|早晨|清晨)</td>
+<td>6时</td>
+<td>时数为12~23时，将时数减12</td>
+</tr>
+<tr>
+<td>上午</td>
+<td>(上午|am|AM|a.m)</td>
+<td>9时</td>
+<td>时数为12~23时，将时数减12</td>
+</tr>
+<tr>
+<td>中午</td>
+<td>(中午|午间|白天)</td>
+<td>12时</td>
+<td>时数为0~4时，将时数加12</td>
+</tr>
+<tr>
+<td>下午</td>
+<td>(下午|午后|pm|PM|p.m)</td>
+<td>15时</td>
+<td>时数为0~11时，将时数加12</td>
+</tr>
+<tr>
+<td>晚上</td>
+<td>(晚上|晚|今晚|夜间|夜里)</td>
+<td>21时</td>
+<td>时数为0~12时，将时数加12</td>
+</tr>
+</tbody>
+</table>
+<p>晚上的时间调整中，当时数变为24时时，要再变为0时，因为规范化时间中没有24时。</p>
+</li>
+<li>
+<p>对相对时间的解析</p>
+<ol>
+<li>XXX时间之后</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>匹配示例</th>
+<th>粒度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\d+(?=多?年[以之过]?后)</td>
+<td>1年之后</td>
+<td>年</td>
+</tr>
+<tr>
+<td>\d+(?=多?个?月[以之过]?后)</td>
+<td>1个月之后</td>
+<td>月</td>
+</tr>
+<tr>
+<td>\d+(?=多?个?(周|星期|礼拜)[以之过]?后)</td>
+<td>1个礼拜后</td>
+<td>周</td>
+</tr>
+<tr>
+<td>\d+(?=多?天[以之过]?后)</td>
+<td>1天后</td>
+<td>天</td>
+</tr>
+<tr>
+<td>\d+(?=多?个?多?(小时|钟|钟头|时辰)[以之过]?后)</td>
+<td>1个小时后</td>
+<td>时</td>
+</tr>
+<tr>
+<td>半(?=个?多?(小时|钟|钟头|时辰)[以之过]?后)</td>
+<td>半个钟后</td>
+<td>时</td>
+</tr>
+<tr>
+<td>\d+(?=多?分钟[以之过]?后)</td>
+<td>1分钟后</td>
+<td>分</td>
+</tr>
+<tr>
+<td>半(?=分钟[以之过]?后)</td>
+<td>半分钟后</td>
+<td>分</td>
+</tr>
+<tr>
+<td>\d+(?=刻钟[以之过]?后)</td>
+<td>1刻钟后</td>
+<td>分</td>
+</tr>
+</tbody>
+</table>
+<p>以上为从大到小各个粒度时间的“XXX时间之后”的相对时间的表达。利用正则表达式考虑了“以后”“之后”“过后”三种表达，并忽略掉“多”“个”等语言习惯词。其中“时”“分”的层面要考虑“半”和“刻钟”的表达。</p>
+<ol start="2">
+<li>明X、后X、下个XX</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>匹配示例</th>
+<th>粒度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>明年</td>
+<td>明年</td>
+<td>年</td>
+</tr>
+<tr>
+<td>后年</td>
+<td>后年</td>
+<td>年</td>
+</tr>
+<tr>
+<td>下+个?月</td>
+<td>下下下个月</td>
+<td>月</td>
+</tr>
+<tr>
+<td>(下+个?(周|星期|礼拜))([1-7]?)</td>
+<td>下下下下个周五</td>
+<td>周</td>
+</tr>
+<tr>
+<td>明天?(?!年)</td>
+<td>明</td>
+<td>天</td>
+</tr>
+<tr>
+<td>(?&lt;!大)后天</td>
+<td>后天</td>
+<td>天</td>
+</tr>
+<tr>
+<td>大+后天</td>
+<td>大大大大大后天</td>
+<td>天</td>
+</tr>
+</tbody>
+</table>
+<p>以上为从大到小各个粒度时间的“明X、后X、下个XX”的相对时间的表达。同样利用正则表达式忽略掉“个”等语言习惯词。比较有趣的是，这里通过解析“下”字或者“大”字的个数来推算需要将时间往后增加多少个月、多少个周或多少天，虽然前面提到过，神经网络并不能识别出“下”字或者“大”字过多的时间表达。</p>
+</li>
+</ul>
+<h4 id="256-时间隐含义处理器">2.5.6 时间隐含义处理器</h4>
+<ul>
+<li>
+<p>跨年带来的隐含义</p>
+<p>当用户指定了一个过去的月份的时间时，实际上是指明年的月份。比如：</p>
+<p>在2019年12月时，用户做出“1月放假”的安排时，指的是2020年的1月放假。</p>
+</li>
+<li>
+<p>跨月带来的隐含义</p>
+<p>当用户指定了一个当月过去的日期时，实际上是指下个月的日期。比如：</p>
+<p>在2019年11月25日时，用户做出“1号写报告”的安排时，指的是12月1号写报告。</p>
+</li>
+<li>
+<p>跨周带来的隐含义</p>
+<p>当用户指定了一个当周过去的日期时，实际上是指下周的日期。比如：</p>
+<p>在周五时，用户做出“周一上课”的安排时，指的是下周一上课。</p>
+</li>
+<li>
+<p>跨日带来的隐含义</p>
+<p>当用户指定了一个当天过去的时间段时，实际上是指明天的时间段。比如：</p>
+<p>在晚上，用户做出“早上吃早餐”的安排时，指的是明天早上吃早餐。</p>
+</li>
+</ul>
+<p>上述的这四个隐含义在我们的生活中是很普遍的，但是我们时间解析器的基于维护状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 的算法正好无法处理这样的隐含义，因此才需要单独设置本模块来专门检测隐含义并对状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 作出相应更改。</p>
+<p>检测方法是显然的，当解析出的状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 要早于系统当前时间时，就说明存在没有被处理的隐含义。</p>
+<p>这时按照时间粒度从大到小逐个进行判断，当判断出为跨年带来的隐含义时，就把状态时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的年数加1，其他隐含义的处理方式类似。</p>
+<h4 id="257-时间变化检测器">2.5.7 时间变化检测器</h4>
+<ul>
+<li>当检测到状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 和系统当前时间完全一致时，说明时间解析器没有解析出任何时间， 此时为解析失败；</li>
+<li>当检测到状态时间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 和系统基准时间存在不同，而时、分是相同时，说明用户没有提供时、分这样细粒度的时间安排，这时我们将不输出时、分；而当相同的部分为年、月、日时，我们则依然需要将年、月、日输出，因为这是缺省机制带来的信息，需要保留。</li>
+</ul>
+<h4 id="258-解析效果">2.5.8 解析效果</h4>
+<figure data-type="image" tabindex="34"><img src="https://river861.github.io/post-images/1601468230573.png" alt="" loading="lazy"></figure>
+<h3 id="26-项目界面设计">2.6 项目界面设计</h3>
+<p>本项目的界面设计通过PyQt5实现，主要分为三个模块：人机交互模块、日历模块、任务列表模块</p>
+<ul>
+<li>人机交互模块</li>
+</ul>
+<p>用户可以像发送聊天消息一样发送任务安排文本，时间管理助手接收到文本后进行时间解析、任务解析，然后同样以聊天消息的方式将任务安排列表发送给用户，供用户查看解析结果是否正确。除了发送回复消息，时间管理助手还会将任务安排更新到日历模块和任务列表模块上。</p>
+<ul>
+<li>日历模块</li>
+</ul>
+<p>当出现新的任务时间安排时，日历上相应日期上的数字会变蓝，并出现下划线，表示当天有待办任务。点击日历上的日期，任务列表模块会显示出当天有哪些任务。</p>
+<ul>
+<li>任务列表模块</li>
+</ul>
+<p>显示日历所选中的日期的当天任务安排。当用户安排了某项任务的时间具体到时、分时，任务列表上会显示出具体的时、分时间。每条任务前有一个勾选框，当用户完成了该项任务时，可以通过勾选对应任务来表示任务的完成。完成的任务会从任务列表中消失。</p>
+<p>具体的界面展示在下面给出。</p>
+<h2 id="3-项目总展示">3 项目总展示</h2>
+<ul>
+<li>
+<p>非UI形式输出举例</p>
+<p><img src="https://river861.github.io/post-images/1601468254528.png" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601468258715.png" alt="" loading="lazy"><br>
+<img src="https://river861.github.io/post-images/1601468262585.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>UI形式输出展示</p>
+<ul>
+<li>
+<p>启动时后台开始加载神经网络模型，需要一定时间</p>
+<figure data-type="image" tabindex="35"><img src="https://river861.github.io/post-images/1601468274071.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>用户从输入框中输入任务安排语句</p>
+<figure data-type="image" tabindex="36"><img src="https://river861.github.io/post-images/1601468307337.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>程序解析语句并展示提取的任务时间信息、更新日历</p>
+<figure data-type="image" tabindex="37"><img src="https://river861.github.io/post-images/1601468314276.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>用户可以连续输入多段任务安排，任务安排将在日历上累加；用户点击日历上的相应日期可以查看当前的待办任务</p>
+<figure data-type="image" tabindex="38"><img src="https://river861.github.io/post-images/1601468324189.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>用户可勾选已完成的任务，已完成的任务将在列表中消失，然后交互界面将产生任务已完成的信息</p>
+<figure data-type="image" tabindex="39"><img src="https://river861.github.io/post-images/1601468332151.png" alt="" loading="lazy"></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-未来工作">4 未来工作</h2>
+<ul>
+<li>增加容错机制。对于正则表达式无法解析的时间成分，通过人机交互模块对用户进行询问。</li>
+<li>增加数据库存储。实现任务时间安排的长时存储。</li>
+<li>增加任务提醒机制。定时向用户提醒将要到期的任务。</li>
+<li>增加语音输入功能。尝试为项目增加语音输入接口，从而升级为语音助手。</li>
+</ul>
+<h2 id="5-项目感想与总结">5 项目感想与总结</h2>
+<ul>
+<li>
+<p>在本项目的实施过程中，我不仅运用了神经网络的方法，也运用了一些非神经网络的方法（正则表达式、句法分析），在各方面都学习到了许多。首先在神经网络方面我了解了很多流行的模型的具体原理，比如bert模型，对一些常见模型也有了更加熟悉的掌握，比如LSTM模型；在正则表达式方面，我能够写出许多比较复杂的表达式了，并且也能够思考出写正则表达式时需要考虑的种种细节，而句法分析方面，实际上是在期末前上课学习到后，发现可以运用到本项目中，于是才在后来添加上的方法。</p>
+</li>
+<li>
+<p>在项目开始之前，原本觉得这个任务应该算是比较简单的，但是开始做了才发现有许多细节和难点需要考虑，于是就尝试不同的方法一个步骤一个步骤的去实现、解决，所以就逐渐形成了整个项目最后这样一个比较复杂的实现框架。从最终效果来看，还是挺好的。由于时间关系，许多与自然语言处理无关的部分还没有全部完善，比如上述未来工作的前三点，至于升级成语音助手的未来工作，在将来有时间时一定要尝试一下，因为实现之后感觉这个项目就更酷了。项目做得比较复杂，所以报告也写得比较啰嗦，挺抱歉的，辛苦老师阅读了。</p>
+</li>
+</ul>
+<h2 id="6-运行方法与代码文件说明">6 运行方法与代码文件说明</h2>
+<ul>
+<li>
+<p>运行环境：ubuntu 18.04   python3</p>
+</li>
+<li>
+<p>运行指令</p>
+<p>非UI方式启动：</p>
+<pre><code>python3 Main.py
+</code></pre>
+<p>UI方式启动：</p>
+<pre><code>python3 App.py
+</code></pre>
+</li>
+<li>
+<p>文件列表</p>
+<table>
+<thead>
+<tr>
+<th>文件或文件夹名</th>
+<th>简要说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/Css</td>
+<td>UI渲染需要用到的html文件与图片</td>
+</tr>
+<tr>
+<td>/Data</td>
+<td>数据集与数据分析结果</td>
+</tr>
+<tr>
+<td>/Model</td>
+<td>神经网络模型</td>
+</tr>
+<tr>
+<td>config.ini</td>
+<td>配置文件，描述数据集路径与神经网络模型路径</td>
+</tr>
+<tr>
+<td>App.py</td>
+<td>UI界面的设计代码</td>
+</tr>
+<tr>
+<td>Main.py</td>
+<td>主代码，分离时间、任务成分，调用各部件</td>
+</tr>
+<tr>
+<td>Dictionary.py</td>
+<td>数据清洗与时间预处理相关的映射字典</td>
+</tr>
+<tr>
+<td>DataAnalyzing.py</td>
+<td>数据分析相关的代码</td>
+</tr>
+<tr>
+<td>TextPreprocessing.py</td>
+<td>时间预处理相关代码</td>
+</tr>
+<tr>
+<td>Predict.py</td>
+<td>调用神经网络实现时间标注的相关代码</td>
+</tr>
+<tr>
+<td>ThingsDividing.py</td>
+<td>通过句法分析实现任务解析的相关代码</td>
+</tr>
+<tr>
+<td>TimeParsing.py</td>
+<td>通过正则表达式实现时间解析的相关代码</td>
+</tr>
+<tr>
+<td>Train.py</td>
+<td>Bert-BiLSTM-CRF模型训练代码</td>
+</tr>
+<tr>
+<td>Evaluate.py</td>
+<td>模型评估代码</td>
+</tr>
+</tbody>
+</table>
+<p>由于训练好的神经网络模型较大（400M左右），因此将其上传至了百度云盘<br>
+<a href="https://pan.baidu.com/s/1qCObi-ItdHEkKle4_2dp3w">链接</a>  密码: cll8</p>
+</li>
+</ul>
+<h2 id="7-参考文献">7 参考文献</h2>
+<p>[1] Christopher Olah.Understanding LSTM Networks[EB/OL]. https://colah.github.io/posts/2015-08-Understanding-LSTMs/</p>
+<p>[2] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova. 2019. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. arXiv:1810.04805v2.</p>
+<p>[3] Project webpage. https://github.com/percent4/Chinese_Time_Recogniztion/tree/master/data</p>
+<p>[4] Project webpage. https://github.com/google-research/bert</p>
+<p>[5] Project webpage. https://github.com/wbq813/TimeRec</p>
+<p><br><center><strong>*   *   *</strong></center></br></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Fin
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span></span></p>
+<p><a href="https://github.com/River861/TODO-Helper">Github源码</a> 求⭐️~</p>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#0-%E9%80%89%E9%A2%98%E5%8A%A8%E6%9C%BA%E4%B8%8E%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D">0 选题动机与项目介绍</a></li>
+<li><a href="#1-%E9%A1%B9%E7%9B%AE%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6">1 项目整体框架</a></li>
+<li><a href="#2-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B">2 项目实现流程</a>
+<ul>
+<li><a href="#21-%E8%AF%AD%E6%96%99%E8%8E%B7%E5%8F%96%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90">2.1 语料获取与数据分析</a>
+<ul>
+<li><a href="#210-%E8%AF%AD%E6%96%99%E6%9D%A5%E6%BA%90">2.1.0 语料来源</a></li>
+<li><a href="#211-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97">2.1.1 数据清洗</a></li>
+<li><a href="#212-%E5%AF%B9%E6%97%B6%E9%97%B4%E6%8F%8F%E8%BF%B0%E6%96%B9%E5%BC%8F%E7%9A%84%E5%88%86%E6%9E%90">2.1.2 对时间描述方式的分析</a></li>
+<li><a href="#213-%E6%97%B6%E9%97%B4%E6%8F%8F%E8%BF%B0%E7%9A%84%E5%A4%8D%E6%9D%82%E7%A8%8B%E5%BA%A6%E5%88%86%E6%9E%90">2.1.3 时间描述的复杂程度分析</a></li>
+<li><a href="#214-%E6%97%B6%E9%97%B4%E6%8F%8F%E8%BF%B0%E7%9A%84%E7%B1%BB%E5%88%AB%E5%88%86%E6%9E%90">2.1.4 时间描述的类别分析</a></li>
+<li><a href="#215-%E6%97%B6%E9%97%B4%E8%AF%8D%E8%B5%B7%E5%A7%8B%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%88%86%E5%B8%83">2.1.5 时间词起始位置的分布</a></li>
+<li><a href="#216-%E6%97%B6%E9%97%B4%E8%AF%8D%E5%89%8D%E5%90%8E%E8%AF%8D%E7%9A%84%E8%AF%8D%E6%80%A7%E5%88%86%E6%9E%90">2.1.6 时间词前后词的词性分析</a></li>
+</ul>
+</li>
+<li><a href="#22-%E6%97%B6%E9%97%B4%E6%8F%90%E5%8F%96">2.2 时间提取</a>
+<ul>
+<li><a href="#220-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">2.2.0 为什么选择基于神经网络？</a></li>
+<li><a href="#221-%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D">2.2.1 模型介绍</a></li>
+<li><a href="#222-%E8%AE%AD%E7%BB%83%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%BB%93%E6%9E%9C">2.2.2 训练相关参数与训练结果</a></li>
+<li><a href="#223-%E4%B8%89%E7%A7%8D%E4%B8%8D%E5%90%8C%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AF%B9%E6%AF%94">2.2.3 三种不同模型的对比</a></li>
+<li><a href="#224-%E6%A0%87%E6%B3%A8%E6%95%88%E6%9E%9C">2.2.4 标注效果</a></li>
+</ul>
+</li>
+<li><a href="#23-%E6%97%B6%E9%97%B4%E4%B8%8E%E4%BB%BB%E5%8A%A1%E7%9A%84%E4%B8%80%E4%B8%80%E9%85%8D%E5%AF%B9">2.3 时间与任务的一一配对</a></li>
+<li><a href="#24-%E4%BB%BB%E5%8A%A1%E8%A7%A3%E6%9E%90">2.4 任务解析</a>
+<ul>
+<li><a href="#240-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E5%9F%BA%E4%BA%8E%E5%8F%A5%E6%B3%95%E5%88%86%E6%9E%90">2.4.0 为什么选择基于句法分析？</a></li>
+<li><a href="#241-%E6%96%87%E6%B3%95%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90">2.4.1 文法的设计与动态生成</a></li>
+<li><a href="#242-%E8%A7%A3%E6%9E%90%E6%95%88%E6%9E%9C">2.4.2 解析效果</a></li>
+</ul>
+</li>
+<li><a href="#25-%E6%97%B6%E9%97%B4%E8%A7%A3%E6%9E%90">2.5 时间解析</a>
+<ul>
+<li><a href="#250-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E5%9F%BA%E4%BA%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.5.0 为什么选择基于正则表达式？</a></li>
+<li><a href="#251-%E6%97%B6%E9%97%B4%E8%A7%A3%E6%9E%90%E7%9A%84%E7%9B%AE%E6%A0%87%E5%92%8C%E8%A7%84%E5%AE%9A">2.5.1 时间解析的目标和规定</a></li>
+<li><a href="#252-%E6%97%B6%E9%97%B4%E8%A7%A3%E6%9E%90%E6%80%BB%E6%A1%86%E6%9E%B6">2.5.2 时间解析总框架</a></li>
+<li><a href="#253-%E5%85%B3%E4%BA%8E%E7%BC%BA%E7%9C%81%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9C%BA%E5%88%B6">2.5.3 关于缺省处理机制和继承机制</a></li>
+<li><a href="#254-%E8%8A%82%E6%97%A5-%E8%8A%82%E6%B0%94%E5%A4%84%E7%90%86%E5%99%A8">2.5.4 节日、节气处理器</a></li>
+<li><a href="#255-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%A7%A3%E6%9E%90%E5%99%A8">2.5.5 正则表达式解析器</a></li>
+<li><a href="#256-%E6%97%B6%E9%97%B4%E9%9A%90%E5%90%AB%E4%B9%89%E5%A4%84%E7%90%86%E5%99%A8">2.5.6 时间隐含义处理器</a></li>
+<li><a href="#257-%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%A3%80%E6%B5%8B%E5%99%A8">2.5.7 时间变化检测器</a></li>
+<li><a href="#258-%E8%A7%A3%E6%9E%90%E6%95%88%E6%9E%9C">2.5.8 解析效果</a></li>
+</ul>
+</li>
+<li><a href="#26-%E9%A1%B9%E7%9B%AE%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1">2.6 项目界面设计</a></li>
+</ul>
+</li>
+<li><a href="#3-%E9%A1%B9%E7%9B%AE%E6%80%BB%E5%B1%95%E7%A4%BA">3 项目总展示</a></li>
+<li><a href="#4-%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C">4 未来工作</a></li>
+<li><a href="#5-%E9%A1%B9%E7%9B%AE%E6%84%9F%E6%83%B3%E4%B8%8E%E6%80%BB%E7%BB%93">5 项目感想与总结</a></li>
+<li><a href="#6-%E8%BF%90%E8%A1%8C%E6%96%B9%E6%B3%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E">6 运行方法与代码文件说明</a></li>
+<li><a href="#7-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">7 参考文献</a></li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://river861.github.io/post/wetalk-jian-yi-liao-tian-shi/" class="post-title gt-a-link">
+                    WeTalk 简易聊天室
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>
