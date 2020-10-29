@@ -1,0 +1,452 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Scalable RDMA RPC on Reliable Connection with Efficient Resource Sharing | River&#39;s Blog</title>
+
+<link rel="shortcut icon" href="https://river861.github.io/favicon.ico?v=1603978006198">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://river861.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            River&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/about" class="menu gt-a-link">
+                            关于我
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/friends" class="menu gt-a-link">
+                            友链
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1603978006198" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+		<div class="post-content-wrapper">
+			<div class="post-detail gt-bg-theme-color-second">
+				<article class="gt-post-content">
+					<h2 class="post-title">
+					  Scalable RDMA RPC on Reliable Connection with Efficient Resource Sharing
+					</h2>
+					<div class="post-info">
+					  <span>
+						2020-10-28
+					  </span>
+					  <span>
+						10 min read
+					  </span>
+					  
+						<a href="https://river861.github.io/tag/Ebz-vAGbT/" class="post-tag">
+						  # 论文笔记
+						</a>
+					  
+					</div>
+					
+					<div class="post-content">
+						<p>这篇论文提出了两种方法来提升RDMA RPC的Scalability（就译作可伸缩性吧）。</p>
+<!-- more -->
+<h2 id="0-abstract">0 Abstract</h2>
+<ul>
+<li>
+<p>发现问题：RDMA技术能给分布式系统带来低延迟和高带宽，但是当传输的target数目增多时，RC型的RDMA性能会下降。</p>
+</li>
+<li>
+<p>思考问题：NIC cache、CPU cache和memory中的资源竞争。</p>
+</li>
+<li>
+<p>解决问题：<br>
+1. <strong>connection grouping</strong>：将connections进行分组，来解决NIC cache的饱和、抖动问题；<br>
+2. <strong>virtualized mapping</strong>：将所有connections用到的消息池映射到同一个物理消息池中，来解决CPU cache的不命中问题、提高memory的利用率。<br>
+将基于使用了上述技术的RC型RDMA的RPC称为<strong>ScaleRPC</strong>。</p>
+</li>
+<li>
+<p>应用：<br>
+1. 分布式文件系统<br>
+2. 分布式交易系统</p>
+</li>
+</ul>
+<h2 id="1-introduction">1 Introduction</h2>
+<ol>
+<li>DRMA技术被广泛应用到各类型的分布式系统中</li>
+<li>然而在one-to-many型的分布式系统中，当connections数量增加（即client数目增加）时，RDMA的throughput（IOPS）会下降</li>
+<li>这篇论文提出的ScaleRPC通过下面方式解决了问题：
+<ul>
+<li>将connections分成若干组，然后将对每个组通过分时技术（时间片）来调度服务。（这样减少了同时服务的connections数目，从而缓解NIC cache的饱和、抖动）</li>
+<li>通过虚拟映射来时所有connections使用同一块物理消息池，从而限制了使用的内存空间。（减少了CPU LLC(Last Level Cache)的抖动）</li>
+</ul>
+</li>
+<li>进一步需要考虑的问题：</li>
+</ol>
+<ul>
+<li>每个client组发送requests的频率是不同的、会变化的<br>
+👉 使用priority-based scheduling（优先级调度）来实现client组的调度</li>
+<li>虚拟映射时，不同组的的切换应该要轻量、高效<br>
+👉 通过 warm up 来减小组消息池切换的开销</li>
+</ul>
+<ol start="5">
+<li>本论文是从系统角度解决问题，而不是硬件角度。使用DRAM-based的RPC的原因是：替代一个系统的RPC子系统是比较灵活的。</li>
+<li>总结一下主要的工作
+<ul>
+<li>提出ScaledRPC；</li>
+<li>通过比较实验评估了ScaledRPC，比较对象是当前最先进的UD型的RDMA-based RPCs；</li>
+<li>进一步验证了ScaledRPC的伸缩性，例子：分布式文件系统，分布式事务系统。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-background-and-motivation">2 Background and Motivation</h2>
+<h3 id="21-rdma">2.1 RDMA</h3>
+<ol>
+<li>RDMA是一种实现了“绕过os”和“零拷贝”的远程DMA技术，即能够直接和远端主机的内存进行数据传输。分为UD、UC、RC三种：UD支持one-to-one和one-to-many，并且不需要建立；UC、RC则只支持one-to-one，需要建立connection。但UD的MTU只有4KB，而UC和RC的MTU有2GB。UC和RC的区别就是可不可靠。</li>
+<li>RDMA有两种类型的verbs，一种是单边verbs，即一端要send，另一端要recv，都需要CPU参与；另一种是双边verbs，即不需要远端CPU的参与，直接从本端read/write远端。只有RC才能同时支持单边、双边verbs，UD只支持单边verbs。</li>
+</ol>
+<h3 id="22-poor-scalability-of-rdma">2.2 Poor Scalability of RDMA</h3>
+<figure data-type="image" tabindex="1"><img src="https://river861.github.io/post-images/1603889772899.PNG" alt="" loading="lazy"></figure>
+<ol>
+<li>图1(a) 是one-to-many分布式系统中，多个clients同时向server发送请求，clients数量越多时，平均吞吐率越低</li>
+<li>图1(b) 将从多个clients发送到server称为inbound，反过来称为outbound，发现吞吐率受影响的实际上是RC的outbound write。</li>
+</ol>
+<h3 id="resource-contention-in-rdma">Resource Contention in RDMA</h3>
+<figure data-type="image" tabindex="2"><img src="https://river861.github.io/post-images/1603892952511.PNG" alt="" loading="lazy"></figure>
+<ol>
+<li>outbound verbs造成了NIC cache上的资源竞争<br>
+当connections增加时，NIC cache中存储的QP states和WQE cache会超过容量，造成抖动。（NIC cache会和CPU LLC（数据存放的内存）进行“换页”）<br>
+如图3(a) 中，PCIe Read Out比outbound RPC多得多是因为进行了许多QP states和WQE cache的“换进”、“换出”；而inbound RPC稳定、PCIe Read In很低的原因是从远端读进来的数据直接存到了内存中，而不需要NIC的参与。</li>
+<li>inbound verbs造成了CPU cache上的资源竞争<br>
+当connections增加时，NIC向CPU LLC写的数据会超过LLC大小，造成write allocate，降低效率<br>
+如图3(b)，Message box size超过2kb表示LLC装不下了。</li>
+</ol>
+<h2 id="3-scalerpc">3 ScaleRPC</h2>
+<figure data-type="image" tabindex="3"><img src="https://river861.github.io/post-images/1603897333781.PNG" alt="" loading="lazy"></figure>
+<h3 id="31-overview">3.1 Overview</h3>
+<ol>
+<li>Connection grouping：对outbound的消息进行分组（可能来自不同clients）。在一个时间片内只会同时处理当前组里的消息。从而避免了抖动。</li>
+<li>Virtualized mapping：调度connection groups来共享同一块物理消息池<br>
+RPCServer结点在注册时分配这块消息池，这块消息池分成很多消息区（对应每个client），每个消息区分成很多消息块（对应每个message）。每个消息区有一个工作线程轮询（poll）是否收到了新消息，是的话就进行处理并通过RDMA write对client进行返回。</li>
+<li>下一组要处理的connection提前warm up。</li>
+</ol>
+<h3 id="32-connection-grouping">3.2  Connection Grouping</h3>
+<ol>
+<li>在clients发送消息前，server就把clients分成了组，然后按照 round-robin 的模式调度这些组。每个组内的clients可以同时发送requests到server，而不同组的clients将在不同时间片中被服务。</li>
+<li>使用<strong>优先级调度</strong>。每个client的优先级定义为：在一个时间片中的总throughput / 平均的request大小。也就是说，发送request越频繁的的client的优先级更高。把有相同优先级的client分到同一组中。优先级高的组将被赋予更少的client数量和更长的时间片时间（因为它们发request更频繁）。</li>
+<li>client会log in/out，这导致group的大小动态变化，因此设定了阈值来适时合并或分裂group。</li>
+<li>group size是需要权衡的：过小的话无法达到最高效率；过大的话会出现资源冲突。</li>
+</ol>
+<h3 id="33-virtualized-mapping">3.3  Virtualized Mapping</h3>
+<ol>
+<li>client增多时，CPU LLC装不下所有的inbound messages，这将导致write allocate(换入到低一级cache)，从而使效率降低。</li>
+<li>message pool 只需要足够服务一个group的clients就可以了，下一个组可以直接覆盖上一个组写在message pool 中的信息，从而实现虚拟映射。</li>
+<li>当时间片到时间，要切换到另一个组前，会清除当前组在message pool中的requests，然后通过“捎带”的方式通知组内所有clients（发生了切换）。之后就开始切换：保存当前组的metadata（clientIDs等），加载下一个组的metadata。</li>
+<li>warm up：在切换服务的group时，新的group需要等待一段时间才会收到request，为了节省这段时间，可以提前对要服务的下一个组进行warm up（大概是可以提前开始接受request）。</li>
+</ol>
+<h3 id="34-putting-everything-together整体流程">3.4  Putting Everything Together（整体流程）</h3>
+<figure data-type="image" tabindex="4"><img src="https://river861.github.io/post-images/1603966813906.PNG" alt="" loading="lazy"></figure>
+<ol>
+<li>每个client和server连接后，进入warm up状态：requests在自己本地初始化；</li>
+<li>把local requests的（request地址，batch大小）RDMA write到serve的内存E_j中（j为clientID）；</li>
+<li>serve通过优先级调度对E中的requests的clients进行分组、调度；</li>
+<li>然后开始warm up：将选中的下一个组的clients的requests根据地址RDMA read到warm up pool中；</li>
+<li>开始组切换时：当前warm up pool 变成 process pool（<strong>这里对应于Virtualized mapping，对应于一个group</strong>），process pool变成warm up pool；新的warm up pool 开始新的warm up。</li>
+<li>每个client有一个状态机图，当一个client第一次收到server的回应时，它从warm up变成process状态，当收到组切换的消息时，又变成idle状态然后需要重新从本地初始request开始（步骤1）。</li>
+</ol>
+<h3 id="35-deployment-considerations">3.5  Deployment Considerations</h3>
+<h3 id="36-evaluation-of-scalerpc">3.6  Evaluation of ScaleRPC</h3>
+<h4 id="361-experimental-setup">3.6.1  Experimental Setup</h4>
+<h4 id="362-overall-performance">3.6.2  Overall Performance</h4>
+<p>比较了不同RPC系统的throughput、latency。发现ScaleRPC表现得最高，除了会产生tail lantency。</p>
+<h4 id="363-analysis-of-internal-mechanisms">3.6.3  Analysis of Internal Mechanisms</h4>
+<h4 id="364-analysis-of-uniform-workloads">3.6.4  Analysis of Uniform Workloads</h4>
+<ol>
+<li>分析了时间片大小的选择。太小的话，组切换频繁，开销变大；太大的话，tail latency会变大（因为网络不饱和）。</li>
+<li>分析了组大小的选择。太小的话，网络不饱和，throughput无法达到最大；太大的话，资源冲突。</li>
+</ol>
+<h4 id="365-analysis-of-non-uniform-workloads">3.6.5  Analysis of Non-uniform Workloads</h4>
+<p>通过启动拥有不同访问频率的clients来测试在不平衡负载下ScaleRPC中优先级调度产生的效果。最终发现动态型ScaleRPC（时间片大小和组大小根据优先级动态变化）比静态型表现更好。</p>
+<h2 id="4-deployments-of-scalerpc">4  Deployments of ScaleRPC</h2>
+<h3 id="41-scalerpc-in-distributed-file-system">4.1  ScaleRPC in Distributed File System</h3>
+<p>将Octopus中的RPC子系统替换为ScaleRPC，结果表明ScaleRPC比原来的RPC表现更好</p>
+<h3 id="42-scalerpc-in-transactional-system">4.2  ScaleRPC in Transactional System</h3>
+<p>将这样一个系统称为ScaleTX。<br>
+一个transactional System有若干个coordinators作为clients，有若干个participants作为servers。clients发起 transactional requests，servers维护一个key-value store。这是一个many-to-many系统，但是ScaleRPC只针对one-to-many。这里的解决方法是，让几个servers同步一下，以相同的pace切换client groups（以其中一个server为基准）。<br>
+事务系统中的validate用到了RDMA read，commit用到了RDMA write。</p>
+<h4 id="421-evaluation-of-scaletx">4.2.1  Evaluation of ScaleTX</h4>
+<p>用读密集型的Object Store和写密集型的SmallBank分别进行实验。同样和其它RPC的效果一起比较。<br>
+其中还单独比较了ScaleTX-O（取消了单边verbs）和ScaleTX。发现在写密集型中，ScaleTX表现更好（说明了RDMA write的好处）。</p>
+<h2 id="5-discussion">5  Discussion</h2>
+<ol>
+<li>虽然UD型RDMA有很好的scalability，但是它不支持单边verbs，并且MTU很小。</li>
+<li>DCT方法，相比起来负载double了。</li>
+<li>ScaledRPC：使用RC、单边verbs、提升了scalability。</li>
+</ol>
+<h2 id="问题">问题</h2>
+<ol>
+<li>Dynamically Connected Transport(DCT)</li>
+<li>RDMA中write_imm和atomic</li>
+<li>LLC是不是就是数据存放的memory region</li>
+<li>PCIe events</li>
+<li>DDIO(Data Direct I/O)</li>
+<li>论文中所谓的Virtualized mapping仔细一想好像就是简单的覆盖填写？</li>
+<li>tail lantency的原因？后一幅图网络饱和，是由于时间片的组切换导致的tail lantency？前一幅图网络未饱和时什么意思？<br>
+答：就是时间片大小偏大了，导致request被处理完后和在组切换之间存在了一段时间的浪费。</li>
+</ol>
+
+					</div>
+				</article>
+			</div>
+			<div class="toc-container">
+				<ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#0-abstract">0 Abstract</a></li>
+<li><a href="#1-introduction">1 Introduction</a></li>
+<li><a href="#2-background-and-motivation">2 Background and Motivation</a>
+<ul>
+<li><a href="#21-rdma">2.1 RDMA</a></li>
+<li><a href="#22-poor-scalability-of-rdma">2.2 Poor Scalability of RDMA</a></li>
+<li><a href="#resource-contention-in-rdma">Resource Contention in RDMA</a></li>
+</ul>
+</li>
+<li><a href="#3-scalerpc">3 ScaleRPC</a>
+<ul>
+<li><a href="#31-overview">3.1 Overview</a></li>
+<li><a href="#32-connection-grouping">3.2  Connection Grouping</a></li>
+<li><a href="#33-virtualized-mapping">3.3  Virtualized Mapping</a></li>
+<li><a href="#34-putting-everything-together%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B">3.4  Putting Everything Together（整体流程）</a></li>
+<li><a href="#35-deployment-considerations">3.5  Deployment Considerations</a></li>
+<li><a href="#36-evaluation-of-scalerpc">3.6  Evaluation of ScaleRPC</a>
+<ul>
+<li><a href="#361-experimental-setup">3.6.1  Experimental Setup</a></li>
+<li><a href="#362-overall-performance">3.6.2  Overall Performance</a></li>
+<li><a href="#363-analysis-of-internal-mechanisms">3.6.3  Analysis of Internal Mechanisms</a></li>
+<li><a href="#364-analysis-of-uniform-workloads">3.6.4  Analysis of Uniform Workloads</a></li>
+<li><a href="#365-analysis-of-non-uniform-workloads">3.6.5  Analysis of Non-uniform Workloads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-deployments-of-scalerpc">4  Deployments of ScaleRPC</a>
+<ul>
+<li><a href="#41-scalerpc-in-distributed-file-system">4.1  ScaleRPC in Distributed File System</a></li>
+<li><a href="#42-scalerpc-in-transactional-system">4.2  ScaleRPC in Transactional System</a>
+<ul>
+<li><a href="#421-evaluation-of-scaletx">4.2.1  Evaluation of ScaleTX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#5-discussion">5  Discussion</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98">问题</a></li>
+</ul>
+</li>
+</ul>
+
+			</div>
+		</div>
+
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '5abd65b568c1e2c6b800',
+    clientSecret: '3921f7376ba20307d009be645bee2ae1466ed990',
+    repo: 'River861.github.io',
+    owner: 'River861',
+    admin: ['River861'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Re: start</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/River861" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Copyright © 2020  <a href="https://github.com/River861" target="_blank">River</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://river861.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+
+</body>
+</html>
